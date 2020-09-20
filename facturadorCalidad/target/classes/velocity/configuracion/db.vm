@@ -1,0 +1,46 @@
+<!-- NAVBAR -->
+#parse("/velocity/barraDeNavegacion.vm")
+#@mainLayout()
+#end
+
+<style>
+/* Style the buttons */
+a.btnC {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  appearance: button;
+  text-decoration: none;
+  color: white;
+  background-color: #666;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+a.btnC:hover {
+  background-color: #AFEEEE;
+  color: black;
+}
+#some a.active {
+  background-color: #AFEEEE;
+  color: black;
+  border: 3px solid #0000FF;
+}
+body{
+	 background-image: url("https://st2.depositphotos.com/4202565/6982/v/450/depositphotos_69827285-stock-illustration-pattern-with-lines-background.jpg");
+	font-family: Arial;
+}
+</style>
+
+<body>
+	<h1>Configuración de persistencia</h1>
+	<div id="some">
+		<a class="btnC active" href="http://localhost:8080/configuracion/baseDeDatos">Base de Datos</a>
+		<a class="btnC" href="http://localhost:8080/configuracion/archivo">Archivos</a>
+	</div>
+</body>
+</html>

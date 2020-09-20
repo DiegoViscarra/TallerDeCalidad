@@ -1,0 +1,56 @@
+#macro(mainLayout)
+<style>
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #AFEEEE;
+  color: black;
+}
+
+.topnav a.btn:active .btn.active {
+  background-color: #AFEEEE;
+  color: black; 
+ }
+
+.topnav a:active{
+  background-color: #AFEEEE;
+  color: black;
+}
+
+</style>
+
+<body>
+	<div class="topnav" id="myDIV">
+	  <a class="btn" href="http://localhost:8080/registrosCargados">Cargar Archivos CDR's</a>
+	  <a class="btn" href="http://localhost:8080/registrosTarificados">Tarificar</a>
+	  <a class="btn" href="http://localhost:8080/registrosRecuperados">Recuperar Tarificación</a>
+	  <a class="btn" href="http://localhost:8080/configuracion">Configuración</a>
+	  <a class="btn" href="http://localhost:8080/clientes">Clientes</a>
+	  <a class="btn" href="http://localhost:8080/cargarClientes"> Cargar Clientes</a>
+	</div>
+</body>
+
+<script>
+	var header = document.getElementById("myDIV");
+	var btns = header.getElementsByClassName("btn");
+	for (var i = 0; i < btns.length; i++) {
+	  btns[i].addEventListener("visited", function() {
+	  var current = document.getElementsByClassName("active");
+	  current[0].className = current[0].className.replace(" active", "");
+	  this.className += " active";
+	  });
+}
+</script>
+#end

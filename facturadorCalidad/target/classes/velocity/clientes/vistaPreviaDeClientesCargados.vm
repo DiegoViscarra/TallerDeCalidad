@@ -1,0 +1,58 @@
+<!-- NAVBAR -->
+#parse("/velocity/barraDeNavegacion.vm")
+#@mainLayout()
+#end
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+}
+body{
+	 background-image: url("https://st2.depositphotos.com/4202565/6982/v/450/depositphotos_69827285-stock-illustration-pattern-with-lines-background.jpg");
+	font-family: Arial;
+}
+th{
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+  background-color: #AFEEEE;
+} 
+td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+  background-color: white;
+}
+</style>
+<body>
+   <div class="form">
+	<h2>Cargar datos de Cliente</h2>
+	<form  method="post" action="/api/submitCliente" enctype="multipart/form-data">
+		
+		<!-- Nombre :<input  type="text" name="name"/>-->
+			<p>
+	   <label>Seleccionar Archivo: </label> <input  class="btn-file"  type="file" name="myFileClient"/>
+			<p>
+		<input type="submit" class="button" value="Cargar">
+	</form>
+	</div>
+	<h2>Lista de clientes</h2>
+	<table style="border: 1px solid black">
+  	<tr>
+  	    <th>CI</th> 
+	    <th>Nombre</th>
+	    <th>Telefono</th>  
+	    <th>Tipo de Plan</th>
+ 	 </tr>
+ 	 #foreach($cliente in $clientesCargados)
+	  <tr>
+	  		<td>$cliente.getCi()</td>
+		    <td>$cliente.getNombre()</td>
+		    <td>$cliente.getNumeroTelefonico()</td>
+		    <td>$cliente.getTipoPlan()</td>
+	  </tr>	
+	  #end
+</div>
+</body>

@@ -1,0 +1,75 @@
+<!-- NAVBAR -->
+#parse("/velocity/barraDeNavegacion.vm")
+#@mainLayout()
+#end
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+}
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    background-color: #AFEEEE; 
+	  border: none;
+	  padding: 15px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+	  cursor: pointer;
+}
+body{
+	 background-image: url("https://st2.depositphotos.com/4202565/6982/v/450/depositphotos_69827285-stock-illustration-pattern-with-lines-background.jpg");
+	font-family: Arial;
+}
+th{
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+  background-color: #AFEEEE;
+} 
+td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align:center;
+  background-color: white;
+}
+</style>
+
+<header>
+	<h1>Registros Serializados</h1>
+</header>
+<body>
+	<h2>Lista de registros Serializados</h2>
+	 #foreach($nombre in $registrosDeserializados)
+ 	     <h2>$nombre.getValue0()</h2>
+		<table style="border: 1px solid black">
+	  	<tr>
+		    <th>Numero Telefono Origen</th>
+		    <th>Numero Telefono Destino</th>  
+		    <th>Duracion Llamada</th>
+		    <th>Fecha</th>
+		    <th>Hora</th>
+		    <th>Costo de Llamada </th>
+	 	 </tr>
+	 	 #foreach($registro in $nombre.getValue1())
+		  <tr>
+			    <td>$registro.getNumeroTelefonoOrigen()</td>
+			    <td>$registro.getNumeroTelefonoDestino()</td>
+			    <td>$registro.getDuracionLLamada()</td>
+			    <td>$registro.getFecha()</td>
+			    <td>$registro.getHora()</td>
+			    <td>$registro.getCostoDeLlamada()</td>
+		  </tr>	
+		  #end
+		  </table>
+	  #end
+</body>
