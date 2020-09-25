@@ -91,13 +91,13 @@ public class ControladorCDRs {
 	}
 
 	private void guardarDeAcuerdoAModoPersistencia() {
-		if(modoPersistencia == _CLAVEPERSISTENCIABASEDEDATOS)
+		if(modoPersistencia != null && modoPersistencia.equals(_CLAVEPERSISTENCIABASEDEDATOS))
 		{
 			contadorPersistenciaBD++;
 			if(contadorPersistenciaBD <=1)        		
 				guardarEnBD();
 		}
-		if(modoPersistencia == _CLAVEPERSISTENCIAARCHIVOS)
+		if(modoPersistencia != null && modoPersistencia.equals(_CLAVEPERSISTENCIAARCHIVOS))
 			guardarEnArchivoDeTexto();
 	}
 	
