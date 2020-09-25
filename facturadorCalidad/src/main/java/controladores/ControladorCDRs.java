@@ -18,10 +18,11 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
 public class ControladorCDRs {
-	private static final String _CLAVEPERSISTENCIABASEDEDATOS = "BASEDEDATOS";
-	private static final String _CLAVEPERSISTENCIAARCHIVOS = "SERIALIZAR";
-	private static String modoPersistencia = _CLAVEPERSISTENCIAARCHIVOS;
-	private static int contadorPersistenciaBD = 0;
+	private static final String CONFIGURACION = "configuracion";
+	private static final String CLAVEPERSISTENCIABASEDEDATOS = "BASEDEDATOS";
+	private static final String CLAVEPERSISTENCIAARCHIVOS = "SERIALIZAR";
+	private static String modoPersistencia = CLAVEPERSISTENCIAARCHIVOS;
+	private int contadorPersistenciaBD = 0;
 	public static ITarificacion tarificacion;
 	public static IPersistencia persistencia;
 	public static IRegistroCDR registroCDR;
@@ -40,7 +41,7 @@ public class ControladorCDRs {
 		get("/registrosRecuperados", (request, response) ->
         {
         	Map<String, Object> model = new HashMap<>();
-        	if(modoPersistencia == _CLAVEPERSISTENCIAARCHIVOS) {
+        	if(modoPersistencia == CLAVEPERSISTENCIAARCHIVOS) {
             	model.put("registrosDeserializados", deserializarTodosLosArchivos());
             	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/registros/registrosDeCDRSDeserializados.vm"));
         	}
@@ -53,24 +54,24 @@ public class ControladorCDRs {
 		get("/configuracion", (request, response) ->
         {
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
-        	if(modoPersistencia == _CLAVEPERSISTENCIABASEDEDATOS)
+        	model.put(CONFIGURACION, true);
+        	if(modoPersistencia == CLAVEPERSISTENCIABASEDEDATOS)
         		return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/db.vm"));
         	else
         		return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/archivo.vm"));
         });
         get("/configuracion/baseDeDatos", (request, response) ->
         {
-        	modoPersistencia = _CLAVEPERSISTENCIABASEDEDATOS;
+        	modoPersistencia = CLAVEPERSISTENCIABASEDEDATOS;
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
+        	model.put(CONFIGURACION, true);
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/db.vm"));
         });
         get("/configuracion/archivo", (request, response) ->
         {
-        	modoPersistencia = _CLAVEPERSISTENCIAARCHIVOS;
+        	modoPersistencia = CLAVEPERSISTENCIAARCHIVOS;
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
+        	model.put(CONFIGURACION, true);
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/archivo.vm"));
         });
         
@@ -91,13 +92,13 @@ public class ControladorCDRs {
 	}
 
 	private void guardarDeAcuerdoAModoPersistencia() {
-		if(modoPersistencia != null && modoPersistencia.equals(_CLAVEPERSISTENCIABASEDEDATOS))
+		if(modoPersistencia != null && modoPersistencia.equals(CLAVEPERSISTENCIABASEDEDATOS))
 		{
 			contadorPersistenciaBD++;
 			if(contadorPersistenciaBD <=1)        		
 				guardarEnBD();
 		}
-		if(modoPersistencia != null && modoPersistencia.equals(_CLAVEPERSISTENCIAARCHIVOS))
+		if(modoPersistencia != null && modoPersistencia.equals(CLAVEPERSISTENCIAARCHIVOS))
 			guardarEnArchivoDeTexto();
 	}
 	
