@@ -2,5 +2,5 @@ projectKey=org.sonarqube:java-sonar-runner-simple
 serverUrl=http://localhost:9000
 serverVersion=8.4.2.36762
 dashboardUrl=http://localhost:9000/dashboard?id=org.sonarqube%3Ajava-sonar-runner-simple
-ceTaskId=AXSsW6dN7BmrzNrlgg0l
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXSsW6dN7BmrzNrlgg0l
+ceTaskId=AXTCrOiEJzo5hpuKbbH4
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXTCrOiEJzo5hpuKbbH4
