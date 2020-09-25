@@ -62,7 +62,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 			System.out.println(numeroTelefonico);
 			nombre = clientesDivididos[i];i++;
 			plan = clientesDivididos[i].toUpperCase(); i++;
-			plan.trim();
+			plan = plan.trim();
 			Cliente cliente = registrarClienteEnBD(ci, nombre, plan, numeroTelefonico);
 			registrarClienteEnRepositorio(plan, numeroTelefonico, numerosAmigos, clientesDivididos, i, cliente);
 		}
