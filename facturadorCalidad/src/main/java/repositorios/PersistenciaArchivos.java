@@ -82,7 +82,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 	@Override
 	public ArrayList<Pair<String,ArrayList<CDR>>> deserializarTodosLosArchivos() {
 		ArrayList<Pair<String,ArrayList<CDR>>> archivosDeserializados = new ArrayList<Pair<String,ArrayList<CDR>>>();
-		ArrayList<String>archivos = new ArrayList<String>();
+		ArrayList<String>archivos;
 		archivos = listarDirectorio();
 		for(String nombre : archivos) {
 			Pair<String, ArrayList<CDR>> par = new Pair<String, ArrayList<CDR>>(nombre, deserializar(nombre));
