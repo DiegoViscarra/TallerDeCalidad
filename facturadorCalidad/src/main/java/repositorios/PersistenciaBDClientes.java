@@ -65,16 +65,14 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			String sentenciaSQL = "INSERT INTO CLientes (nombre,ci,numeroTelefonico,tipoPlan,fechaRegistro)" + "values(?,?,?,?,?)";
 
 
-			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);){
-			
-			enunciadoPreparado.setString(1,cliente.getNombre());
-			enunciadoPreparado.setString(2,cliente.getCi());
-			enunciadoPreparado.setInt(3,cliente.getNumeroTelefonico());
-			enunciadoPreparado.setString(4,cliente.getTipoPlan());
+			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){
+			enunciadoPreparadoClientes.setString(1,cliente.getNombre());
+			enunciadoPreparadoClientes.setString(2,cliente.getCi());
+			enunciadoPreparadoClientes.setInt(3,cliente.getNumeroTelefonico());
+			enunciadoPreparadoClientes.setString(4,cliente.getTipoPlan());
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-			enunciadoPreparado.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
-			
-			enunciadoPreparado.executeUpdate();}
+			enunciadoPreparadoClientes.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
+			enunciadoPreparadoClientes.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
 			LOGGER.info("Clientes closed successfully");
@@ -97,17 +95,15 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			String sentenciaSQL = "INSERT INTO NumerosAmigos (numeroTelefonico,fechaRegistro,numeroAmigo1,numeroAmigo2,numeroAmigo3,numeroAmigo4)" + "values(?,?,?,?,?,?)";
 
 
-			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);){
-			
-			enunciadoPreparado.setInt(1,numeroTelefonico);
+			try(PreparedStatement enunciadoPreparadoClientesConAmigos = conexionBD.prepareStatement(sentenciaSQL);){
+			enunciadoPreparadoClientesConAmigos.setInt(1,numeroTelefonico);
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-			enunciadoPreparado.setString(2,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
-			enunciadoPreparado.setInt(3,numerosAmigos.get(0));
-			enunciadoPreparado.setInt(4,numerosAmigos.get(1));
-			enunciadoPreparado.setInt(5,numerosAmigos.get(2));
-			enunciadoPreparado.setInt(6,numerosAmigos.get(3));
-			
-			enunciadoPreparado.executeUpdate();}
+			enunciadoPreparadoClientesConAmigos.setString(2,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
+			enunciadoPreparadoClientesConAmigos.setInt(3,numerosAmigos.get(0));
+			enunciadoPreparadoClientesConAmigos.setInt(4,numerosAmigos.get(1));
+			enunciadoPreparadoClientesConAmigos.setInt(5,numerosAmigos.get(2));
+			enunciadoPreparadoClientesConAmigos.setInt(6,numerosAmigos.get(3));
+			enunciadoPreparadoClientesConAmigos.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
 			LOGGER.info("NumerosAmigos closed successfully");
