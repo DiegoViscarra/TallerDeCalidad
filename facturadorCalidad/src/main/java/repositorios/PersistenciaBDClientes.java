@@ -14,15 +14,17 @@ import entidades.Cliente;
 import modelos.ClienteModelo;
 
 public class PersistenciaBDClientes implements IPersistenciaBDClientes {
+	private static final String JDBC_SQLITE_DB_SQL_DB = "jdbc:sqlite:dbSQL.db";
+	private static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 	
 	@Override
 	public void crearTabla() {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
-
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
+			
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQLClientes = "CREATE TABLE IF NOT EXISTS Clientes " +
 					"(nombre CHAR(30)     NOT NULL," +
@@ -53,8 +55,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	@Override
 	public void poblarTablaClientes(Cliente cliente) {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened Clientes successfully");
 
@@ -85,8 +87,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	@Override
 	public void poblarTablaClientesConNumerosAmigos(ArrayList<Integer> numerosAmigos, int numeroTelefonico) {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened numerosAmigos successfully");
 
@@ -119,8 +121,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	public ArrayList<ClienteModelo> mostrarTablaClientes() {
 		try {
 			ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened Clientes successfully");
 
@@ -156,8 +158,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 		try {
 			ArrayList<ClienteModelo> numerosAmigos = new ArrayList<ClienteModelo>();
 			ArrayList<Integer> numeros = new ArrayList<Integer>();
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened NumerosAmigos successfully");
 
