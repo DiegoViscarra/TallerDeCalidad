@@ -17,6 +17,7 @@ import io.vavr.Tuple2;
 import java.util.logging.Logger;
 
 public class PersistenciaArchivos implements IPersistenciaArchivos {
+	private static final String EXCEPTION_CAUGHT = "Exception caught";
 	private static String rutaCarpeta = Paths.get(".").toAbsolutePath().normalize().toString()+"\\Serializaciones\\";
 	private final static Logger LOGGER = Logger.getLogger(PersistenciaArchivos.class.getName());
 	@Override
@@ -34,7 +35,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 				archivoDeSalida.close();
 			}
 		} catch (IOException ex) {
-			LOGGER.severe("Exception caught");
+			LOGGER.severe(EXCEPTION_CAUGHT);
 		}	
 	}
 	private String obtenerFechaNombreDocumento() {
@@ -58,10 +59,10 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 				return lecturaRegistros;
 			}
 		} catch (IOException ex) {
-			LOGGER.severe("Exception caught");
+			LOGGER.severe(EXCEPTION_CAUGHT);
 		}
         catch(ClassNotFoundException ex) {
-        	LOGGER.severe("Exception caught");
+        	LOGGER.severe(EXCEPTION_CAUGHT);
         }
 		ArrayList<CDR> lecturaRegistros = null;
 		return lecturaRegistros;
