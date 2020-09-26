@@ -20,7 +20,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void crearTabla() {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQL = "CREATE TABLE IF NOT EXISTS CDR " +
@@ -46,7 +46,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void poblarTabla(CDR registro) {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened CDR successfully");
 
@@ -84,7 +84,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		try {
 			ArrayList<CDRModelo> registrosRecuperados = new ArrayList<CDRModelo>();
 			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened CDR successfully");
 
