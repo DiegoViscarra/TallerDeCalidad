@@ -13,13 +13,14 @@ import modelos.CDRModelo;
 
 
 public class PersistenciaBDCDR implements IPersistenciaBDCDR {
+	private static final String SQL_CLASS = "org.sqlite.JDBC";
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 
 	@Override
 	public void crearTabla() {
 		try {
-			Class.forName("org.sqlite.JDBC");
+			Class.forName(SQL_CLASS);
 			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 
 			enunciadoSQL = conexionBD.createStatement();
@@ -45,7 +46,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	@Override
 	public void poblarTabla(CDR registro) {
 		try {
-			Class.forName("org.sqlite.JDBC");
+			Class.forName(SQL_CLASS);
 			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened CDR successfully");
@@ -83,7 +84,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public ArrayList<CDRModelo> mostrarTabla(String sentenciaSQL) {
 		try {
 			ArrayList<CDRModelo> registrosRecuperados = new ArrayList<CDRModelo>();
-			Class.forName("org.sqlite.JDBC");
+			Class.forName(SQL_CLASS);
 			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db;user=user&password=password");
 			conexionBD.setAutoCommit(false);
 			System.out.println("Opened CDR successfully");
