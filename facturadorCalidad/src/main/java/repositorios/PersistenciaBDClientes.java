@@ -14,7 +14,7 @@ import entidades.Cliente;
 import modelos.ClienteModelo;
 
 public class PersistenciaBDClientes implements IPersistenciaBDClientes {
-	private static final String JDBC_SQLITE_DB_SQL_DB = "jdbc:sqlite:dbSQL.db";
+	private static final String JDBC_SQLITE_DB_SQL_DB = "jdbc:sqlite:dbSQL.db;user=user&password=password";
 	private static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
