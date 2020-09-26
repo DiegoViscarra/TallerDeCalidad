@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 import casosDeUso.IPersistenciaBDClientes;
 import entidades.Cliente;
@@ -16,6 +17,7 @@ import modelos.ClienteModelo;
 public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	private static final String JDBC_SQLITE_DB_SQL_DB = "jdbc:sqlite:dbSQL.db;user=user&password=password";
 	private static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
+	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 	
@@ -47,7 +49,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			enunciadoSQL.close();
 			conexionBD.close();
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -58,7 +60,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened Clientes successfully");
+			LOGGER.info("Opened Clientes successfully");
 
 			String sentenciaSQL = "INSERT INTO CLientes (nombre,ci,numeroTelefonico,tipoPlan,fechaRegistro)" + "values(?,?,?,?,?)";
 
@@ -75,13 +77,13 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			enunciadoPreparado.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
-			System.out.println("Clientes closed successfully");
+			LOGGER.info("Clientes closed successfully");
 		} catch ( Exception e ) {
-			System.out.println("entra al errror");
-			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			LOGGER.info("entra al errror");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Clientes created successfully");
+		LOGGER.info("Clientes created successfully");
 	}
 	
 	@Override
@@ -90,8 +92,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened numerosAmigos successfully");
-
+			LOGGER.info("Opened numerosAmigos successfully");
+			
 			String sentenciaSQL = "INSERT INTO NumerosAmigos (numeroTelefonico,fechaRegistro,numeroAmigo1,numeroAmigo2,numeroAmigo3,numeroAmigo4)" + "values(?,?,?,?,?,?)";
 
 
@@ -108,13 +110,13 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			enunciadoPreparado.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
-			System.out.println("NumerosAmigos closed successfully");
+			LOGGER.info("NumerosAmigos closed successfully");
 		} catch ( Exception e ) {
-			System.out.println("entra al errror");
-			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			LOGGER.info("entra al errror");
+			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("NumerosAmigos created successfully");
+		LOGGER.info("NumerosAmigos created successfully");
 	}
 
 	@Override
@@ -124,7 +126,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened Clientes successfully");
+			LOGGER.info("Opened Clientes successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
 			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM Clientes;" );){
@@ -143,10 +145,10 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
-			System.out.println("selection done successfully");	
+			LOGGER.info("selection done successfully");	
 			return clientesRecuperados;
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 			return null;
 		}
@@ -161,7 +163,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened NumerosAmigos successfully");
+			LOGGER.info("Opened NumerosAmigos successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
 			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM NumerosAmigos;" );){
@@ -182,10 +184,10 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
-			System.out.println("selection done successfully");	
+			LOGGER.info("selection done successfully");	
 			return numerosAmigos;
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
 			return null;
 		}
