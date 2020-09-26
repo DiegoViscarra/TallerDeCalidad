@@ -59,7 +59,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 			System.out.println("Exception caught");
 		}
         catch(ClassNotFoundException ex) {
-            ex.printStackTrace();
+        	System.out.println("Exception caught");
         }
 		return null;
 	}
