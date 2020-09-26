@@ -89,28 +89,28 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			System.out.println("Opened CDR successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
-			ResultSet resultadoConsulta = enunciadoSQL.executeQuery(sentenciaSQL);
-
-			while ( resultadoConsulta.next() ) {
-				int numeroTelefonoOrigen = resultadoConsulta.getInt("numeroTelefonoOrigen");
-				int numeroTelefonoDestino = resultadoConsulta.getInt("numeroTelefonoDestino");
-				String  duracionLlamada = resultadoConsulta.getString("duracionLlamada");
-				String  fecha = resultadoConsulta.getString("fecha");
-				String  hora = resultadoConsulta.getString("hora");
-				double costo  = resultadoConsulta.getDouble("costo");
-				String fechaTarificacion = resultadoConsulta.getString("fechaTarificacion");
-				String horaTarificacion = resultadoConsulta.getString("horaTarificacion");
-				int id = resultadoConsulta.getInt("id");
-				
-				CDRModelo modelo = new CDRModelo(id, numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,fechaTarificacion,costo,horaTarificacion);
-				
-				registrosRecuperados.add(modelo);
+			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery(sentenciaSQL)){
+				while ( resultadoConsulta.next() ) {
+					int numeroTelefonoOrigen = resultadoConsulta.getInt("numeroTelefonoOrigen");
+					int numeroTelefonoDestino = resultadoConsulta.getInt("numeroTelefonoDestino");
+					String  duracionLlamada = resultadoConsulta.getString("duracionLlamada");
+					String  fecha = resultadoConsulta.getString("fecha");
+					String  hora = resultadoConsulta.getString("hora");
+					double costo  = resultadoConsulta.getDouble("costo");
+					String fechaTarificacion = resultadoConsulta.getString("fechaTarificacion");
+					String horaTarificacion = resultadoConsulta.getString("horaTarificacion");
+					int id = resultadoConsulta.getInt("id");
+					
+					CDRModelo modelo = new CDRModelo(id, numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,fechaTarificacion,costo,horaTarificacion);
+					
+					registrosRecuperados.add(modelo);
+				}
+				resultadoConsulta.close();
+				enunciadoSQL.close();
+				conexionBD.close();
+				System.out.println("selection done successfully");	
+				return registrosRecuperados;
 			}
-			resultadoConsulta.close();
-			enunciadoSQL.close();
-			conexionBD.close();
-			System.out.println("selection done successfully");	
-			return registrosRecuperados;
 		} catch ( Exception e ) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
