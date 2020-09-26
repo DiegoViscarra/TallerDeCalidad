@@ -14,9 +14,11 @@ import org.javatuples.Pair;
 import casosDeUso.IPersistenciaArchivos;
 import entidades.CDR;
 import io.vavr.Tuple2;
+import java.util.logging.Logger;
 
 public class PersistenciaArchivos implements IPersistenciaArchivos {
 	private static String rutaCarpeta = Paths.get(".").toAbsolutePath().normalize().toString()+"\\Serializaciones\\";
+	private final static Logger LOGGER = Logger.getLogger(PersistenciaArchivos.class.getName());
 	@Override
 	public void serializar(ArrayList<CDR> registrosTelefonicos) {
 		try {
@@ -32,7 +34,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 				archivoDeSalida.close();
 			}
 		} catch (IOException ex) {
-			System.out.println("Exception caught");
+			LOGGER.severe("Exception caught");
 		}	
 	}
 	private String obtenerFechaNombreDocumento() {
@@ -56,10 +58,10 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 				return lecturaRegistros;
 			}
 		} catch (IOException ex) {
-			System.out.println("Exception caught");
+			LOGGER.severe("Exception caught");
 		}
         catch(ClassNotFoundException ex) {
-        	System.out.println("Exception caught");
+        	LOGGER.severe("Exception caught");
         }
 		ArrayList<CDR> lecturaRegistros = null;
 		return lecturaRegistros;
@@ -71,7 +73,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 		ArrayList<String> listaFicheros = new ArrayList<String>();
 		if (ficheros != null) {
 		  for (int x=0;x<ficheros.length;x++) {
-			  System.out.println(ficheros[x]);
+			  LOGGER.info(ficheros[x]);
 			  listaFicheros.add(ficheros[x]);
 		  }
 		}
