@@ -53,28 +53,29 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			String sentenciaSQL = "INSERT INTO CDR (numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,costo,fechaTarificacion,horaTarificacion)" + "values(?,?,?,?,?,?,?,?)";
 
 
-			PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);
-			
-			enunciadoPreparado.setInt(1,registro.getNumeroTelefonoOrigen());
-			enunciadoPreparado.setInt(2,registro.getNumeroTelefonoDestino());
-			enunciadoPreparado.setString(3,registro.getDuracionLLamada());
-			enunciadoPreparado.setString(4,registro.getFecha());
-			enunciadoPreparado.setString(5,registro.getHora());
-			enunciadoPreparado.setDouble(6,registro.getCostoDeLlamada());
-			SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-			enunciadoPreparado.setString(7,formatoFecha.format(Calendar.getInstance().getTime()).toString());
-			SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
-			enunciadoPreparado.setString(8,formatoHora.format(Calendar.getInstance().getTime()).toString());
-			
-			enunciadoPreparado.executeUpdate();
-			conexionBD.commit();
-			conexionBD.close();
-			System.out.println("CDR closed successfully");
+			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL)){
+				enunciadoPreparado.setInt(1,registro.getNumeroTelefonoOrigen());
+				enunciadoPreparado.setInt(2,registro.getNumeroTelefonoDestino());
+				enunciadoPreparado.setString(3,registro.getDuracionLLamada());
+				enunciadoPreparado.setString(4,registro.getFecha());
+				enunciadoPreparado.setString(5,registro.getHora());
+				enunciadoPreparado.setDouble(6,registro.getCostoDeLlamada());
+				SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+				enunciadoPreparado.setString(7,formatoFecha.format(Calendar.getInstance().getTime()).toString());
+				SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm:ss");
+				enunciadoPreparado.setString(8,formatoHora.format(Calendar.getInstance().getTime()).toString());
+				enunciadoPreparado.executeUpdate();
+				conexionBD.commit();
+				conexionBD.close();
+				System.out.println("CDR closed successfully");
+				enunciadoPreparado.close();
+			}
 		} catch ( Exception e ) {
 			System.out.println("entra al errror");
 			System.err.println( e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
+		
 		System.out.println("CDR created successfully");
 	}
 	
