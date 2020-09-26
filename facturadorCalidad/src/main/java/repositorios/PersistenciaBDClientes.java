@@ -121,8 +121,8 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 
 	@Override
 	public ArrayList<ClienteModelo> mostrarTablaClientes() {
+		ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
 		try {
-			ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
@@ -150,15 +150,15 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 		} catch ( Exception e ) {
 			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-			return null;
+			return clientesRecuperados;
 		}
 		
 	}
 
 	@Override
 	public ArrayList<ClienteModelo> mostrarTablaClientesConNumerosAmigos() {
+		ArrayList<ClienteModelo> numerosAmigos = new ArrayList<ClienteModelo>();
 		try {
-			ArrayList<ClienteModelo> numerosAmigos = new ArrayList<ClienteModelo>();
 			ArrayList<Integer> numeros = new ArrayList<Integer>();
 			Class.forName(ORG_SQLITE_JDBC);
 			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
@@ -189,7 +189,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 		} catch ( Exception e ) {
 			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-			return null;
+			return numerosAmigos;
 		}
 		
 	}
