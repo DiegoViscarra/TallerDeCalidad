@@ -47,10 +47,10 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 		try {
 			File documento = new File(nombreArchivo); 
 			String rutaActual = rutaCarpeta + documento.toString();
+			ArrayList<CDR> lecturaRegistros = new ArrayList<CDR>();
 			try(
 				FileInputStream archivoEntrada = new FileInputStream(rutaActual);
 				ObjectInputStream objetoEntrada = new ObjectInputStream(archivoEntrada);){
-				ArrayList<CDR> lecturaRegistros = new ArrayList<CDR>();
 				lecturaRegistros = (ArrayList<CDR>)objetoEntrada.readObject();
 				objetoEntrada.close();
 				return lecturaRegistros;
@@ -61,7 +61,8 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
         catch(ClassNotFoundException ex) {
         	System.out.println("Exception caught");
         }
-		return null;
+		ArrayList<CDR> lecturaRegistros = null;
+		return lecturaRegistros;
 	}
 	
 	private ArrayList<String> listarDirectorio() {
