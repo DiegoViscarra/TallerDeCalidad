@@ -61,7 +61,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			String sentenciaSQL = "INSERT INTO CLientes (nombre,ci,numeroTelefonico,tipoPlan,fechaRegistro)" + "values(?,?,?,?,?)";
 
 
-			PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);
+			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);){
 			
 			enunciadoPreparado.setString(1,cliente.getNombre());
 			enunciadoPreparado.setString(2,cliente.getCi());
@@ -70,7 +70,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 			enunciadoPreparado.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
 			
-			enunciadoPreparado.executeUpdate();
+			enunciadoPreparado.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
 			System.out.println("Clientes closed successfully");
@@ -93,7 +93,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			String sentenciaSQL = "INSERT INTO NumerosAmigos (numeroTelefonico,fechaRegistro,numeroAmigo1,numeroAmigo2,numeroAmigo3,numeroAmigo4)" + "values(?,?,?,?,?,?)";
 
 
-			PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);
+			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);){
 			
 			enunciadoPreparado.setInt(1,numeroTelefonico);
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
@@ -103,7 +103,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			enunciadoPreparado.setInt(5,numerosAmigos.get(2));
 			enunciadoPreparado.setInt(6,numerosAmigos.get(3));
 			
-			enunciadoPreparado.executeUpdate();
+			enunciadoPreparado.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
 			System.out.println("NumerosAmigos closed successfully");
@@ -125,7 +125,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			System.out.println("Opened Clientes successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
-			ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM Clientes;" );
+			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM Clientes;" );){
 
 			while ( resultadoConsulta.next() ) {
 				String nombre = resultadoConsulta.getString("nombre");
@@ -138,7 +138,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 				
 				clientesRecuperados.add(modelo);
 			}
-			resultadoConsulta.close();
+			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
 			System.out.println("selection done successfully");	
@@ -162,7 +162,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			System.out.println("Opened NumerosAmigos successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
-			ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM NumerosAmigos;" );
+			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM NumerosAmigos;" );){
 
 			while ( resultadoConsulta.next() ) {
 
@@ -177,7 +177,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 				
 				numerosAmigos.add(modelo);
 			}
-			resultadoConsulta.close();
+			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
 			System.out.println("selection done successfully");	
