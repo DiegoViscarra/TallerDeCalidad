@@ -24,11 +24,11 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
             File documento = new File(fechaDocumento + ".txt"); 
             String rutaActual = rutaCarpeta + documento.toString();
          
-            FileOutputStream archivoDeSalida = new FileOutputStream((rutaActual));
-			ObjectOutputStream objetoDeSalida = new ObjectOutputStream(archivoDeSalida);
+            try(FileOutputStream archivoDeSalida = new FileOutputStream((rutaActual));
+			ObjectOutputStream objetoDeSalida = new ObjectOutputStream(archivoDeSalida);){
 			objetoDeSalida.writeObject(registrosTelefonicos);
 			objetoDeSalida.close();
-			archivoDeSalida.close();
+			archivoDeSalida.close();}
 		} catch (IOException ex) {
 			System.out.println("Exception caught");
 		}	
