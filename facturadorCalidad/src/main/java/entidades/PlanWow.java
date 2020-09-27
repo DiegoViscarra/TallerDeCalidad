@@ -2,6 +2,7 @@ package entidades;
 
 import java.util.ArrayList;
 
+import casosDeUso.ComposedElements;
 import casosDeUso.IPlan;
 
 public class PlanWow implements IPlan{
@@ -14,7 +15,7 @@ public class PlanWow implements IPlan{
 		if(estaEntreNumerosAmigos(registro))
 			return 0;
 		else
-			return costoLlamada.calcularCosto("CALCULOSIMPLE", registro, this);
+			return ComposedElements.costoLlamada.calcularCosto("CALCULOSIMPLE", registro, this);
 	}
 
 	private boolean estaEntreNumerosAmigos(CDR registro) {
