@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 import casosDeUso.IPersistenciaBDCDR;
 import entidades.CDR;
@@ -15,9 +16,10 @@ import modelos.CDRModelo;
 public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	private static final String SQL_CLASS = "org.sqlite.JDBC";
 	private static final String CONNETTION_DB = "jdbc:sqlite:dbSQL.db;user=user&password=password";
+	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
-
+	
 	@Override
 	public void crearTabla() {
 		try {
@@ -39,7 +41,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			enunciadoSQL.close();
 			conexionBD.close();
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -50,7 +52,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			Class.forName(SQL_CLASS);
 			conexionBD = DriverManager.getConnection(CONNETTION_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened CDR successfully");
+			LOGGER.info("Opened CDR successfully");
 
 			String sentenciaSQL = "INSERT INTO CDR (numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,costo,fechaTarificacion,horaTarificacion)" + "values(?,?,?,?,?,?,?,?)";
 
@@ -69,16 +71,16 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 				enunciadoPreparado.executeUpdate();
 				conexionBD.commit();
 				conexionBD.close();
-				System.out.println("CDR closed successfully");
+				LOGGER.info("CDR closed successfully");
 				enunciadoPreparado.close();
 			}
 		} catch ( Exception e ) {
-			System.out.println("entra al errror");
-			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			LOGGER.info("entra al errror");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 		
-		System.out.println("CDR created successfully");
+		LOGGER.info("CDR created successfully");
 	}
 	
 	@Override
@@ -88,8 +90,8 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			Class.forName(SQL_CLASS);
 			conexionBD = DriverManager.getConnection(CONNETTION_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened CDR successfully");
-
+			LOGGER.info("Opened CDR successfully");
+			
 			enunciadoSQL = conexionBD.createStatement();
 			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery(sentenciaSQL)){
 				while ( resultadoConsulta.next() ) {
@@ -110,11 +112,11 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 				resultadoConsulta.close();
 				enunciadoSQL.close();
 				conexionBD.close();
-				System.out.println("selection done successfully");	
+				LOGGER.info("selection done successfully");
 				return registrosRecuperados;
 			}
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 			return null;
 		}
