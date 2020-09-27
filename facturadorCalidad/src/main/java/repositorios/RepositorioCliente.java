@@ -56,7 +56,8 @@ public class RepositorioCliente implements IRepositorioCliente{
 		int numeroTelefonico = 0;
 	    ArrayList<Integer>numerosAmigos = new ArrayList<Integer>();
 		String[] clientesDivididos = registroClientes.split("\\r?\\n|;");
-		for(int i=0; i<clientesDivididos.length; i++) {
+		int i=0;
+		while(i<clientesDivididos.length) {
 			ci = clientesDivididos[i]; i++;
 			numeroTelefonico = Integer.parseInt(clientesDivididos[i]);i++;
 			System.out.println(numeroTelefonico);
