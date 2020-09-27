@@ -16,7 +16,8 @@ public class RepositorioCDR implements IRepositorioCDR {
 		int numeroTelefonicoOrigen = 0, numeroTelefonicoDestino = 0;
 		String duracionDeLaLlamada = null, fecha = null, hora = null;
 		String[] registrosDivididos = registros.split("\\r?\\n|;");
-		for(int i=0;i<registrosDivididos.length;i++) {
+		int i =0;
+		while(i<registrosDivididos.length) {
 			numeroTelefonicoOrigen=Integer.parseInt(registrosDivididos[i]);i++;
 			numeroTelefonicoDestino=Integer.parseInt(registrosDivididos[i]);i++;
 			duracionDeLaLlamada=registrosDivididos[i];i++;
@@ -24,6 +25,7 @@ public class RepositorioCDR implements IRepositorioCDR {
 			hora=registrosDivididos[i];	
 			CDR nuevoCDR = new CDR(numeroTelefonicoOrigen, numeroTelefonicoDestino, duracionDeLaLlamada, fecha, hora);
 			registrosCargados.add(nuevoCDR);
+			i++;
 		}	
 	}
 	@Override

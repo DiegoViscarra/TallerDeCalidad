@@ -58,7 +58,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 		int numeroTelefonico = 0;
 	    ArrayList<Integer>numerosAmigos = new ArrayList<Integer>();
 		String[] clientesDivididos = registroClientes.split("\\r?\\n|;");
-		int i=0;
+		int i =0;
 		while(i<clientesDivididos.length) {
 			ci = clientesDivididos[i]; i++;
 			numeroTelefonico = Integer.parseInt(clientesDivididos[i]);i++;
@@ -69,6 +69,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 			plan = plan.trim();
 			Cliente cliente = registrarClienteEnBD(ci, nombre, plan, numeroTelefonico);
 			registrarClienteEnRepositorio(plan, numeroTelefonico, numerosAmigos, clientesDivididos, i, cliente);
+			i++;
 		}
 	}
 	private void registrarClienteEnRepositorio(String plan, int numeroTelefonico, ArrayList<Integer> numerosAmigos,
