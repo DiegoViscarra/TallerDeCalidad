@@ -18,13 +18,14 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
 public class ControladorCDRs {
-	private static final String _CLAVEPERSISTENCIABASEDEDATOS = "BASEDEDATOS";
-	private static final String _CLAVEPERSISTENCIAARCHIVOS = "SERIALIZAR";
-	private static String modoPersistencia = _CLAVEPERSISTENCIAARCHIVOS;
-	private static int contadorPersistenciaBD = 0;
-	public static ITarificacion tarificacion;
-	public static IPersistencia persistencia;
-	public static IRegistroCDR registroCDR;
+	private static final String CONFIGURACION = "configuracion";
+	private static final String CLAVEPERSISTENCIABASEDEDATOS = "BASEDEDATOS";
+	private static final String CLAVEPERSISTENCIAARCHIVOS = "SERIALIZAR";
+	private static String modoPersistencia = CLAVEPERSISTENCIAARCHIVOS;
+	private int contadorPersistenciaBD = 0;
+	private ITarificacion tarificacion = null;
+	private IPersistencia persistencia = null;
+	private IRegistroCDR registroCDR = null;
 	public ControladorCDRs(ITarificacion tarificacion, IPersistencia persistencia, IRegistroCDR registroCDR) {
 		this.tarificacion = tarificacion;
 		this.persistencia = persistencia;
@@ -33,19 +34,19 @@ public class ControladorCDRs {
         {
         	Map<String, Object> modelo = new HashMap<>();
         	modelo.put("modoPersistencia", modoPersistencia);
-        	modelo.put("registrosTarificados", devolverRegistrosTarificados());
+        	modelo.put("registrosTarificados", devolverRegistrosTarificados(this.tarificacion, this.registroCDR));
         	contadorPersistenciaBD = 0;
         	return new VelocityTemplateEngine().render(new ModelAndView(modelo, "velocity/registros/registrosDeCDRSTarificados.vm"));
         });
 		get("/registrosRecuperados", (request, response) ->
         {
         	Map<String, Object> model = new HashMap<>();
-        	if(modoPersistencia == _CLAVEPERSISTENCIAARCHIVOS) {
-            	model.put("registrosDeserializados", deserializarTodosLosArchivos());
+        	if(modoPersistencia == CLAVEPERSISTENCIAARCHIVOS) {
+            	model.put("registrosDeserializados", deserializarTodosLosArchivos(this.persistencia));
             	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/registros/registrosDeCDRSDeserializados.vm"));
         	}
         	else {
-        		model.put("registrosRecuperados", devolverDeBDCDRModelo());
+        		model.put("registrosRecuperados", devolverDeBDCDRModelo(this.persistencia));
         		return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/registros/registrosDeCDRSRecuperados.vm"));        		
         	}
         });
@@ -53,24 +54,24 @@ public class ControladorCDRs {
 		get("/configuracion", (request, response) ->
         {
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
-        	if(modoPersistencia == _CLAVEPERSISTENCIABASEDEDATOS)
+        	model.put(CONFIGURACION, true);
+        	if(modoPersistencia == CLAVEPERSISTENCIABASEDEDATOS)
         		return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/db.vm"));
         	else
         		return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/archivo.vm"));
         });
         get("/configuracion/baseDeDatos", (request, response) ->
         {
-        	modoPersistencia = _CLAVEPERSISTENCIABASEDEDATOS;
+        	modoPersistencia = CLAVEPERSISTENCIABASEDEDATOS;
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
+        	model.put(CONFIGURACION, true);
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/db.vm"));
         });
         get("/configuracion/archivo", (request, response) ->
         {
-        	modoPersistencia = _CLAVEPERSISTENCIAARCHIVOS;
+        	modoPersistencia = CLAVEPERSISTENCIAARCHIVOS;
         	Map<String, Object> model = new HashMap<>();
-        	model.put("configuracion", true);
+        	model.put(CONFIGURACION, true);
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/configuracion/archivo.vm"));
         });
         
@@ -79,53 +80,53 @@ public class ControladorCDRs {
         	guardarDeAcuerdoAModoPersistencia();
         	Map<String, Object> model = new HashMap<>();
         	model.put("modoPersistencia", modoPersistencia);
-        	model.put("registrosTarificados", devolverRegistrosTarificados());
+        	model.put("registrosTarificados", devolverRegistrosTarificados(tarificacion, registroCDR));
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/registros/registrosDeCDRSTarificados.vm"));
         });
         
         post("/filtrar", (request, response) -> {
         	Map<String, Object> model = new HashMap<>();
-        	model.put("registrosRecuperados", devolverCDRModeloFiltrado(request.queryParams("fecha").toString()));
+        	model.put("registrosRecuperados", devolverCDRModeloFiltrado(request.queryParams("fecha").toString(), persistencia));
         	return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/registros/registrosDeCDRSRecuperados.vm"));
         });
 	}
 
 	private void guardarDeAcuerdoAModoPersistencia() {
-		if(modoPersistencia == _CLAVEPERSISTENCIABASEDEDATOS)
+		if(modoPersistencia != null && modoPersistencia.equals(CLAVEPERSISTENCIABASEDEDATOS))
 		{
 			contadorPersistenciaBD++;
 			if(contadorPersistenciaBD <=1)        		
-				guardarEnBD();
+				guardarEnBD(persistencia, tarificacion, registroCDR);
 		}
-		if(modoPersistencia == _CLAVEPERSISTENCIAARCHIVOS)
-			guardarEnArchivoDeTexto();
+		if(modoPersistencia != null && modoPersistencia.equals(CLAVEPERSISTENCIAARCHIVOS))
+			guardarEnArchivoDeTexto(persistencia, tarificacion, registroCDR);
 	}
 	
-	public static ArrayList<Pair<String,ArrayList<CDR>>> deserializarTodosLosArchivos() {
+	public static ArrayList<Pair<String,ArrayList<CDR>>> deserializarTodosLosArchivos(IPersistencia persistencia) {
     	return persistencia.deserializarArchivos();
     }
 	
-	private static ArrayList<CDRModelo> devolverDeBDCDRModelo() {
+	private static ArrayList<CDRModelo> devolverDeBDCDRModelo(IPersistencia persistencia) {
     	return persistencia.mostrarDeBDCDRs();
     }
 	
-	public static void guardarEnBD() {
-    	persistencia.persistirEnBDCdr(devolverRegistrosTarificados());
+	public static void guardarEnBD(IPersistencia persistencia, ITarificacion tarificacion, IRegistroCDR registroCDR) {
+		persistencia.persistirEnBDCdr(devolverRegistrosTarificados(tarificacion, registroCDR));
     }
     
-    public static void guardarEnArchivoDeTexto() {
-    	persistencia.persistirEnArchivo(devolverRegistrosTarificados());
+    public static void guardarEnArchivoDeTexto(IPersistencia persistencia, ITarificacion tarificacion, IRegistroCDR registroCDR ) {
+    	persistencia.persistirEnArchivo(devolverRegistrosTarificados(tarificacion, registroCDR));
     }
     
-    private static ArrayList<CDR> devolverRegistrosTarificados() {
-    	return tarificacion.tarificarRegistros(devolverRegistrosNoTarificados());
+    private static ArrayList<CDR> devolverRegistrosTarificados(ITarificacion tarificacion, IRegistroCDR registroCDR) {
+    	return tarificacion.tarificarRegistros(devolverRegistrosNoTarificados(registroCDR));
     }
     
-    private static ArrayList<CDR> devolverRegistrosNoTarificados() {
+    private static ArrayList<CDR> devolverRegistrosNoTarificados(IRegistroCDR registroCDR) {
     	return registroCDR.obtenerRegistrosNoTarificados();
     }
     
-    private static ArrayList<CDRModelo> devolverCDRModeloFiltrado(String fecha) {
+    private static ArrayList<CDRModelo> devolverCDRModeloFiltrado(String fecha, IPersistencia persistencia) {
     	return persistencia.mostrarDeBDCDRsFiltradosPor(fecha);
     }
     

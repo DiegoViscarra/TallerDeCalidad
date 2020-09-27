@@ -12,23 +12,23 @@ import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
 public class ControladorClientes {
-	private static IPersistencia persistencia;
-	protected ControladorClientes(IPersistencia persistencia) {
+	private IPersistencia persistencia;
+	ControladorClientes(IPersistencia persistencia) {
 		this.persistencia = persistencia;
 		get("/clientes", (request, response) -> 
         {
         	Map<String, Object> modelo = new HashMap<>();
-        	modelo.put("clientes", devolverClientesDeBD());
-        	modelo.put("amigos", devolverClientesConNumerosAmigosDeBD());
+        	modelo.put("clientes", devolverClientesDeBD(this.persistencia));
+        	modelo.put("amigos", devolverClientesConNumerosAmigosDeBD(this.persistencia));
         	return new VelocityTemplateEngine().render(new ModelAndView(modelo, "velocity/clientes/clientesRegistrados.vm"));
         });
 	}
 	
-	public static ArrayList<ClienteModelo> devolverClientesDeBD(){
+	public static ArrayList<ClienteModelo> devolverClientesDeBD(IPersistencia persistencia){
     	return persistencia.mostrarDeBDClientes();
     }
 	
-	public static ArrayList<ClienteModelo> devolverClientesConNumerosAmigosDeBD(){
+	public static ArrayList<ClienteModelo> devolverClientesConNumerosAmigosDeBD(IPersistencia persistencia){
     	return persistencia.mostrarDeBDClientesAmigos();
     }
     

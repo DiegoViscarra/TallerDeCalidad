@@ -4,11 +4,11 @@ import entidades.CDR;
 
 public class ObtenerMontoTarifa {
 
-	private static final double _TARIFANORMALWOW = 0.99;
-	private static final int _TARIFAFIJAPOSTPAGO = 1;
-	private static final double _TARIFAHORARIOSUPERREDUCIDO = 0.70;
-	private static final double _TARIFAHORARIOREDUCIDO = 0.95;
-	private static final double _TARIFAHORARIONORMAL = 1.45;
+	private static final double TARIFANORMALWOW = 0.99;
+	private static final int TARIFAFIJAPOSTPAGO = 1;
+	private static final double TARIFAHORARIOSUPERREDUCIDO = 0.70;
+	private static final double TARIFAHORARIOREDUCIDO = 0.95;
+	private static final double TARIFAHORARIONORMAL = 1.45;
 
 	
 	public double obtenerMontoTarifa(String tipoPlan, CDR registro) {
@@ -34,20 +34,20 @@ public class ObtenerMontoTarifa {
 		double tarifa = 0;
 		int hora = Integer.parseInt(registro.getHora().split(":")[0]);
 		if(estaEnHorarioNormal(hora))
-			tarifa = _TARIFAHORARIONORMAL;
+			tarifa = TARIFAHORARIONORMAL;
 		if(estaEnHorarioReducido(hora))
-			tarifa = _TARIFAHORARIOREDUCIDO;
+			tarifa = TARIFAHORARIOREDUCIDO;
 		if(estaEnHorarioSuperReducido(hora))
-			tarifa = _TARIFAHORARIOSUPERREDUCIDO;
+			tarifa = TARIFAHORARIOSUPERREDUCIDO;
 		return tarifa;
 	} 
 
 	private double obtenerMontoTarifaWow() {
-		return _TARIFANORMALWOW;
+		return TARIFANORMALWOW;
 	}
 
 	private double obtenerMontoTarifaPostpago() {
-		return _TARIFAFIJAPOSTPAGO;
+		return TARIFAFIJAPOSTPAGO;
 	}
 	
 	private boolean estaEnHorarioSuperReducido(int hora) {

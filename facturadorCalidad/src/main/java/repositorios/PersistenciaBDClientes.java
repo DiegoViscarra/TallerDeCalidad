@@ -8,21 +8,25 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 import casosDeUso.IPersistenciaBDClientes;
 import entidades.Cliente;
 import modelos.ClienteModelo;
 
 public class PersistenciaBDClientes implements IPersistenciaBDClientes {
+	private static final String JDBC_SQLITE_DB_SQL_DB = "jdbc:sqlite:dbSQL.db;user=user&password=password";
+	private static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
+	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 	
 	@Override
 	public void crearTabla() {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
-
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
+			
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQLClientes = "CREATE TABLE IF NOT EXISTS Clientes " +
 					"(nombre CHAR(30)     NOT NULL," +
@@ -45,7 +49,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			enunciadoSQL.close();
 			conexionBD.close();
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
 	}
@@ -53,79 +57,75 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	@Override
 	public void poblarTablaClientes(Cliente cliente) {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened Clientes successfully");
+			LOGGER.info("Opened Clientes successfully");
 
 			String sentenciaSQL = "INSERT INTO CLientes (nombre,ci,numeroTelefonico,tipoPlan,fechaRegistro)" + "values(?,?,?,?,?)";
 
 
-			PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);
-			
-			enunciadoPreparado.setString(1,cliente.getNombre());
-			enunciadoPreparado.setString(2,cliente.getCi());
-			enunciadoPreparado.setInt(3,cliente.getNumeroTelefonico());
-			enunciadoPreparado.setString(4,cliente.getTipoPlan());
+			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){
+			enunciadoPreparadoClientes.setString(1,cliente.getNombre());
+			enunciadoPreparadoClientes.setString(2,cliente.getCi());
+			enunciadoPreparadoClientes.setInt(3,cliente.getNumeroTelefonico());
+			enunciadoPreparadoClientes.setString(4,cliente.getTipoPlan());
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-			enunciadoPreparado.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
-			
-			enunciadoPreparado.executeUpdate();
+			enunciadoPreparadoClientes.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
+			enunciadoPreparadoClientes.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
-			System.out.println("Clientes closed successfully");
+			LOGGER.info("Clientes closed successfully");
 		} catch ( Exception e ) {
-			System.out.println("entra al errror");
-			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			LOGGER.info("entra al errror");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Clientes created successfully");
+		LOGGER.info("Clientes created successfully");
 	}
 	
 	@Override
 	public void poblarTablaClientesConNumerosAmigos(ArrayList<Integer> numerosAmigos, int numeroTelefonico) {
 		try {
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened numerosAmigos successfully");
-
+			LOGGER.info("Opened numerosAmigos successfully");
+			
 			String sentenciaSQL = "INSERT INTO NumerosAmigos (numeroTelefonico,fechaRegistro,numeroAmigo1,numeroAmigo2,numeroAmigo3,numeroAmigo4)" + "values(?,?,?,?,?,?)";
 
 
-			PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL);
-			
-			enunciadoPreparado.setInt(1,numeroTelefonico);
+			try(PreparedStatement enunciadoPreparadoClientesConAmigos = conexionBD.prepareStatement(sentenciaSQL);){
+			enunciadoPreparadoClientesConAmigos.setInt(1,numeroTelefonico);
 			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
-			enunciadoPreparado.setString(2,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
-			enunciadoPreparado.setInt(3,numerosAmigos.get(0));
-			enunciadoPreparado.setInt(4,numerosAmigos.get(1));
-			enunciadoPreparado.setInt(5,numerosAmigos.get(2));
-			enunciadoPreparado.setInt(6,numerosAmigos.get(3));
-			
-			enunciadoPreparado.executeUpdate();
+			enunciadoPreparadoClientesConAmigos.setString(2,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());
+			enunciadoPreparadoClientesConAmigos.setInt(3,numerosAmigos.get(0));
+			enunciadoPreparadoClientesConAmigos.setInt(4,numerosAmigos.get(1));
+			enunciadoPreparadoClientesConAmigos.setInt(5,numerosAmigos.get(2));
+			enunciadoPreparadoClientesConAmigos.setInt(6,numerosAmigos.get(3));
+			enunciadoPreparadoClientesConAmigos.executeUpdate();}
 			conexionBD.commit();
 			conexionBD.close();
-			System.out.println("NumerosAmigos closed successfully");
+			LOGGER.info("NumerosAmigos closed successfully");
 		} catch ( Exception e ) {
-			System.out.println("entra al errror");
-			System.err.println( e.getClass().getName() + ": " + e.getMessage());
+			LOGGER.info("entra al errror");
+			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("NumerosAmigos created successfully");
+		LOGGER.info("NumerosAmigos created successfully");
 	}
 
 	@Override
 	public ArrayList<ClienteModelo> mostrarTablaClientes() {
+		ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
 		try {
-			ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened Clientes successfully");
+			LOGGER.info("Opened Clientes successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
-			ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM Clientes;" );
+			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM Clientes;" );){
 
 			while ( resultadoConsulta.next() ) {
 				String nombre = resultadoConsulta.getString("nombre");
@@ -138,31 +138,31 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 				
 				clientesRecuperados.add(modelo);
 			}
-			resultadoConsulta.close();
+			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
-			System.out.println("selection done successfully");	
+			LOGGER.info("selection done successfully");	
 			return clientesRecuperados;
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-			return null;
+			return clientesRecuperados;
 		}
 		
 	}
 
 	@Override
 	public ArrayList<ClienteModelo> mostrarTablaClientesConNumerosAmigos() {
+		ArrayList<ClienteModelo> numerosAmigos = new ArrayList<ClienteModelo>();
 		try {
-			ArrayList<ClienteModelo> numerosAmigos = new ArrayList<ClienteModelo>();
 			ArrayList<Integer> numeros = new ArrayList<Integer>();
-			Class.forName("org.sqlite.JDBC");
-			conexionBD = DriverManager.getConnection("jdbc:sqlite:dbSQL.db");
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(JDBC_SQLITE_DB_SQL_DB);
 			conexionBD.setAutoCommit(false);
-			System.out.println("Opened NumerosAmigos successfully");
+			LOGGER.info("Opened NumerosAmigos successfully");
 
 			enunciadoSQL = conexionBD.createStatement();
-			ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM NumerosAmigos;" );
+			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( "SELECT * FROM NumerosAmigos;" );){
 
 			while ( resultadoConsulta.next() ) {
 
@@ -177,15 +177,15 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 				
 				numerosAmigos.add(modelo);
 			}
-			resultadoConsulta.close();
+			resultadoConsulta.close();}
 			enunciadoSQL.close();
 			conexionBD.close();
-			System.out.println("selection done successfully");	
+			LOGGER.info("selection done successfully");	
 			return numerosAmigos;
 		} catch ( Exception e ) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-			return null;
+			return numerosAmigos;
 		}
 		
 	}

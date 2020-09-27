@@ -11,7 +11,7 @@ import modelos.CDRModelo;
 import modelos.FacturaModelo;
 
 public class ControladorFacturacion {
-	private static IPersistencia persistencia;
+	private IPersistencia persistencia;
 	public static Gson gson = new Gson();
 	ControladorFacturacion(IPersistencia persistencia){
 		this.persistencia = persistencia;
@@ -19,12 +19,12 @@ public class ControladorFacturacion {
         {
 			Integer numeroTelefonico= Integer.parseInt(request.params(":numeroTelefonico"));
 			String mes = request.params(":mes");
-			return gson.toJson(devolverFacturaDeUnMesDeUnCliente(numeroTelefonico,mes));
+			return gson.toJson(devolverFacturaDeUnMesDeUnCliente(numeroTelefonico,mes, this.persistencia));
 			
         });
 	}
 	
-	public static FacturaModelo devolverFacturaDeUnMesDeUnCliente(Integer numeroTelefonico, String mes) {
+	public static FacturaModelo devolverFacturaDeUnMesDeUnCliente(Integer numeroTelefonico, String mes, IPersistencia persistencia) {
     	return persistencia.obtenerFacturaDeMesParaCliente(numeroTelefonico, mes);
     }
 }

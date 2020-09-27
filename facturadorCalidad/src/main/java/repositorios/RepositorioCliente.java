@@ -1,6 +1,7 @@
 package repositorios;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,6 +11,7 @@ import casosDeUso.IRepositorioCliente;
 import entidades.Cliente;
 
 public class RepositorioCliente implements IRepositorioCliente{
+	private final static Logger LOGGER = Logger.getLogger(RepositorioCliente.class.getName());
 	private ArrayList<Cliente> clientesRegistrados = new ArrayList<Cliente>();
 	private FactoriaPlan factoria = new FactoriaPlan();
 	IPersistencia persistencia;
@@ -56,15 +58,18 @@ public class RepositorioCliente implements IRepositorioCliente{
 		int numeroTelefonico = 0;
 	    ArrayList<Integer>numerosAmigos = new ArrayList<Integer>();
 		String[] clientesDivididos = registroClientes.split("\\r?\\n|;");
-		for(int i=0; i<clientesDivididos.length; i++) {
+		int i =0;
+		while(i<clientesDivididos.length) {
 			ci = clientesDivididos[i]; i++;
 			numeroTelefonico = Integer.parseInt(clientesDivididos[i]);i++;
-			System.out.println(numeroTelefonico);
+			String message=String.valueOf(numeroTelefonico);
+			LOGGER.fine(message);
 			nombre = clientesDivididos[i];i++;
 			plan = clientesDivididos[i].toUpperCase(); i++;
-			plan.trim();
+			plan = plan.trim();
 			Cliente cliente = registrarClienteEnBD(ci, nombre, plan, numeroTelefonico);
 			registrarClienteEnRepositorio(plan, numeroTelefonico, numerosAmigos, clientesDivididos, i, cliente);
+			i++;
 		}
 	}
 	private void registrarClienteEnRepositorio(String plan, int numeroTelefonico, ArrayList<Integer> numerosAmigos,
