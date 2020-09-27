@@ -118,7 +118,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		} catch ( Exception e ) {
 			LOGGER.severe( e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
-			return null;
+			return new ArrayList<CDRModelo>();
 		}
 		
 	}
