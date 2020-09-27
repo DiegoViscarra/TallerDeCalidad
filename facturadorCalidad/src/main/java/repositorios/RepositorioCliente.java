@@ -1,6 +1,7 @@
 package repositorios;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,6 +11,7 @@ import casosDeUso.IRepositorioCliente;
 import entidades.Cliente;
 
 public class RepositorioCliente implements IRepositorioCliente{
+	private final static Logger LOGGER = Logger.getLogger(RepositorioCliente.class.getName());
 	private ArrayList<Cliente> clientesRegistrados = new ArrayList<Cliente>();
 	private FactoriaPlan factoria = new FactoriaPlan();
 	IPersistencia persistencia;
@@ -60,7 +62,8 @@ public class RepositorioCliente implements IRepositorioCliente{
 		while(i<clientesDivididos.length) {
 			ci = clientesDivididos[i]; i++;
 			numeroTelefonico = Integer.parseInt(clientesDivididos[i]);i++;
-			System.out.println(numeroTelefonico);
+			String message=String.valueOf(numeroTelefonico);
+			LOGGER.fine(message);
 			nombre = clientesDivididos[i];i++;
 			plan = clientesDivididos[i].toUpperCase(); i++;
 			plan.trim();
