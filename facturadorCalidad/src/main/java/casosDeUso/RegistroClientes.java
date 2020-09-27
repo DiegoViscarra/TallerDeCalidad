@@ -57,11 +57,12 @@ public class RegistroClientes implements IRegistroClientes {
 	}
 	
 	ArrayList<Integer> buscarRegistroAmigos(Integer numeroCliente, ArrayList<ClienteModelo> clientesAmigos){
+		ArrayList<Integer> numerosAmigos = null;
 		for(ClienteModelo cliente:clientesAmigos) {
 			if(coincidenEnNumeroTelefonico(numeroCliente, cliente))
-				return cliente.getNumerosAmigos();
+				numerosAmigos = cliente.getNumerosAmigos();
 		}
-		return null;
+		return numerosAmigos;
 	}
 
 	private boolean coincidenEnNumeroTelefonico(Integer numeroCliente, ClienteModelo cliente) {
