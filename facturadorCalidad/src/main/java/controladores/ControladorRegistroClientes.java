@@ -20,13 +20,13 @@ import spark.template.velocity.VelocityTemplateEngine;
 import spark.utils.IOUtils;
 
 public class ControladorRegistroClientes {
-	private static IRegistroClientes registroClientes;
+	private IRegistroClientes registroClientes;
 	public ControladorRegistroClientes(IRegistroClientes registroClientes) {
-		ControladorRegistroClientes.registroClientes = registroClientes;
+		this.registroClientes = registroClientes;
 		get("/cargarClientes", (request, response) -> 
         {
         	Map<String, Object> modelo = new HashMap<>();
-        	modelo.put("clientes", devolverClientes());
+        	modelo.put("clientes", devolverClientes(this.registroClientes));
         	return new VelocityTemplateEngine().render(new ModelAndView(modelo, "velocity/clientes/vistaPreviaDeClientesCargados.vm"));
         });
 		
@@ -43,7 +43,7 @@ public class ControladorRegistroClientes {
         		e.printStackTrace();
         	}
         	Map<String, Object> model = new HashMap<>();
-        	model.put("clientesCargados", devolverClientes());
+        	model.put("clientesCargados", devolverClientes(this.registroClientes));
             return new VelocityTemplateEngine().render(new ModelAndView(model, "velocity/clientes/vistaPreviaDeClientesCargados.vm"));
         });
 	}
@@ -59,7 +59,7 @@ public class ControladorRegistroClientes {
 		registroClientes.guardarClientesCargados(clientesCargadosEnCadena);
 	}
 	
-	private static Object devolverClientes() {
+	private static Object devolverClientes(IRegistroClientes registroClientes) {
 		   return registroClientes.devolverClientes();
 		}
 
