@@ -105,7 +105,9 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 					String horaTarificacion = resultadoConsulta.getString("horaTarificacion");
 					int id = resultadoConsulta.getInt("id");
 					
-					CDRModelo modelo = new CDRModelo(id, numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,fechaTarificacion,costo,horaTarificacion);
+					CDRModelo modelo = new CDRModelo(id);
+				    modelo.setDatosBasicosCDR(numeroTelefonoOrigen, numeroTelefonoDestino);
+				    modelo.setDatosAvanzadosCDR(duracionLlamada, fecha, hora, fechaTarificacion, costo, horaTarificacion);
 					
 					registrosRecuperados.add(modelo);
 				}
