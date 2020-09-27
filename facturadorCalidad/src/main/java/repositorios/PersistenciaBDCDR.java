@@ -26,15 +26,15 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQL = "CREATE TABLE IF NOT EXISTS CDR " +
-					"( id INTEGER PRIMARY KEY NOT NULL," + 
-					"numeroTelefonoOrigen INT     NOT NULL," +
-					" numeroTelefonoDestino            INT     NOT NULL, " + 
-					" duracionLlamada        CHAR(20)    NOT NULL, " + 
-					" fecha         CHAR(20)    NOT NULL,"+
-					" hora          CHAR(20)    NOT NULL," +
-					" costo			DOUBLE		NOT NULL," +
-					"fechaTarificacion CHAR(20) NOT NULL,"+
-					"horaTarificacion CHAR(20)  NOT NULL)";
+					"( id\tINTEGER\tPRIMARY KEY\tNOT NULL," + 
+					"numeroTelefonoOrigen\tINT\tNOT NULL," +
+					" numeroTelefonoDestino\tINT\tNOT NULL, " + 
+					" duracionLlamada\tCHAR(20)\tNOT NULL, " + 
+					" fecha\tCHAR(20)\tNOT NULL,"+
+					" hora\tCHAR(20)\tNOT NULL," +
+					" costo\tDOUBLE\tNOT NULL," +
+					"fechaTarificacion\tCHAR(20)\tNOT NULL,"+
+					"horaTarificacion\tCHAR(20)\tNOT NULL)";
 			enunciadoSQL.executeUpdate(sentenciaSQL);
 			enunciadoSQL.close();
 			conexionBD.close();
