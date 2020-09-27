@@ -22,13 +22,13 @@ import spark.template.velocity.VelocityTemplateEngine;
 import spark.utils.IOUtils;
 
 public class ControladorCargaCDRs {
-	public static IRegistroCDR registroCDR;
+	private IRegistroCDR registroCDR;
 	public ControladorCargaCDRs(IRegistroCDR registroCDR) {
 		this.registroCDR = registroCDR;
 		get("/registrosCargados", (request, response) ->
         {
         	Map<String, Object> modelo = new HashMap<>();
-        	modelo.put("registrosCargados", devolverRegistrosCargados());
+        	modelo.put("registrosCargados", devolverRegistrosCargados(this.registroCDR));
         	return new VelocityTemplateEngine().render(new ModelAndView(modelo, "velocity/registros/vistaPreviaDeCDRSCargados.vm"));
         });
         
@@ -45,7 +45,7 @@ public class ControladorCargaCDRs {
         		e.printStackTrace();
         	}
         	Map<String, Object> modelo = new HashMap<>();
-        	modelo.put("registrosCargados", devolverRegistrosCargados());
+        	modelo.put("registrosCargados", devolverRegistrosCargados(this.registroCDR));
         	modelo.put("Title","CDRs Cargados");
             return new VelocityTemplateEngine().render(new ModelAndView(modelo, "velocity/registros/vistaPreviaDeCDRSCargados.vm"));
 
@@ -66,7 +66,7 @@ public class ControladorCargaCDRs {
 	
 
 
-	private static ArrayList<CDR> devolverRegistrosCargados() {
+	private static ArrayList<CDR> devolverRegistrosCargados(IRegistroCDR registroCDR) {
     	return registroCDR.obtenerRegistrosNoTarificados();
     }
 }
