@@ -69,6 +69,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 			plan.trim();
 			Cliente cliente = registrarClienteEnBD(ci, nombre, plan, numeroTelefonico);
 			registrarClienteEnRepositorio(plan, numeroTelefonico, numerosAmigos, clientesDivididos, i, cliente);
+			i++;
 		}
 	}
 	private void registrarClienteEnRepositorio(String plan, int numeroTelefonico, ArrayList<Integer> numerosAmigos,
