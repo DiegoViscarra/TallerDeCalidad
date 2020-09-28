@@ -15,7 +15,7 @@ import modelos.CDRModelo;
 
 public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	private static final String SQL_CLASS = "org.sqlite.JDBC";
-	private static final String CONNETTION_DB = "jdbc:sqlite:dbSQL.db;user=user&password=password";
+	private static final ConnectionDB connectionDB= new ConnectionDB();
 	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
 	Connection conexionBD = null;
 	Statement enunciadoSQL = null;
@@ -24,7 +24,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void crearTabla() {
 		try {
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(CONNETTION_DB);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
 
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQL = "CREATE TABLE IF NOT EXISTS CDR " +
@@ -50,7 +50,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void poblarTabla(CDR registro) {
 		try {
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(CONNETTION_DB);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened CDR successfully");
 
@@ -88,7 +88,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		try {
 			ArrayList<CDRModelo> registrosRecuperados = new ArrayList<CDRModelo>();
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(CONNETTION_DB);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened CDR successfully");
 			
