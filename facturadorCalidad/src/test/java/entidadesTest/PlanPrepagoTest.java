@@ -1,12 +1,14 @@
-package entidades;
+package entidadesTest;
 
 import org.testng.annotations.Test;
 
+import entidades.CDR;
+import entidades.PlanPrepago;
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeMethod;
 
-public class TestPlanPrepago {
+public class PlanPrepagoTest {
 	PlanPrepago planPrepago;
 
 	@Test
