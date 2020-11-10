@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="24" passed="24" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2020-11-10T18:11:54 BOT" name="Default suite" finished-at="2020-11-10T18:11:54 BOT" duration-ms="64">
+    <groups>
+    </groups>
+    <test started-at="2020-11-10T18:11:54 BOT" name="Default test" finished-at="2020-11-10T18:11:54 BOT" duration-ms="64">
+      <class name="entidadesTest.PlanWowTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:entidadesTest.PlanWowTest@273e7444]" started-at="2020-11-10T18:11:54 BOT" name="init" finished-at="2020-11-10T18:11:54 BOT" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="calculatePriceCallBelongsToFriends()[pri:0, instance:entidadesTest.PlanWowTest@273e7444]" started-at="2020-11-10T18:11:54 BOT" name="calculatePriceCallBelongsToFriends" finished-at="2020-11-10T18:11:54 BOT" duration-ms="4" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- calculatePriceCallBelongsToFriends -->
+        <test-method is-config="true" signature="init()[pri:0, instance:entidadesTest.PlanWowTest@273e7444]" started-at="2020-11-10T18:11:54 BOT" name="init" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="calculatePriceExternalNumber()[pri:0, instance:entidadesTest.PlanWowTest@273e7444]" started-at="2020-11-10T18:11:54 BOT" name="calculatePriceExternalNumber" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- calculatePriceExternalNumber -->
+      </class> <!-- entidadesTest.PlanWowTest -->
+      <class name="modelosTest.FacturaModeloTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:modelosTest.FacturaModeloTest@7db12bb6]" started-at="2020-11-10T18:11:54 BOT" name="init" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="mesTest()[pri:0, instance:modelosTest.FacturaModeloTest@7db12bb6]" started-at="2020-11-10T18:11:54 BOT" name="mesTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- mesTest -->
+        <test-method is-config="true" signature="init()[pri:0, instance:modelosTest.FacturaModeloTest@7db12bb6]" started-at="2020-11-10T18:11:54 BOT" name="init" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="numeroTelefonicoTest()[pri:0, instance:modelosTest.FacturaModeloTest@7db12bb6]" started-at="2020-11-10T18:11:54 BOT" name="numeroTelefonicoTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- numeroTelefonicoTest -->
+      </class> <!-- modelosTest.FacturaModeloTest -->
+      <class name="entidadesTest.UserTest">
+        <test-method is-config="true" signature="init()[pri:0, instance:entidadesTest.UserTest@783a467b]" started-at="2020-11-10T18:11:54 BOT" name="init" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method signature="userNameTest()[pri:0, instance:entidadesTest.UserTest@783a467b]" started-at="2020-11-10T18:11:54 BOT" name="userNameTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userNameTest -->
+        <test-method signature="userPasswordTest()[pri:0, instance:entidadesTest.UserTest@783a467b]" started-at="2020-11-10T18:11:54 BOT" name="userPasswordTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userPasswordTest -->
+      </class> <!-- entidadesTest.UserTest -->
+      <class name="CDRTest">
+        <test-method signature="asignarCostoYConseguirCostoDeLlamadaTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="asignarCostoYConseguirCostoDeLlamadaTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- asignarCostoYConseguirCostoDeLlamadaTest -->
+        <test-method signature="conseguirDuracionDeLlamadaTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conseguirDuracionDeLlamadaTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirDuracionDeLlamadaTest -->
+        <test-method signature="conseguirFechaDeLlamadaTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conseguirFechaDeLlamadaTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirFechaDeLlamadaTest -->
+        <test-method signature="conseguirHoraDeLlamadaTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conseguirHoraDeLlamadaTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirHoraDeLlamadaTest -->
+        <test-method signature="conseguirNumeroDeTelefonoDeDestinoTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNumeroDeTelefonoDeDestinoTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNumeroDeTelefonoDeDestinoTest -->
+        <test-method signature="conseguirNumeroDeTelefonoDeOrigenTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNumeroDeTelefonoDeOrigenTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNumeroDeTelefonoDeOrigenTest -->
+        <test-method signature="conversiónDeTiempoDeLlamadaADecimalTest()[pri:0, instance:CDRTest@272113c4]" started-at="2020-11-10T18:11:54 BOT" name="conversiónDeTiempoDeLlamadaADecimalTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conversiónDeTiempoDeLlamadaADecimalTest -->
+      </class> <!-- CDRTest -->
+      <class name="ClienteTest">
+        <test-method signature="asignarNumeroTelefonicoYConseguirNumeroTelefonicoTest()[pri:0, instance:ClienteTest@73e9cf30]" started-at="2020-11-10T18:11:54 BOT" name="asignarNumeroTelefonicoYConseguirNumeroTelefonicoTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- asignarNumeroTelefonicoYConseguirNumeroTelefonicoTest -->
+        <test-method signature="asignarPlanYConseguirPlanTest()[pri:0, instance:ClienteTest@73e9cf30]" started-at="2020-11-10T18:11:54 BOT" name="asignarPlanYConseguirPlanTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- asignarPlanYConseguirPlanTest -->
+        <test-method signature="asignarTipoDePlanYConseguirTipoDePlanTest()[pri:0, instance:ClienteTest@73e9cf30]" started-at="2020-11-10T18:11:54 BOT" name="asignarTipoDePlanYConseguirTipoDePlanTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- asignarTipoDePlanYConseguirTipoDePlanTest -->
+        <test-method signature="conseguirCiTest()[pri:0, instance:ClienteTest@73e9cf30]" started-at="2020-11-10T18:11:54 BOT" name="conseguirCiTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirCiTest -->
+        <test-method signature="conseguirNombreTest()[pri:0, instance:ClienteTest@73e9cf30]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNombreTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNombreTest -->
+      </class> <!-- ClienteTest -->
+      <class name="modelosTest.ClienteModeloTest">
+        <test-method signature="conseguirCiTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirCiTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirCiTest -->
+        <test-method signature="conseguirFechaDeRegistroTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirFechaDeRegistroTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirFechaDeRegistroTest -->
+        <test-method signature="conseguirNombreTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNombreTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNombreTest -->
+        <test-method signature="conseguirNumeroTelefonicoTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNumeroTelefonicoTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNumeroTelefonicoTest -->
+        <test-method signature="conseguirNumerosDeAmigosTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirNumerosDeAmigosTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="1" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirNumerosDeAmigosTest -->
+        <test-method signature="conseguirTipoDePlanTest()[pri:0, instance:modelosTest.ClienteModeloTest@771a660]" started-at="2020-11-10T18:11:54 BOT" name="conseguirTipoDePlanTest" finished-at="2020-11-10T18:11:54 BOT" duration-ms="0" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- conseguirTipoDePlanTest -->
+      </class> <!-- modelosTest.ClienteModeloTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
