@@ -18,7 +18,7 @@ public class FactoriaPlan {
 	
 	public IPlan getPlan(String tipoPlan,ArrayList<Integer> numerosAmigos) {
 		if(esWow(tipoPlan))
-			return new PlanWow(numerosAmigos);
+			return new PlanWow(numerosAmigos); 
 		return null;
 	}
 	

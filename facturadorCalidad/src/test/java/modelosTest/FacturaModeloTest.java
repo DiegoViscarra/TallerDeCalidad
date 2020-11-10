@@ -23,6 +23,7 @@ public class FacturaModeloTest {
 		Assert.assertEquals("Septiembre", facturaTester.mes());
 	}
 	
+	@Test
 	public void montoMesTest() {
 		Assert.assertEquals(1200, facturaTester.montoMes());
 	}

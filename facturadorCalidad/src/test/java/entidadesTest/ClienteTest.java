@@ -1,3 +1,5 @@
+package entidadesTest;
+
 
 
 import org.testng.Assert;
