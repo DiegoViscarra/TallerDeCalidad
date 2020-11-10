@@ -11,15 +11,15 @@ public class FacturaModelo {
 		this.montoMes = montoMes;
 	}
 	
-	Integer getNumeroTelefonico() {
+	public Integer getNumeroTelefonico() {
 		return numeroTelefonico;
 	}
 	
-	String mes() {
+	public String mes() {
 		return mes;
 	}
 	
-	double montoMes() {
+	public double montoMes() {
 		return montoMes;
 	}
 }
