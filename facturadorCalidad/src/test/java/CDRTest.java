@@ -3,10 +3,12 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import casosDeUso.IPlan;
 import casosDeUso.Tarificacion;
 import entidades.CDR;
 import entidades.Cliente;
 import entidades.PlanPostpago;
+import repositorios.FactoriaPlan;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
 import repositorios.PersistenciaBDClientes;
@@ -70,12 +72,12 @@ public class CDRTest {
 	}
   
   /*Prueba método calcularCostoDeLlamada*/
-  /*@Test
+  @Test
   void calcularElCostoDeLlamadaTest() {
-		Tarificacion tarificacion = new Tarificacion(null);
-		Cliente cliente = new Cliente("d", "1", 1);
+		FactoriaPlan factoria = new FactoriaPlan();
+		IPlan plan = factoria.getPlan("PREPAGO");
 		CDR registro = new CDR(1,2,"02:45", "3/1/2020", "12:00");
-		Assert.assertEquals("02:45",tarificacion.tarificar(registro, cliente));
-	}*/
+		Assert.assertEquals(3.9875, registro.calcularCostoDeLlamada(plan));
+	}
   
 }
