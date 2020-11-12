@@ -2,20 +2,20 @@
 <testng-results ignored="0" total="2" passed="2" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2020-11-10T22:23:00 BOT" name="Default suite" finished-at="2020-11-10T22:23:00 BOT" duration-ms="31">
+  <suite started-at="2020-11-12T01:05:57 BOT" name="Default suite" finished-at="2020-11-12T01:05:57 BOT" duration-ms="72">
     <groups>
     </groups>
-    <test started-at="2020-11-10T22:23:00 BOT" name="Default test" finished-at="2020-11-10T22:23:00 BOT" duration-ms="31">
-      <class name="casosDeUsoTest.CalculadorCostoLlamadaTest">
-        <test-method signature="asignarCostoYConseguirCostoDeLlamadaCasoCalculosimpleTest()[pri:0, instance:casosDeUsoTest.CalculadorCostoLlamadaTest@4da4253]" started-at="2020-11-10T22:23:00 BOT" name="asignarCostoYConseguirCostoDeLlamadaCasoCalculosimpleTest" finished-at="2020-11-10T22:23:00 BOT" duration-ms="7" status="PASS">
+    <test started-at="2020-11-12T01:05:57 BOT" name="Default test" finished-at="2020-11-12T01:05:57 BOT" duration-ms="72">
+      <class name="casosDeUsoTest.RepositorioCDRTest">
+        <test-method signature="registrarCDRyObtnerLosRegistrosNoTarificadosTest()[pri:0, instance:casosDeUsoTest.RepositorioCDRTest@2954f6ab]" started-at="2020-11-12T01:05:57 BOT" name="registrarCDRyObtnerLosRegistrosNoTarificadosTest" finished-at="2020-11-12T01:05:57 BOT" duration-ms="19" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- asignarCostoYConseguirCostoDeLlamadaCasoCalculosimpleTest -->
-        <test-method signature="asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest()[pri:0, instance:casosDeUsoTest.CalculadorCostoLlamadaTest@4da4253]" started-at="2020-11-10T22:23:00 BOT" name="asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest" finished-at="2020-11-10T22:23:00 BOT" duration-ms="1" status="PASS">
+        </test-method> <!-- registrarCDRyObtnerLosRegistrosNoTarificadosTest -->
+        <test-method signature="registrarCDRyVaciarLosRegistrosTest()[pri:0, instance:casosDeUsoTest.RepositorioCDRTest@2954f6ab]" started-at="2020-11-12T01:05:57 BOT" name="registrarCDRyVaciarLosRegistrosTest" finished-at="2020-11-12T01:05:57 BOT" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest -->
-      </class> <!-- casosDeUsoTest.CalculadorCostoLlamadaTest -->
+        </test-method> <!-- registrarCDRyVaciarLosRegistrosTest -->
+      </class> <!-- casosDeUsoTest.RepositorioCDRTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
