@@ -11,16 +11,16 @@ public class ConnectionDB  {
 	private static final String CONNETTION_DB = "jdbc:sqlite:dbSQL.db;";
 	private static String rutaCarpeta = Paths.get(".").toAbsolutePath().normalize().toString();
 
-	public String getConnection() {
-		 User user = getUserAndPassFromTXT();
+	public String getConnection(String archivo) {
+		 User user = getUserAndPassFromTXT(archivo);
 		String CONNETTION_DB_WHIT_USER = CONNETTION_DB + "user=" + user.getName() + "&password=" + user.getPassword();
 		return CONNETTION_DB_WHIT_USER;
 	}
 	
 	
-	private User getUserAndPassFromTXT() {
+	public User getUserAndPassFromTXT(String archivo) {
 		try {
-			File file = new File(rutaCarpeta+"\\Users.txt");
+			File file = new File(rutaCarpeta+"\\"+ archivo);
 			try (Scanner input = new Scanner(file);){
 				input.useDelimiter("-|\n");
 			    String nombre = "";

@@ -25,7 +25,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	public void crearTabla() {
 		try {
 			Class.forName(ORG_SQLITE_JDBC);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQLClientes = "CREATE TABLE IF NOT EXISTS Clientes " +
@@ -58,7 +58,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	public void poblarTablaClientes(Cliente cliente) {
 		try {
 			Class.forName(ORG_SQLITE_JDBC);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened Clientes successfully");
 
@@ -88,7 +88,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	public void poblarTablaClientesConNumerosAmigos(ArrayList<Integer> numerosAmigos, int numeroTelefonico) {
 		try {
 			Class.forName(ORG_SQLITE_JDBC);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened numerosAmigos successfully");
 			
@@ -120,7 +120,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 		ArrayList<ClienteModelo> clientesRecuperados = new ArrayList<ClienteModelo>();
 		try {
 			Class.forName(ORG_SQLITE_JDBC);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened Clientes successfully");
 
@@ -157,7 +157,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 		try {
 			ArrayList<Integer> numeros = new ArrayList<Integer>();
 			Class.forName(ORG_SQLITE_JDBC);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened NumerosAmigos successfully");
 

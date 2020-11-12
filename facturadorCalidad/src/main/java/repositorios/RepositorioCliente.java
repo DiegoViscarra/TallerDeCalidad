@@ -54,6 +54,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 	}
 	@Override
 	public void registrarClientes(String registroClientes) {
+		System.out.print(registroClientes);
 		String ci = null, nombre = null, plan= null;
 		int numeroTelefonico = 0;
 	    ArrayList<Integer>numerosAmigos = new ArrayList<Integer>();

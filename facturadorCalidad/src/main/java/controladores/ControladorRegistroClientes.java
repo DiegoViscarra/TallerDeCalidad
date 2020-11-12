@@ -56,6 +56,7 @@ public class ControladorRegistroClientes {
 		StringWriter escritor = new StringWriter();
 		IOUtils.copy(entradaFlujo, escritor);
 		String clientesCargadosEnCadena = escritor.toString();
+		System.out.print(clientesCargadosEnCadena);
 		registroClientes.guardarClientesCargados(clientesCargadosEnCadena);
 	}
 	

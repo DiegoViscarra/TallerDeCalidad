@@ -24,7 +24,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void crearTabla() {
 		try {
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 
 			enunciadoSQL = conexionBD.createStatement();
 			String sentenciaSQL = "CREATE TABLE IF NOT EXISTS CDR " +
@@ -50,7 +50,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	public void poblarTabla(CDR registro) {
 		try {
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened CDR successfully");
 
@@ -88,7 +88,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		try {
 			ArrayList<CDRModelo> registrosRecuperados = new ArrayList<CDRModelo>();
 			Class.forName(SQL_CLASS);
-			conexionBD = DriverManager.getConnection(connectionDB.getConnection());
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened CDR successfully");
 			

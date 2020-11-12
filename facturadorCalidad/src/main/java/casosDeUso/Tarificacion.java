@@ -30,7 +30,7 @@ public class Tarificacion implements ITarificacion {
 		return registrosTelefonicos;
 	}
 	
-	private boolean noEstaTarificado(CDR registro) {
+	public boolean noEstaTarificado(CDR registro) {
 		return registro.getCostoDeLlamada() < 0;
 	}
 

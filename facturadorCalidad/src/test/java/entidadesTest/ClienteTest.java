@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import entidades.Cliente;
 import entidades.PlanPrepago;
 
-public class ClienteTest {
+public class ClienteTest { 
 	
 	/*Prueba métodos setNumeroTelefonico y getNumeroTelefonico*/
 	@Test
