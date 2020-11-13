@@ -12,7 +12,7 @@ public class ConnectionDB  {
 	private static String rutaCarpeta = Paths.get(".").toAbsolutePath().normalize().toString();
 
 	public String getConnection(String archivo) {
-		 User user = getUserAndPassFromTXT(archivo);
+		User user = getUserAndPassFromTXT(archivo);
 		String CONNETTION_DB_WHIT_USER = CONNETTION_DB + "user=" + user.getName() + "&password=" + user.getPassword();
 		return CONNETTION_DB_WHIT_USER;
 	}

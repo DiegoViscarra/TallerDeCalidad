@@ -53,6 +53,54 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 			System.exit(0);
 		}
 	}
+	
+	@Override
+	public void borrarTodosLosDatosDeClientes() {
+		try {
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
+			conexionBD.setAutoCommit(false);
+			LOGGER.info("Opened Clientes successfully");
+			
+			String sentenciaSQL = "DELETE FROM Clientes";
+			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){
+				enunciadoPreparadoClientes.executeUpdate();
+				conexionBD.commit();
+				conexionBD.close();
+				LOGGER.info("Clientes closed successfully");
+			}
+		}
+		catch ( Exception e ) {
+			LOGGER.info("entra al errror");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		LOGGER.info("Clientes deleted successfully");
+	}
+	
+	@Override
+	public void borrarTodosLosDatosDeNumerosAmigos() {
+		try {
+			Class.forName(ORG_SQLITE_JDBC);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
+			conexionBD.setAutoCommit(false);
+			LOGGER.info("Opened NumerosAmigos successfully");
+			
+			String sentenciaSQL = "DELETE FROM NumerosAmigos";
+			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){
+				enunciadoPreparadoClientes.executeUpdate();
+				conexionBD.commit();
+				conexionBD.close();
+				LOGGER.info("NumerosAmigos closed successfully");
+			}
+		}
+		catch ( Exception e ) {
+			LOGGER.info("entra al errror");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		LOGGER.info("NumerosAmigos deleted successfully");
+	}
 
 	@Override
 	public void poblarTablaClientes(Cliente cliente) {

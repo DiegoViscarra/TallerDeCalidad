@@ -21,7 +21,7 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 	private static String rutaCarpeta = Paths.get(".").toAbsolutePath().normalize().toString()+"\\Serializaciones\\";
 	private final static Logger LOGGER = Logger.getLogger(PersistenciaArchivos.class.getName());
 	@Override
-	public void serializar(ArrayList<CDR> registrosTelefonicos) {
+	public String serializar(ArrayList<CDR> registrosTelefonicos) {
 		try {
 			String fechaDocumento = obtenerFechaNombreDocumento();
             File documento = new File(fechaDocumento + ".txt"); 
@@ -33,9 +33,11 @@ public class PersistenciaArchivos implements IPersistenciaArchivos {
 				objetoDeSalida.writeObject(registrosTelefonicos);
 				objetoDeSalida.close();
 				archivoDeSalida.close();
+				return fechaDocumento;
 			}
 		} catch (IOException ex) {
 			LOGGER.severe(EXCEPTION_CAUGHT);
+			return "";
 		}	
 	}
 	private String obtenerFechaNombreDocumento() {
