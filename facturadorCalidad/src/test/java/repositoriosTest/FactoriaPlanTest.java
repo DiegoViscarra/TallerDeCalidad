@@ -1,4 +1,4 @@
-package repositorios;
+package repositoriosTest;
 
 import java.util.ArrayList;
 
@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import casosDeUso.IPlan;
+import repositorios.FactoriaPlan;
 
 class FactoriaPlanTest {
 	FactoriaPlan factoriaPlan;

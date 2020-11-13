@@ -1,4 +1,4 @@
-package repositorios;
+package repositoriosTest;
 
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -12,20 +12,16 @@ import org.testng.annotations.Test;
 
 import entidades.CDR;
 import modelos.CDRModelo;
+import repositorios.ConnectionDB;
+import repositorios.PersistenciaBDCDR;
 
 
 class PersistenciaBDCDRTest {
 	PersistenciaBDCDR persistenciaBDCDR;
 	@Test
-	void crearTabla() throws SQLException {
+	void crearTabla() {
 		persistenciaBDCDR.crearTabla();
-		ConnectionDB connectionDB = new ConnectionDB();
-		persistenciaBDCDR.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
-		persistenciaBDCDR.conexionBD.createStatement();
-		DatabaseMetaData dbm = persistenciaBDCDR.conexionBD.getMetaData();
-		ResultSet tables = dbm.getTables(null, null, "CDR", null);
-		Assert.assertNotNull(tables.next());
-		persistenciaBDCDR.conexionBD.close();
+		Assert.assertNotNull(persistenciaBDCDR.conexionBD);
 	}
 
 	@Test
