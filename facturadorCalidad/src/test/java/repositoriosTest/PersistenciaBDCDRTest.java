@@ -47,7 +47,7 @@ class PersistenciaBDCDRTest {
 	}
 	
 	@Test
-	void birrarDatos()  {
+	void borrarDatos()  {
 		persistenciaBDCDR.borrarTodosLosDatosDeCDR();
 		Assert.assertNotNull(persistenciaBDCDR.conexionBD);
 	}
