@@ -1,7 +1,6 @@
 package repositoriosTest;
 
 import entidades.User;
-import java.io.FileNotFoundException;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;

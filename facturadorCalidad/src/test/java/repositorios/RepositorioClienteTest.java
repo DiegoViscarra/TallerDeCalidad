@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import casosDeUso.Persistencia;
 import entidades.Cliente;
 
-class RepositorioClientesTest {
+class RepositorioClienteTest {
 	private final RepositorioCliente repositorio = new RepositorioCliente(new Persistencia(new PersistenciaBDCDR(), new PersistenciaBDClientes(), new PersistenciaArchivos(), new RepositorioCDR()));
 	@Test
 	void testRegistrarClientePlanNormal() {
