@@ -1,4 +1,4 @@
-package casosDeUsoTest;
+package repositoriosTest;
 
 import java.util.ArrayList;
 
