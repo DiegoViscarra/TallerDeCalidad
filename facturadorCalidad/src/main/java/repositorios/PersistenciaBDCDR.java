@@ -17,7 +17,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 	private static final String SQL_CLASS = "org.sqlite.JDBC";
 	private static final ConnectionDB connectionDB= new ConnectionDB();
 	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
-	Connection conexionBD = null;
+	public Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 	
 	@Override
@@ -125,7 +125,6 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		
 	}
 	
-	@Override
 	public void borrarTodosLosDatosDeCDR() {
 		try {
 			Class.forName(SQL_CLASS);
@@ -134,6 +133,29 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			LOGGER.info("Opened CDR successfully");
 			
 			String sentenciaSQL = "DELETE FROM CDR";
+			try(PreparedStatement enunciadoPreparadoCDR = conexionBD.prepareStatement(sentenciaSQL);){
+				enunciadoPreparadoCDR.executeUpdate();
+				conexionBD.commit();
+				conexionBD.close();
+				LOGGER.info("CDR closed successfully");
+			}
+		}
+		catch ( Exception e ) {
+			LOGGER.info("entra al error");
+			LOGGER.severe(e.getClass().getName() + ": " + e.getMessage());
+			System.exit(0);
+		}
+		LOGGER.info("CDR deleted successfully");
+	}
+	
+	public void borrarTodosLosDatosDeUsuario() {
+		try {
+			Class.forName(SQL_CLASS);
+			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
+			conexionBD.setAutoCommit(false);
+			LOGGER.info("Opened CDR successfully");
+			
+			String sentenciaSQL = "DELETE FROM Clientes";
 			try(PreparedStatement enunciadoPreparadoCDR = conexionBD.prepareStatement(sentenciaSQL);){
 				enunciadoPreparadoCDR.executeUpdate();
 				conexionBD.commit();

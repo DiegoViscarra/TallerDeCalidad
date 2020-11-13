@@ -1,4 +1,4 @@
-package repositorios;
+package repositoriosTest;
 
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -12,11 +12,13 @@ import org.testng.annotations.Test;
 
 import entidades.CDR;
 import modelos.CDRModelo;
+import repositorios.ConnectionDB;
+import repositorios.PersistenciaBDCDR;
 
 
 class PersistenciaBDCDRTest {
 	PersistenciaBDCDR persistenciaBDCDR;
-	@Test
+	@Test 
 	void crearTabla() throws SQLException {
 		persistenciaBDCDR.crearTabla();
 		ConnectionDB connectionDB = new ConnectionDB();
@@ -40,9 +42,14 @@ class PersistenciaBDCDRTest {
 		ConnectionDB connectionDB = new ConnectionDB();
 		persistenciaBDCDR.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 		persistenciaBDCDR.conexionBD.createStatement();
-		
 		ArrayList<CDRModelo> resultado= persistenciaBDCDR.mostrarTabla("SELECT * FROM CDR;");
 		Assert.assertNotNull(resultado);
+	}
+	
+	@Test
+	void borrarDatos()  {
+		persistenciaBDCDR.borrarTodosLosDatosDeCDR();
+		Assert.assertNotNull(persistenciaBDCDR.conexionBD);
 	}
 	@BeforeMethod
 	public void beforeMethod() {

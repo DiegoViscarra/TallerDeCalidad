@@ -53,6 +53,8 @@ public class RepositorioClientesTest {
 	@BeforeMethod
 	public void initRegistrarNuevoClientePlanNormal(){
 		repositorio.registrarNuevoClientePlanNormal(clienteNormal, "PREPAGO");
+		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
+		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 	}
 	
 	@Test
