@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testconNg.ClienteModeloTest">
+      <class name="casosDeUsoTest.RepositorioCDRTest">
         <methods>
-          <include name="conseguirCiTest"/>
+          <include name="asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest"/>
         </methods>
-      </class> <!-- testconNg.ClienteModeloTest -->
+      </class> <!-- casosDeUsoTest.RepositorioCDRTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

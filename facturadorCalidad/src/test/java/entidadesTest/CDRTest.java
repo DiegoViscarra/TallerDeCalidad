@@ -5,8 +5,16 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import casosDeUso.IPlan;
+import casosDeUso.Tarificacion;
 import entidades.CDR;
+import entidades.Cliente;
+import entidades.PlanPostpago;
 import repositorios.FactoriaPlan;
+import repositorios.PersistenciaArchivos;
+import repositorios.PersistenciaBDCDR;
+import repositorios.PersistenciaBDClientes;
+import repositorios.RepositorioCDR;
+import repositorios.RepositorioCliente;
 
 public class CDRTest {
 	
