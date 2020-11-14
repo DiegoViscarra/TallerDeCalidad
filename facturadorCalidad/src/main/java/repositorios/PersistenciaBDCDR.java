@@ -125,7 +125,6 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 		
 	}
 	
-	@Override
 	public void borrarTodosLosDatosDeCDR() {
 		try {
 			Class.forName(SQL_CLASS);

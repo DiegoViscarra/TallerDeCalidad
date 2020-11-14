@@ -77,7 +77,7 @@ public class PersistenciaTest {
 		Assert.assertEquals(factura.getNumeroTelefonico(),(Integer)234);
 		Assert.assertEquals((Double)factura.montoMes(),(Double)9.5);
 		
-	}
+	} 
 	
 	@Test
 	public void obtenerFacturaConClienteNoRegistrado() {
