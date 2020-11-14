@@ -96,11 +96,11 @@ public class Persistencia implements IPersistencia {
 		return new FacturaModelo(numeroTelefonico, mes, sumaTotal);
 	}
 	
-	private boolean esClienteRegistrado(ArrayList<CDRModelo> costoRegistrosTelefonicos) {
+	public boolean esClienteRegistrado(ArrayList<CDRModelo> costoRegistrosTelefonicos) {
 		return costoRegistrosTelefonicos.size() > 0;
 	}
 	
-	private double obtenerSumaTotalDeRegistrosDelMes(ArrayList<CDRModelo> registrosDelMes) {
+	public double obtenerSumaTotalDeRegistrosDelMes(ArrayList<CDRModelo> registrosDelMes) {
 		double sumaTotal = 0;
 		for(CDRModelo cdr: registrosDelMes) {
 			sumaTotal = sumaTotal + cdr.getCostoDeLlamada(); 
@@ -108,7 +108,7 @@ public class Persistencia implements IPersistencia {
 		return sumaTotal;
 	}
 	
-	private ArrayList<CDRModelo> filtrarRegistrosPorMes(String mes, ArrayList<CDRModelo> conjuntoCDRs){
+	public ArrayList<CDRModelo> filtrarRegistrosPorMes(String mes, ArrayList<CDRModelo> conjuntoCDRs){
 		ArrayList<CDRModelo> registrosFiltradosPorMes = new ArrayList<CDRModelo>();
 		for(CDRModelo cdr : conjuntoCDRs) {
 			String fecha = cdr.getFecha();
@@ -119,11 +119,11 @@ public class Persistencia implements IPersistencia {
 		return registrosFiltradosPorMes;
 		
 	}
-	private boolean coincidenEnMes(String mes, String[] fechaDividida) {
+	public boolean coincidenEnMes(String mes, String[] fechaDividida) {
 		return Integer.parseInt(mes) == Integer.parseInt(fechaDividida[1]);
 	}
 	
-	private String obtenerMesLiteral(Integer mes) {
+	public String obtenerMesLiteral(Integer mes) {
 		String mesLiteral = "";
 		String meses[] = {"No valido","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 		if(esNumeroDeMesInvalido(mes))
@@ -132,7 +132,7 @@ public class Persistencia implements IPersistencia {
 			mesLiteral = meses[mes];
 		return mesLiteral;
 	}
-	private boolean esNumeroDeMesInvalido(Integer mes) {
+	public boolean esNumeroDeMesInvalido(Integer mes) {
 		return mes > 12 || mes < 1;
 	}
 
