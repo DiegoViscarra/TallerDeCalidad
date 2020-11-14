@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeMethod;
 
 import casosDeUso.ObtenerMontoTarifa;
 import entidades.CDR;
-import junit.framework.Assert;
+import org.testng.Assert;
 
 public class ObtenerMontoTarifaTest {
 	public ObtenerMontoTarifa tester;
@@ -61,6 +61,24 @@ public class ObtenerMontoTarifaTest {
 		Assert.assertEquals(0.0, tester.obtenerMontoTarifa("EMERGENCIA", registroTestPrepagoSuperReducido));
 	}
 	
+	@Test
+	public void noEstaEnHorarioSuperReducido() {
+		Assert.assertFalse(tester.estaEnHorarioSuperReducido(12));
+		Assert.assertFalse(tester.estaEnHorarioSuperReducido(-1));
+		Assert.assertTrue(tester.estaEnHorarioSuperReducido(1));
+		Assert.assertTrue(tester.estaEnHorarioSuperReducido(6));
+	}
+	
+	@Test
+	public void noEstaEnHorarioReducido() {
+		Assert.assertFalse(tester.estaEnHorarioReducido(20));
+		Assert.assertFalse(tester.estaEnHorarioReducido(24));
+		Assert.assertFalse(tester.estaEnHorarioReducido(-1));
+		Assert.assertFalse(tester.estaEnHorarioReducido(3));
+		Assert.assertTrue(tester.estaEnHorarioReducido(0));
+		Assert.assertTrue(tester.estaEnHorarioReducido(21));
+		Assert.assertTrue(tester.estaEnHorarioReducido(23));
+	}
 	
 	
 
