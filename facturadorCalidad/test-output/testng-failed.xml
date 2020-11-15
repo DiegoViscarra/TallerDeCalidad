@@ -3,19 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="entidadesTest.CDRTest">
+      <class name="repositoriosTest.RepositorioCDRTest">
         <methods>
-          <include name="conseguirNumeroDeTelefonoDeDestinoTest"/>
-          <include name="conseguirNumeroDeTelefonoDeOrigenTest"/>
-          <include name="conseguirFechaDeLlamadaTest"/>
-          <include name="calcularElCostoDeLlamadaTest"/>
-          <include name="asignarCostoYConseguirCostoDeLlamadaTest"/>
-          <include name="conversiónDeTiempoDeLlamadaADecimalTest"/>
-          <include name="conseguirDuracionDeLlamadaTest"/>
-          <include name="conseguirHoraDeLlamadaTest"/>
+          <include name="registrarCDRyObtnerLosRegistrosNoTarificadosTest"/>
           <include name="beforeMethod"/>
         </methods>
-      </class> <!-- entidadesTest.CDRTest -->
+      </class> <!-- repositoriosTest.RepositorioCDRTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
