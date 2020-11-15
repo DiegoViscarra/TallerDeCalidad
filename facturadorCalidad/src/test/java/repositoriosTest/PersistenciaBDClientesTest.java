@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import entidades.CDR;
@@ -16,13 +17,17 @@ import modelos.CDRModelo;
 import modelos.ClienteModelo;
 import repositorios.ConnectionDB;
 import repositorios.PersistenciaBDClientes;
+import repositorios.RepositorioCDR;
 
 public class PersistenciaBDClientesTest {
-	
-	
+	PersistenciaBDClientes persistenciaBDClientes;
+	@BeforeMethod
+	public void beforeMethod() {
+		persistenciaBDClientes = new PersistenciaBDClientes();
+	}
+	/*Prueba método crearTabla*/
 	@Test 
-	void crearTabla() throws SQLException {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void crearTablaClientesYNumerosAmigos() throws SQLException {
 		persistenciaBDClientes.crearTabla();
 		ConnectionDB connectionDB = new ConnectionDB();
 		persistenciaBDClientes.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
@@ -35,18 +40,18 @@ public class PersistenciaBDClientesTest {
 		persistenciaBDClientes.conexionBD.close();
 	}
 	
+	/*Prueba método poblarTablaClientes*/
 	@Test
-	void poblarTabla() {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void poblarTablaDeClientes() {
 		Cliente cliente = new Cliente("Juan", "213", 1);
 		cliente.setTipoPlan("PREPAGO");
 		persistenciaBDClientes.poblarTablaClientes(cliente);
 		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
 	}
 	
+	/*Prueba método poblarTablaClientesConNumerosAmigos*/
 	@Test
-	void poblarTablanumAmig() {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void poblarTablaDeNumerosDeAmigos() {
 		Cliente cliente = new Cliente("Pedro", "123", 2);
 		cliente.setTipoPlan("WOW");
 		ArrayList<Integer> numerosAmigos = new ArrayList<>(Arrays.asList(4,5,6,7));
@@ -54,9 +59,9 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
 	}
 	
+	/*Prueba método mostrarTablaClientes*/
 	@Test
-	void mostrarTabla() throws SQLException {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void mostrarTablaDeClientes() throws SQLException {
 		ConnectionDB connectionDB = new ConnectionDB();
 		persistenciaBDClientes.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 		persistenciaBDClientes.conexionBD.createStatement();
@@ -64,9 +69,9 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(resultado);
 	}
 	
+	/*Prueba método mostrarTablaClientesConNumerosAmigos*/
 	@Test
-	void mostrarTablaAmig() throws SQLException {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void mostrarTablaDeNumerosAmigos() throws SQLException {
 		ConnectionDB connectionDB = new ConnectionDB();
 		persistenciaBDClientes.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 		persistenciaBDClientes.conexionBD.createStatement();
@@ -74,26 +79,12 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(resultado);
 	}
 	
+	/*Prueba los métodos borrarTodosLosDatosDeClientes y borrarTodosLosDatosDeNumerosAmigos*/
 	@Test
-	void borrarDatos()  {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
+	void borrarDatosDeLaBaseDeDatosDeClientes()  {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
 	}
-	/*
-	@Test(
-		    expectedExceptions = Exception.class
-		)
-	void crearTablaError() throws SQLException {
-		PersistenciaBDClientes persistenciaBDClientes = new PersistenciaBDClientes();
-		persistenciaBDClientes.crearTabla();
-		ConnectionDB connectionDB = new ConnectionDB();
-		persistenciaBDClientes.conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
-		persistenciaBDClientes.conexionBD.createStatement();
-		DatabaseMetaData dbm = persistenciaBDClientes.conexionBD.getMetaData();
-		ResultSet tables = dbm.getTables(null, null, null, null);
-		Assert.assertNotNull(tables.next());
-		persistenciaBDClientes.conexionBD.close();
-	}*/
+	
 }
