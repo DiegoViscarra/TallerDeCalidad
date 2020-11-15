@@ -24,78 +24,76 @@ import repositorios.RepositorioCliente;
 import static spark.Spark.port;
 import static spark.Spark.stop;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class ControladorRegistroClientesTest {
-	HttpClient client;
-	HttpRequest request;
-	HttpResponse<?> response;
+	IPersistenciaBDClientes persistenciaClientes;
+	IRegistroClientes registroClientes;
 	IRepositorioCliente repositorioCliente;
 
 	@Test
-	public void getCargarClientes() throws Exception, InterruptedException {
-		HttpClient client = HttpClient.newHttpClient();
-		request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/cargarClientes")).build();
-		response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		Assert.assertEquals(response.statusCode(), 200);
+	public void getRegistrosCargados() throws Exception, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+		HttpGet request = new HttpGet("http://localhost:8080/cargarClientes");
+		HttpResponse response = client.execute(request);
+		Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
+	
+	@Test
+	public void postApiSubmitSinArchivo() throws Exception, InterruptedException {
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost("http://localhost:8080/api/submitCliente");
+		HttpResponse response = httpclient.execute(httpPost);
+		Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+		}
 
 	@Test
-	public void postApiSubmitCliente() throws Exception, InterruptedException {
-		Path data = Paths.get(
-				"D:\\II-2020\\GESTION DE CALIDAD DE SISTEMAS (CANEDO ARZE CARLOS OSWALDO)\\Practica 3\\2\\facturadorCalidad\\src\\test\\java\\controladoresTest\\clientes.csv");
-		request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/api/submitCliente"))
-				.POST(BodyPublishers.ofFile(data)).build();
-		request.uri().getRawPath();
-		response = client.send(request, BodyHandlers.discarding());
-		Assert.assertEquals(response.statusCode(), 200);
-		Assert.assertEquals(3, repositorioCliente.devolverClientes().size());
-
-	}
-
-	@Test
-	public void postApiSubmitClienteSinArchivo() throws Exception, InterruptedException {
-		request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/api/submitCliente"))
-				.POST(BodyPublishers.noBody()).build();
-		request.uri().getRawPath();
-		response = client.send(request, BodyHandlers.discarding());
-		Assert.assertEquals(response.statusCode(), 200);
-		Assert.assertEquals(0, repositorioCliente.devolverClientes().size());
+	public void postApiSubmit() throws Exception, InterruptedException {
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost("http://localhost:8080/api/submitCliente");
+		File uploadFile = new File("FilesTest/Clientes.csv");
+		FileBody uploadFilePart = new FileBody(uploadFile);
+		MultipartEntity reqEntity = new MultipartEntity();
+		reqEntity.addPart("myFileClient", uploadFilePart);
+		httpPost.setEntity(reqEntity);
+		HttpResponse response = httpclient.execute(httpPost);
+		Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+		Assert.assertEquals(3, registroClientes.devolverClientes().size());
 	}
 
 	@BeforeClass
 	public void beforeClass() {
 		IRepositorioCDR repositorioCDR = new RepositorioCDR();
-		IPersistenciaBDClientes persistenciaClientes = new PersistenciaBDClientes();
-		IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes,
-				new PersistenciaArchivos(), repositorioCDR);
+		persistenciaClientes = new PersistenciaBDClientes();
+		IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes, new PersistenciaArchivos(), repositorioCDR);
 		repositorioCliente = new RepositorioCliente(persistencia);
-		IRegistroClientes registroClientes = new RegistroClientes(repositorioCliente, persistenciaClientes);
+		registroClientes = new RegistroClientes(repositorioCliente,persistenciaClientes);
 		port(8080);
 		new ControladorRegistroClientes(registroClientes);
 	}
 
 	@BeforeMethod
 	public void beforeMethod() {
-		client = HttpClient.newBuilder().build();
-		response = null;
+		persistenciaClientes.borrarTodosLosDatosDeClientes();
 	}
-	
+
 	@AfterClass
 	public void afterClass() {
 		stop();
 	}
+
 
 }
