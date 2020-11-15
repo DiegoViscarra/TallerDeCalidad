@@ -90,7 +90,7 @@ public class ControladorClientesTest {
 		IPlan plan3 = new PlanWow(amigos);
 		cliente3.setPlan(plan3);
 		cliente3.setTipoPlan("WOW");
-		
+		 
 		
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
 		persistenciaBDClientes.poblarTablaClientes(cliente2);

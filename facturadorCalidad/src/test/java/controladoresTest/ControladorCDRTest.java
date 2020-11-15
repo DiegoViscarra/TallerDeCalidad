@@ -70,7 +70,7 @@ public class ControladorCDRTest {
 		
 		Cliente cliente2 = new Cliente("Ana", "9", 789);
 		IPlan plan2 = new PlanPostpago();
-		cliente2.setPlan(plan2);
+		cliente2.setPlan(plan2); 
 		cliente2.setTipoPlan("POSTPAGO");
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
 		persistenciaBDClientes.poblarTablaClientes(cliente2);
