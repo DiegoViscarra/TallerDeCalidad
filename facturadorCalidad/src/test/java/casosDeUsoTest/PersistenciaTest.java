@@ -1,20 +1,30 @@
 package casosDeUsoTest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterGroups;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import casosDeUso.IPersistenciaArchivos;
 import casosDeUso.IPersistenciaBDCDR;
 import casosDeUso.IPersistenciaBDClientes;
+import casosDeUso.IPlan;
 import casosDeUso.IRepositorioCDR;
 import casosDeUso.Persistencia;
 import entidades.CDR;
+import entidades.Cliente;
+import entidades.PlanPostpago;
+import entidades.PlanWow;
 import modelos.CDRModelo;
+import modelos.ClienteModelo;
+import modelos.FacturaModelo;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
 import repositorios.PersistenciaBDClientes;
@@ -22,16 +32,6 @@ import repositorios.RepositorioCDR;
 
 public class PersistenciaTest {
 	
-	/*Prueba método calcularCosto, caso por default
-	  @Test
-	  void asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest() {
-		    Persistencia persistencia = new Persistencia(null, null, null, null);
-		    CDR registro = new CDR(1,2,"02:45", "3/1/2020", "12:00");
-		    ArrayList<CDR> registrosTelefonicos = new ArrayList<CDR>();
-		    registrosTelefonicos.add(registro);
-			//Assert.assertEquals("Ninguno",persistencia.persistirEnBDCdr(registrosTelefonicos));
-		}
-	*/
 	public Persistencia persistencia;
 	public IPersistenciaBDCDR persistenciaBDCDR;
 	public IPersistenciaBDClientes persistenciaBDClientes;
@@ -47,58 +47,51 @@ public class PersistenciaTest {
 		
 		persistencia = new Persistencia(persistenciaBDCDR, persistenciaBDClientes, persistenciaArchivos, repositorioCDR);
 	}
-	
-	@Test
-	public void esNumeroInvalidoDeMesTest() {
-		Assert.assertTrue(persistencia.esNumeroDeMesInvalido(13));
-		Assert.assertTrue(persistencia.esNumeroDeMesInvalido(0));
-		Assert.assertFalse(persistencia.esNumeroDeMesInvalido(5));
-	}
-	
-	@Test
-	public void obtenerMesLiteralTest() {
-		Assert.assertEquals("Enero", persistencia.obtenerMesLiteral(1));
-		Assert.assertEquals("Mes no valido", persistencia.obtenerMesLiteral(90));
-	}
-	
-	@Test
-	public void coincidenEnMesTest() {
-		String[] fecha = {"11", "1","2020"};
-		Assert.assertTrue(persistencia.coincidenEnMes("1", fecha));
-		Assert.assertFalse(persistencia.coincidenEnMes("2", fecha));
-	}
-	
-	@BeforeMethod
-	public void initFiltroRegistros() {
-		registros = new ArrayList<CDRModelo>();
-		CDRModelo uno = new CDRModelo(1);
-				uno.setDatosBasicosCDR(123, 345);
-				uno.setDatosAvanzadosCDR( "02:45", "11/10/2020", "23:00", "11/11/2011", 2.75, "2:00");
-		CDRModelo dos = new CDRModelo(1);
-				dos.setDatosBasicosCDR(123, 345);
-				dos.setDatosAvanzadosCDR( "01:45", "11/11/2020", "23:00", "11/11/2011", 1.75, "2:00");
-		CDRModelo tres = new CDRModelo(1);
-				tres.setDatosBasicosCDR(123, 345);
-				tres.setDatosAvanzadosCDR( "03:45", "11/11/2020", "23:00", "11/11/2011", 3.75, "2:00");
 
-		registros.add(uno);
-		registros.add(dos);
-		registros.add(tres);
+	@BeforeMethod
+	public void initBD() {
+		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
+		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
+		persistenciaBDCDR.borrarTodosLosDatosDeCDR();
+		Cliente cliente = new Cliente("Sergio", "1", 234);
+		IPlan plan = new PlanPostpago();
+		cliente.setPlan(plan);
+		cliente.setTipoPlan("POSTPAGO");
+		persistenciaBDClientes.poblarTablaClientes(cliente);
+		CDR uno = new CDR(234, 345, "02:45", "11/03/2020", "23:00");
+		uno.setCosto(2.75);
+		CDR dos = new CDR(234, 345, "06:45", "11/03/2020", "12:00");
+		dos.setCosto(6.75);
+		CDR tres = new CDR(234, 345, "01:45", "11/10/2020", "15:00");
+		tres.setCosto(1.75);
+		persistenciaBDCDR.poblarTabla(uno);
+		persistenciaBDCDR.poblarTabla(dos);
+		persistenciaBDCDR.poblarTabla(tres);
+	}
+	
+	@Test
+	public void obtenerFacturaDelMesParaClienteTest() {
+		System.out.print(persistenciaBDCDR.mostrarTabla("SELECT * FROM CDR ;"));
+		FacturaModelo factura = persistencia.obtenerFacturaDeMesParaCliente(234, "03");
+		System.out.print(factura.montoMes());
+		Assert.assertEquals(factura.getNumeroTelefonico(),(Integer)234);
+		Assert.assertEquals((Double)factura.montoMes(),(Double)9.5);
 		
-		filtrados = new ArrayList<CDRModelo>();
-		filtrados.add(dos);
-		filtrados.add(tres);
 	}
 	
 	@Test
-	public void filtrarRegistrosPorMesTest() {
-		Assert.assertEquals(filtrados, persistencia.filtrarRegistrosPorMes("11", registros));
+	public void obtenerFacturaConClienteNoRegistrado() {
+		FacturaModelo factura = persistencia.obtenerFacturaDeMesParaCliente(567, "3");
+		Assert.assertEquals((Integer)0, factura.getNumeroTelefonico());
+		Assert.assertEquals((Double)factura.montoMes(),(Double)0.0);
+		
 	}
 	
-	@Test
-	public void sumarTotalDelMesTest() {
-		Assert.assertEquals(5.5, persistencia.obtenerSumaTotalDeRegistrosDelMes(filtrados));
+	@AfterMethod
+	public void tearBD() {
+		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
+		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
+		persistenciaBDCDR.borrarTodosLosDatosDeCDR();
 	}
-	
 	
 }
