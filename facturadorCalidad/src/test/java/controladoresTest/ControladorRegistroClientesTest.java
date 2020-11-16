@@ -25,7 +25,9 @@ import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 public class ControladorRegistroClientesTest {
 	IPersistenciaBDClientes persistenciaClientes;
@@ -85,14 +87,6 @@ public class ControladorRegistroClientesTest {
 	public void afterClass() {
 		persistenciaClientes.borrarTodosLosDatosDeClientes();
 		
-	}
-	@AfterSuite
-	public void afterSuite() {
-		stop();
-	}
-	@BeforeSuite
-	public void beforeSuite() throws InterruptedException {
-		port(8080);
 	}
 
 }

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersistenciaBDClientes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">repositorios</a> &gt; <span class="el_source">PersistenciaBDClientes.java</span></div><h1>PersistenciaBDClientes.java</h1><pre class="source lang-java linenums">package repositorios;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Logger;
+
+import casosDeUso.IPersistenciaBDClientes;
+import entidades.Cliente;
+import modelos.ClienteModelo;
+
+<span class="fc" id="L17">public class PersistenciaBDClientes implements IPersistenciaBDClientes {</span>
+<span class="fc" id="L18">	private static final ConnectionDB connectionDB= new ConnectionDB();</span>
+	private static final String ORG_SQLITE_JDBC = &quot;org.sqlite.JDBC&quot;;
+<span class="fc" id="L20">	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());</span>
+<span class="fc" id="L21">	public Connection conexionBD = null;</span>
+<span class="fc" id="L22">	Statement enunciadoSQL = null;</span>
+	
+	@Override
+	public void crearTabla() {
+		try {
+<span class="fc" id="L27">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L28">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+			
+<span class="fc" id="L30">			enunciadoSQL = conexionBD.createStatement();</span>
+<span class="fc" id="L31">			String sentenciaSQLClientes = &quot;CREATE TABLE IF NOT EXISTS Clientes &quot; +</span>
+					&quot;(nombre CHAR(30)     NOT NULL,&quot; +
+					&quot; ci    CHAR(30) PRIMARY KEY    NOT NULL, &quot; + 
+					&quot; numeroTelefonico        INT    NOT NULL, &quot; + 
+					&quot; tipoPlan         CHAR(20)    NOT NULL,&quot;+
+					&quot; fechaRegistro          CHAR(20)    NOT NULL)&quot;;
+			
+<span class="fc" id="L38">			String sentenciaSQLAmigos = &quot;CREATE TABLE IF NOT EXISTS NumerosAmigos &quot; +</span>
+					&quot;( id INTEGER PRIMARY KEY NOT NULL,&quot; + 
+					&quot; numeroTelefonico        INT    NOT NULL, &quot; + 
+					&quot; fechaRegistro          CHAR(20)    NOT NULL,&quot;+
+					&quot; numeroAmigo1        INT    NOT NULL, &quot; + 
+					&quot; numeroAmigo2        INT    NOT NULL, &quot; + 
+					&quot; numeroAmigo3        INT    NOT NULL, &quot; + 
+					&quot; numeroAmigo4        INT    NOT NULL )&quot;;
+				
+<span class="fc" id="L47">			enunciadoSQL.executeUpdate(sentenciaSQLClientes);</span>
+<span class="fc" id="L48">			enunciadoSQL.executeUpdate(sentenciaSQLAmigos);</span>
+<span class="fc" id="L49">			enunciadoSQL.close();</span>
+<span class="fc" id="L50">			conexionBD.close();</span>
+<span class="nc" id="L51">		} catch ( Exception e ) {</span>
+<span class="nc" id="L52">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L53">			System.exit(0);</span>
+<span class="fc" id="L54">		}</span>
+<span class="fc" id="L55">	}</span>
+	
+	@Override
+	public void borrarTodosLosDatosDeClientes() {
+		try {
+<span class="fc" id="L60">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L61">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L62">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L63">			LOGGER.info(&quot;Opened Clientes successfully&quot;);</span>
+			
+<span class="fc" id="L65">			String sentenciaSQL = &quot;DELETE FROM Clientes&quot;;</span>
+<span class="fc" id="L66">			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L67">				enunciadoPreparadoClientes.executeUpdate();</span>
+<span class="fc" id="L68">				conexionBD.commit();</span>
+<span class="fc" id="L69">				conexionBD.close();</span>
+<span class="fc" id="L70">				LOGGER.info(&quot;Clientes closed successfully&quot;);</span>
+			}
+		}
+<span class="nc" id="L73">		catch ( Exception e ) {</span>
+<span class="nc" id="L74">			LOGGER.info(&quot;entra al errror&quot;);</span>
+<span class="nc" id="L75">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L76">			System.exit(0);</span>
+<span class="fc" id="L77">		}</span>
+<span class="fc" id="L78">		LOGGER.info(&quot;Clientes deleted successfully&quot;);</span>
+<span class="fc" id="L79">	}</span>
+	
+	@Override
+	public void borrarTodosLosDatosDeNumerosAmigos() {
+		try {
+<span class="fc" id="L84">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L85">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L86">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L87">			LOGGER.info(&quot;Opened NumerosAmigos successfully&quot;);</span>
+			
+<span class="fc" id="L89">			String sentenciaSQL = &quot;DELETE FROM NumerosAmigos&quot;;</span>
+<span class="fc" id="L90">			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L91">				enunciadoPreparadoClientes.executeUpdate();</span>
+<span class="fc" id="L92">				conexionBD.commit();</span>
+<span class="fc" id="L93">				conexionBD.close();</span>
+<span class="fc" id="L94">				LOGGER.info(&quot;NumerosAmigos closed successfully&quot;);</span>
+			}
+		}
+<span class="nc" id="L97">		catch ( Exception e ) {</span>
+<span class="nc" id="L98">			LOGGER.info(&quot;entra al errror&quot;);</span>
+<span class="nc" id="L99">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L100">			System.exit(0);</span>
+<span class="fc" id="L101">		}</span>
+<span class="fc" id="L102">		LOGGER.info(&quot;NumerosAmigos deleted successfully&quot;);</span>
+<span class="fc" id="L103">	}</span>
+
+	@Override
+	public void poblarTablaClientes(Cliente cliente) {
+		try {
+<span class="fc" id="L108">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L109">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L110">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L111">			LOGGER.info(&quot;Opened Clientes successfully&quot;);</span>
+
+<span class="fc" id="L113">			String sentenciaSQL = &quot;INSERT INTO CLientes (nombre,ci,numeroTelefonico,tipoPlan,fechaRegistro)&quot; + &quot;values(?,?,?,?,?)&quot;;</span>
+
+
+<span class="fc" id="L116">			try(PreparedStatement enunciadoPreparadoClientes = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L117">			enunciadoPreparadoClientes.setString(1,cliente.getNombre());</span>
+<span class="fc" id="L118">			enunciadoPreparadoClientes.setString(2,cliente.getCi());</span>
+<span class="fc" id="L119">			enunciadoPreparadoClientes.setInt(3,cliente.getNumeroTelefonico());</span>
+<span class="fc" id="L120">			enunciadoPreparadoClientes.setString(4,cliente.getTipoPlan());</span>
+<span class="fc" id="L121">			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat(&quot;HH:mm:ss dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L122">			enunciadoPreparadoClientes.setString(5,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());</span>
+<span class="fc" id="L123">			enunciadoPreparadoClientes.executeUpdate();}</span>
+<span class="fc" id="L124">			conexionBD.commit();</span>
+<span class="fc" id="L125">			conexionBD.close();</span>
+<span class="fc" id="L126">			LOGGER.info(&quot;Clientes closed successfully&quot;);</span>
+<span class="nc" id="L127">		} catch ( Exception e ) {</span>
+<span class="nc" id="L128">			LOGGER.info(&quot;entra al errror&quot;);</span>
+<span class="nc" id="L129">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L130">			System.exit(0);</span>
+<span class="fc" id="L131">		}</span>
+<span class="fc" id="L132">		LOGGER.info(&quot;Clientes created successfully&quot;);</span>
+<span class="fc" id="L133">	}</span>
+	
+	@Override
+	public void poblarTablaClientesConNumerosAmigos(ArrayList&lt;Integer&gt; numerosAmigos, int numeroTelefonico) {
+		try {
+<span class="fc" id="L138">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L139">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L140">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L141">			LOGGER.info(&quot;Opened numerosAmigos successfully&quot;);</span>
+			
+<span class="fc" id="L143">			String sentenciaSQL = &quot;INSERT INTO NumerosAmigos (numeroTelefonico,fechaRegistro,numeroAmigo1,numeroAmigo2,numeroAmigo3,numeroAmigo4)&quot; + &quot;values(?,?,?,?,?,?)&quot;;</span>
+
+
+<span class="fc" id="L146">			try(PreparedStatement enunciadoPreparadoClientesConAmigos = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L147">			enunciadoPreparadoClientesConAmigos.setInt(1,numeroTelefonico);</span>
+<span class="fc" id="L148">			SimpleDateFormat formatoFechaCompleta = new SimpleDateFormat(&quot;HH:mm:ss dd/MM/yyyy&quot;);</span>
+<span class="fc" id="L149">			enunciadoPreparadoClientesConAmigos.setString(2,formatoFechaCompleta.format(Calendar.getInstance().getTime()).toString());</span>
+<span class="fc" id="L150">			enunciadoPreparadoClientesConAmigos.setInt(3,numerosAmigos.get(0));</span>
+<span class="fc" id="L151">			enunciadoPreparadoClientesConAmigos.setInt(4,numerosAmigos.get(1));</span>
+<span class="fc" id="L152">			enunciadoPreparadoClientesConAmigos.setInt(5,numerosAmigos.get(2));</span>
+<span class="fc" id="L153">			enunciadoPreparadoClientesConAmigos.setInt(6,numerosAmigos.get(3));</span>
+<span class="fc" id="L154">			enunciadoPreparadoClientesConAmigos.executeUpdate();}</span>
+<span class="fc" id="L155">			conexionBD.commit();</span>
+<span class="fc" id="L156">			conexionBD.close();</span>
+<span class="fc" id="L157">			LOGGER.info(&quot;NumerosAmigos closed successfully&quot;);</span>
+<span class="nc" id="L158">		} catch ( Exception e ) {</span>
+<span class="nc" id="L159">			LOGGER.info(&quot;entra al errror&quot;);</span>
+<span class="nc" id="L160">			LOGGER.severe( e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L161">			System.exit(0);</span>
+<span class="fc" id="L162">		}</span>
+<span class="fc" id="L163">		LOGGER.info(&quot;NumerosAmigos created successfully&quot;);</span>
+<span class="fc" id="L164">	}</span>
+
+	@Override
+	public ArrayList&lt;ClienteModelo&gt; mostrarTablaClientes() {
+<span class="fc" id="L168">		ArrayList&lt;ClienteModelo&gt; clientesRecuperados = new ArrayList&lt;ClienteModelo&gt;();</span>
+		try {
+<span class="fc" id="L170">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L171">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L172">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L173">			LOGGER.info(&quot;Opened Clientes successfully&quot;);</span>
+
+<span class="fc" id="L175">			enunciadoSQL = conexionBD.createStatement();</span>
+<span class="fc" id="L176">			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( &quot;SELECT * FROM Clientes;&quot; );){</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">			while ( resultadoConsulta.next() ) {</span>
+<span class="fc" id="L179">				String nombre = resultadoConsulta.getString(&quot;nombre&quot;);</span>
+<span class="fc" id="L180">				String ci = resultadoConsulta.getString(&quot;ci&quot;);</span>
+<span class="fc" id="L181">				int numeroTelefonico = resultadoConsulta.getInt(&quot;numeroTelefonico&quot;);</span>
+<span class="fc" id="L182">				String tipoPlan = resultadoConsulta.getString(&quot;tipoPlan&quot;);</span>
+<span class="fc" id="L183">				String fechaRegistro = resultadoConsulta.getString(&quot;fechaRegistro&quot;);</span>
+				
+<span class="fc" id="L185">				ClienteModelo modelo = new ClienteModelo(nombre, ci,numeroTelefonico,tipoPlan,fechaRegistro);</span>
+				
+<span class="fc" id="L187">				clientesRecuperados.add(modelo);</span>
+<span class="fc" id="L188">			}</span>
+<span class="fc" id="L189">			resultadoConsulta.close();}</span>
+<span class="fc" id="L190">			enunciadoSQL.close();</span>
+<span class="fc" id="L191">			conexionBD.close();</span>
+<span class="fc" id="L192">			LOGGER.info(&quot;selection done successfully&quot;);	</span>
+<span class="fc" id="L193">			return clientesRecuperados;</span>
+<span class="nc" id="L194">		} catch ( Exception e ) {</span>
+<span class="nc" id="L195">			LOGGER.severe( e.getClass().getName() + &quot;: &quot; + e.getMessage() );</span>
+<span class="nc" id="L196">			System.exit(0);</span>
+<span class="nc" id="L197">			return clientesRecuperados;</span>
+		}
+		
+	}
+
+	@Override
+	public ArrayList&lt;ClienteModelo&gt; mostrarTablaClientesConNumerosAmigos() {
+<span class="fc" id="L204">		ArrayList&lt;ClienteModelo&gt; numerosAmigos = new ArrayList&lt;ClienteModelo&gt;();</span>
+		try {
+<span class="fc" id="L206">			ArrayList&lt;Integer&gt; numeros = new ArrayList&lt;Integer&gt;();</span>
+<span class="fc" id="L207">			Class.forName(ORG_SQLITE_JDBC);</span>
+<span class="fc" id="L208">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L209">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L210">			LOGGER.info(&quot;Opened NumerosAmigos successfully&quot;);</span>
+
+<span class="fc" id="L212">			enunciadoSQL = conexionBD.createStatement();</span>
+<span class="fc" id="L213">			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery( &quot;SELECT * FROM NumerosAmigos;&quot; );){</span>
+
+<span class="fc bfc" id="L215" title="All 2 branches covered.">			while ( resultadoConsulta.next() ) {</span>
+
+<span class="fc" id="L217">				int numeroTelefonico = resultadoConsulta.getInt(&quot;numeroTelefonico&quot;);</span>
+<span class="fc" id="L218">				String fechaRegistro = resultadoConsulta.getString(&quot;fechaRegistro&quot;);</span>
+<span class="fc" id="L219">				numeros.add(resultadoConsulta.getInt(&quot;numeroAmigo1&quot;));</span>
+<span class="fc" id="L220">				numeros.add(resultadoConsulta.getInt(&quot;numeroAmigo2&quot;));</span>
+<span class="fc" id="L221">				numeros.add(resultadoConsulta.getInt(&quot;numeroAmigo3&quot;));</span>
+<span class="fc" id="L222">				numeros.add(resultadoConsulta.getInt(&quot;numeroAmigo4&quot;));</span>
+				
+<span class="fc" id="L224">				ClienteModelo modelo = new ClienteModelo(numeroTelefonico, fechaRegistro,numeros);</span>
+				
+<span class="fc" id="L226">				numerosAmigos.add(modelo);</span>
+<span class="fc" id="L227">			}</span>
+<span class="fc" id="L228">			resultadoConsulta.close();}</span>
+<span class="fc" id="L229">			enunciadoSQL.close();</span>
+<span class="fc" id="L230">			conexionBD.close();</span>
+<span class="fc" id="L231">			LOGGER.info(&quot;selection done successfully&quot;);	</span>
+<span class="fc" id="L232">			return numerosAmigos;</span>
+<span class="nc" id="L233">		} catch ( Exception e ) {</span>
+<span class="nc" id="L234">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage() );</span>
+<span class="nc" id="L235">			System.exit(0);</span>
+<span class="nc" id="L236">			return numerosAmigos;</span>
+		}
+		
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

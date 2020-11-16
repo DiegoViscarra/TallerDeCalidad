@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorRegistroClientes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">controladores</a> &gt; <span class="el_source">ControladorRegistroClientes.java</span></div><h1>ControladorRegistroClientes.java</h1><pre class="source lang-java linenums">package controladores;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+
+import casosDeUso.IRegistroClientes;
+import spark.ModelAndView;
+import spark.Request;
+import spark.template.velocity.VelocityTemplateEngine;
+import spark.utils.IOUtils;
+
+public class ControladorRegistroClientes {
+	private IRegistroClientes registroClientes;
+<span class="fc" id="L24">	public ControladorRegistroClientes(IRegistroClientes registroClientes) {</span>
+<span class="fc" id="L25">		this.registroClientes = registroClientes;</span>
+<span class="fc" id="L26">		get(&quot;/cargarClientes&quot;, (request, response) -&gt; </span>
+        {
+<span class="fc" id="L28">        	Map&lt;String, Object&gt; modelo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L29">        	modelo.put(&quot;clientes&quot;, devolverClientes(this.registroClientes));</span>
+<span class="fc" id="L30">        	return new VelocityTemplateEngine().render(new ModelAndView(modelo, &quot;velocity/clientes/vistaPreviaDeClientesCargados.vm&quot;));</span>
+        });
+		
+<span class="fc" id="L33">		post(&quot;/api/submitCliente&quot;, (request, response) -&gt; </span>
+        {
+<span class="fc" id="L35">        	request.attribute(&quot;org.eclipse.jetty.multipartConfig&quot;, new MultipartConfigElement(&quot;/tmp&quot;));</span>
+<span class="fc" id="L36">        	Part uploadedFile = null;      	</span>
+        	try
+        	{
+<span class="fc" id="L39">        		guardarClientesCargados(registroClientes, request);	</span>
+        	}
+<span class="fc" id="L41">        	catch(IOException | ServletException e)</span>
+        	{
+<span class="fc" id="L43">        		e.printStackTrace();</span>
+<span class="fc" id="L44">        	}</span>
+<span class="fc" id="L45">        	Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L46">        	model.put(&quot;clientesCargados&quot;, devolverClientes(this.registroClientes));</span>
+<span class="fc" id="L47">            return new VelocityTemplateEngine().render(new ModelAndView(model, &quot;velocity/clientes/vistaPreviaDeClientesCargados.vm&quot;));</span>
+        });
+<span class="fc" id="L49">	}</span>
+
+	private void guardarClientesCargados(IRegistroClientes registroClientes, Request request)
+			throws IOException, ServletException {
+		Part archivoCargado;
+<span class="fc" id="L54">		archivoCargado = request.raw().getPart(&quot;myFileClient&quot;);</span>
+<span class="fc" id="L55">		InputStream entradaFlujo = archivoCargado.getInputStream();</span>
+<span class="fc" id="L56">		StringWriter escritor = new StringWriter();</span>
+<span class="fc" id="L57">		IOUtils.copy(entradaFlujo, escritor);</span>
+<span class="fc" id="L58">		String clientesCargadosEnCadena = escritor.toString();</span>
+<span class="fc" id="L59">		System.out.print(clientesCargadosEnCadena);</span>
+<span class="fc" id="L60">		registroClientes.guardarClientesCargados(clientesCargadosEnCadena);</span>
+<span class="fc" id="L61">	}</span>
+	
+	private static Object devolverClientes(IRegistroClientes registroClientes) {
+<span class="fc" id="L64">		   return registroClientes.devolverClientes();</span>
+		}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

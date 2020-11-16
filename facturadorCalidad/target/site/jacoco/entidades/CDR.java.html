@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CDR.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">entidades</a> &gt; <span class="el_source">CDR.java</span></div><h1>CDR.java</h1><pre class="source lang-java linenums">package entidades;
+
+import java.io.Serializable;
+
+import casosDeUso.IPlan;
+
+public class CDR implements Serializable{
+	private static final long serialVersionUID = 6250590643601878842L;
+	private int numeroTelefonoOrigen, numeroTelefonoDestino;
+	private double costoDeLlamada; 
+	private String duracionLlamada, fecha, hora;
+	
+<span class="fc" id="L13">	public CDR(int numeroTelefonoOrigen, int numeroTelefonoDestino, String duracionLlamada, String fecha, String hora){</span>
+<span class="fc" id="L14">		this.numeroTelefonoOrigen = numeroTelefonoOrigen;</span>
+<span class="fc" id="L15">		this.numeroTelefonoDestino = numeroTelefonoDestino;</span>
+<span class="fc" id="L16">		this.duracionLlamada = duracionLlamada;</span>
+<span class="fc" id="L17">		this.fecha = fecha;</span>
+<span class="fc" id="L18">		this.hora = hora;</span>
+<span class="fc" id="L19">		this.costoDeLlamada = -1;</span>
+<span class="fc" id="L20">	}</span>
+	
+	public void setCosto(double costoDeLlamada) {
+<span class="fc" id="L23">		costoDeLlamada = Math.round(costoDeLlamada * 10000);</span>
+<span class="fc" id="L24">		costoDeLlamada = costoDeLlamada/10000;</span>
+<span class="fc" id="L25">		this.costoDeLlamada = costoDeLlamada;</span>
+<span class="fc" id="L26">	}</span>
+	
+	public double getCostoDeLlamada() {
+<span class="fc" id="L29">		return costoDeLlamada;</span>
+	}
+	
+	public int getNumeroTelefonoOrigen() {
+<span class="fc" id="L33">		return numeroTelefonoOrigen;</span>
+	}
+	
+	public int getNumeroTelefonoDestino() {
+<span class="fc" id="L37">		return numeroTelefonoDestino;</span>
+	}
+	
+	public double convertirMinutosADecimal() {
+<span class="fc" id="L41">		double minutos = Double.parseDouble(duracionLlamada.split(&quot;:&quot;)[0]);</span>
+<span class="fc" id="L42">		double segundos = Double.parseDouble(duracionLlamada.split(&quot;:&quot;)[1])/60;</span>
+<span class="fc" id="L43">		return minutos + segundos;</span>
+	}
+	
+	public String getHora() {
+<span class="fc" id="L47">		return hora;</span>
+	}
+	
+	public double calcularCostoDeLlamada(IPlan plan) {
+<span class="fc" id="L51">		return plan.calcularCostoDeUnaLlamada(this);</span>
+	}
+	
+	public String getFecha() {
+<span class="fc" id="L55">		return fecha;</span>
+	}
+	public String getDuracionLLamada() {
+<span class="fc" id="L58">		return duracionLlamada;</span>
+	}
+}	
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

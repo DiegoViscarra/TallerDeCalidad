@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersistenciaBDCDR.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">repositorios</a> &gt; <span class="el_source">PersistenciaBDCDR.java</span></div><h1>PersistenciaBDCDR.java</h1><pre class="source lang-java linenums">package repositorios;
+
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.logging.Logger;
+
+import casosDeUso.IPersistenciaBDCDR;
+import entidades.CDR;
+import modelos.CDRModelo;
+
+
+<span class="fc" id="L16">public class PersistenciaBDCDR implements IPersistenciaBDCDR {</span>
+	private static final String SQL_CLASS = &quot;org.sqlite.JDBC&quot;;
+<span class="fc" id="L18">	private static final ConnectionDB connectionDB= new ConnectionDB();</span>
+<span class="fc" id="L19">	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());</span>
+<span class="fc" id="L20">	public Connection conexionBD = null;</span>
+<span class="fc" id="L21">	Statement enunciadoSQL = null;</span>
+	
+	@Override
+	public void crearTabla() {
+		try {
+<span class="fc" id="L26">			Class.forName(SQL_CLASS);</span>
+<span class="fc" id="L27">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+
+<span class="fc" id="L29">			enunciadoSQL = conexionBD.createStatement();</span>
+<span class="fc" id="L30">			String sentenciaSQL = &quot;CREATE TABLE IF NOT EXISTS CDR &quot; +</span>
+					&quot;( id\tINTEGER\tPRIMARY KEY\tNOT NULL,&quot; + 
+					&quot;numeroTelefonoOrigen\tINT\tNOT NULL,&quot; +
+					&quot; numeroTelefonoDestino\tINT\tNOT NULL, &quot; + 
+					&quot; duracionLlamada\tCHAR(20)\tNOT NULL, &quot; + 
+					&quot; fecha\tCHAR(20)\tNOT NULL,&quot;+
+					&quot; hora\tCHAR(20)\tNOT NULL,&quot; +
+					&quot; costo\tDOUBLE\tNOT NULL,&quot; +
+					&quot;fechaTarificacion\tCHAR(20)\tNOT NULL,&quot;+
+					&quot;horaTarificacion\tCHAR(20)\tNOT NULL)&quot;;
+<span class="fc" id="L40">			enunciadoSQL.executeUpdate(sentenciaSQL);</span>
+<span class="fc" id="L41">			enunciadoSQL.close();</span>
+<span class="fc" id="L42">			conexionBD.close();</span>
+<span class="nc" id="L43">		} catch ( Exception e ) {</span>
+<span class="nc" id="L44">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L45">			System.exit(0);</span>
+<span class="fc" id="L46">		}</span>
+<span class="fc" id="L47">	}</span>
+
+	@Override
+	public void poblarTabla(CDR registro) {
+		try {
+<span class="fc" id="L52">			Class.forName(SQL_CLASS);</span>
+<span class="fc" id="L53">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L54">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L55">			LOGGER.info(&quot;Opened CDR successfully&quot;);</span>
+
+<span class="fc" id="L57">			String sentenciaSQL = &quot;INSERT INTO CDR (numeroTelefonoOrigen,numeroTelefonoDestino,duracionLlamada,fecha,hora,costo,fechaTarificacion,horaTarificacion)&quot; + &quot;values(?,?,?,?,?,?,?,?)&quot;;</span>
+
+
+<span class="fc" id="L60">			try(PreparedStatement enunciadoPreparado = conexionBD.prepareStatement(sentenciaSQL)){</span>
+<span class="fc" id="L61">				enunciadoPreparado.setInt(1,registro.getNumeroTelefonoOrigen());</span>
+<span class="fc" id="L62">				enunciadoPreparado.setInt(2,registro.getNumeroTelefonoDestino());</span>
+<span class="fc" id="L63">				enunciadoPreparado.setString(3,registro.getDuracionLLamada());</span>
+<span class="fc" id="L64">				enunciadoPreparado.setString(4,registro.getFecha());</span>
+<span class="fc" id="L65">				enunciadoPreparado.setString(5,registro.getHora());</span>
+<span class="fc" id="L66">				enunciadoPreparado.setDouble(6,registro.getCostoDeLlamada());</span>
+<span class="fc" id="L67">				SimpleDateFormat formatoFecha = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+<span class="fc" id="L68">				enunciadoPreparado.setString(7,formatoFecha.format(Calendar.getInstance().getTime()).toString());</span>
+<span class="fc" id="L69">				SimpleDateFormat formatoHora = new SimpleDateFormat(&quot;HH:mm:ss&quot;);</span>
+<span class="fc" id="L70">				enunciadoPreparado.setString(8,formatoHora.format(Calendar.getInstance().getTime()).toString());</span>
+<span class="fc" id="L71">				enunciadoPreparado.executeUpdate();</span>
+<span class="fc" id="L72">				conexionBD.commit();</span>
+<span class="fc" id="L73">				conexionBD.close();</span>
+<span class="fc" id="L74">				LOGGER.info(&quot;CDR closed successfully&quot;);</span>
+<span class="fc" id="L75">				enunciadoPreparado.close();</span>
+			}
+<span class="nc" id="L77">		} catch ( Exception e ) {</span>
+<span class="nc" id="L78">			LOGGER.info(&quot;entra al errror&quot;);</span>
+<span class="nc" id="L79">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L80">			System.exit(0);</span>
+<span class="fc" id="L81">		}</span>
+		
+<span class="fc" id="L83">		LOGGER.info(&quot;CDR created successfully&quot;);</span>
+<span class="fc" id="L84">	}</span>
+	
+	@Override
+	public ArrayList&lt;CDRModelo&gt; mostrarTabla(String sentenciaSQL) {
+		try {
+<span class="fc" id="L89">			ArrayList&lt;CDRModelo&gt; registrosRecuperados = new ArrayList&lt;CDRModelo&gt;();</span>
+<span class="fc" id="L90">			Class.forName(SQL_CLASS);</span>
+<span class="fc" id="L91">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L92">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L93">			LOGGER.info(&quot;Opened CDR successfully&quot;);</span>
+			 
+<span class="fc" id="L95">			enunciadoSQL = conexionBD.createStatement();</span>
+<span class="fc" id="L96">			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery(sentenciaSQL)){</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">				while ( resultadoConsulta.next() ) {</span>
+<span class="fc" id="L98">					int numeroTelefonoOrigen = resultadoConsulta.getInt(&quot;numeroTelefonoOrigen&quot;);</span>
+<span class="fc" id="L99">					int numeroTelefonoDestino = resultadoConsulta.getInt(&quot;numeroTelefonoDestino&quot;);</span>
+<span class="fc" id="L100">					String  duracionLlamada = resultadoConsulta.getString(&quot;duracionLlamada&quot;);</span>
+<span class="fc" id="L101">					String  fecha = resultadoConsulta.getString(&quot;fecha&quot;);</span>
+<span class="fc" id="L102">					String  hora = resultadoConsulta.getString(&quot;hora&quot;);</span>
+<span class="fc" id="L103">					double costo  = resultadoConsulta.getDouble(&quot;costo&quot;);</span>
+<span class="fc" id="L104">					String fechaTarificacion = resultadoConsulta.getString(&quot;fechaTarificacion&quot;);</span>
+<span class="fc" id="L105">					String horaTarificacion = resultadoConsulta.getString(&quot;horaTarificacion&quot;);</span>
+<span class="fc" id="L106">					int id = resultadoConsulta.getInt(&quot;id&quot;);</span>
+					
+<span class="fc" id="L108">					CDRModelo modelo = new CDRModelo(id);</span>
+<span class="fc" id="L109">				    modelo.setDatosBasicosCDR(numeroTelefonoOrigen, numeroTelefonoDestino);</span>
+<span class="fc" id="L110">				    modelo.setDatosAvanzadosCDR(duracionLlamada, fecha, hora, fechaTarificacion, costo, horaTarificacion);</span>
+					
+<span class="fc" id="L112">					registrosRecuperados.add(modelo);</span>
+<span class="fc" id="L113">				}</span>
+<span class="fc" id="L114">				resultadoConsulta.close();</span>
+<span class="fc" id="L115">				enunciadoSQL.close();</span>
+<span class="fc" id="L116">				conexionBD.close();</span>
+<span class="fc" id="L117">				LOGGER.info(&quot;selection done successfully&quot;);</span>
+<span class="fc" id="L118">				return registrosRecuperados;</span>
+			}
+<span class="nc" id="L120">		} catch ( Exception e ) {</span>
+<span class="nc" id="L121">			LOGGER.severe( e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L122">			System.exit(0);</span>
+<span class="nc" id="L123">			return new ArrayList&lt;CDRModelo&gt;();</span>
+		}
+		
+	}
+	
+	@Override
+	public void borrarTodosLosDatosDeCDR() {
+		try {
+<span class="fc" id="L131">			Class.forName(SQL_CLASS);</span>
+<span class="fc" id="L132">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L133">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L134">			LOGGER.info(&quot;Opened CDR successfully&quot;);</span>
+			
+<span class="fc" id="L136">			String sentenciaSQL = &quot;DELETE FROM CDR&quot;;</span>
+<span class="fc" id="L137">			try(PreparedStatement enunciadoPreparadoCDR = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L138">				enunciadoPreparadoCDR.executeUpdate();</span>
+<span class="fc" id="L139">				conexionBD.commit();</span>
+<span class="fc" id="L140">				conexionBD.close();</span>
+<span class="fc" id="L141">				LOGGER.info(&quot;CDR closed successfully&quot;);</span>
+			}
+		}
+<span class="nc" id="L144">		catch ( Exception e ) {</span>
+<span class="nc" id="L145">			LOGGER.info(&quot;entra al error&quot;);</span>
+<span class="nc" id="L146">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L147">			System.exit(0);</span>
+<span class="fc" id="L148">		}</span>
+<span class="fc" id="L149">		LOGGER.info(&quot;CDR deleted successfully&quot;);</span>
+<span class="fc" id="L150">	}</span>
+	
+	
+	public void borrarTodosLosDatosDeUsuario() {
+		try {
+<span class="fc" id="L155">			Class.forName(SQL_CLASS);</span>
+<span class="fc" id="L156">			conexionBD = DriverManager.getConnection(connectionDB.getConnection(&quot;Users.txt&quot;));</span>
+<span class="fc" id="L157">			conexionBD.setAutoCommit(false);</span>
+<span class="fc" id="L158">			LOGGER.info(&quot;Opened CDR successfully&quot;);</span>
+			
+<span class="fc" id="L160">			String sentenciaSQL = &quot;DELETE FROM Clientes&quot;;</span>
+<span class="fc" id="L161">			try(PreparedStatement enunciadoPreparadoCDR = conexionBD.prepareStatement(sentenciaSQL);){</span>
+<span class="fc" id="L162">				enunciadoPreparadoCDR.executeUpdate();</span>
+<span class="fc" id="L163">				conexionBD.commit();</span>
+<span class="fc" id="L164">				conexionBD.close();</span>
+<span class="fc" id="L165">				LOGGER.info(&quot;CDR closed successfully&quot;);</span>
+			}
+		}
+<span class="nc" id="L168">		catch ( Exception e ) {</span>
+<span class="nc" id="L169">			LOGGER.info(&quot;entra al error&quot;);</span>
+<span class="nc" id="L170">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
+<span class="nc" id="L171">			System.exit(0);</span>
+<span class="fc" id="L172">		}</span>
+<span class="fc" id="L173">		LOGGER.info(&quot;CDR deleted successfully&quot;);</span>
+<span class="fc" id="L174">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

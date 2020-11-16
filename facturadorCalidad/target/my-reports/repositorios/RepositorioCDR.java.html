@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RepositorioCDR.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">repositorios</a> &gt; <span class="el_source">RepositorioCDR.java</span></div><h1>RepositorioCDR.java</h1><pre class="source lang-java linenums">package repositorios;
+
+import java.util.ArrayList;
+
+import casosDeUso.IRepositorioCDR;
+import entidades.CDR;
+
+<span class="fc" id="L8">public class RepositorioCDR implements IRepositorioCDR {</span>
+	
+<span class="fc" id="L10">	private ArrayList&lt;CDR&gt; registrosCargados = new ArrayList&lt;CDR&gt;();</span>
+	
+	
+	@Override
+	public void registrarCDRs(String registros) {
+		
+<span class="fc" id="L16">		int numeroTelefonicoOrigen = 0, numeroTelefonicoDestino = 0;</span>
+<span class="fc" id="L17">		String duracionDeLaLlamada = null, fecha = null, hora = null;</span>
+<span class="fc" id="L18">		String[] registrosDivididos = registros.split(&quot;\\r?\\n|;&quot;);</span>
+<span class="fc" id="L19">		int i =0;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">		while(i&lt;registrosDivididos.length) {</span>
+<span class="fc" id="L21">			numeroTelefonicoOrigen=Integer.parseInt(registrosDivididos[i]);i++;</span>
+<span class="fc" id="L22">			numeroTelefonicoDestino=Integer.parseInt(registrosDivididos[i]);i++;</span>
+<span class="fc" id="L23">			duracionDeLaLlamada=registrosDivididos[i];i++;</span>
+<span class="fc" id="L24">			fecha=registrosDivididos[i];i++;</span>
+<span class="fc" id="L25">			hora=registrosDivididos[i];	</span>
+<span class="fc" id="L26">			CDR nuevoCDR = new CDR(numeroTelefonicoOrigen, numeroTelefonicoDestino, duracionDeLaLlamada, fecha, hora);</span>
+<span class="fc" id="L27">			registrosCargados.add(nuevoCDR);</span>
+<span class="fc" id="L28">			i++;</span>
+<span class="fc" id="L29">		}	</span>
+<span class="fc" id="L30">	}</span>
+	@Override
+	public ArrayList&lt;CDR&gt; obtenerRegistrosNoTarificados() {
+<span class="fc" id="L33">		return registrosCargados;</span>
+	}
+
+	@Override
+	public void vaciarRegistros() {
+<span class="fc" id="L38">		registrosCargados.clear();</span>
+<span class="fc" id="L39">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ControladorCargaCDRs.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">controladores</a> &gt; <span class="el_source">ControladorCargaCDRs.java</span></div><h1>ControladorCargaCDRs.java</h1><pre class="source lang-java linenums">package controladores;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
+import javax.servlet.http.Part;
+
+import casosDeUso.IRegistroCDR;
+import entidades.CDR;
+import spark.ModelAndView;
+import spark.Request;
+import spark.template.velocity.VelocityTemplateEngine;
+import spark.utils.IOUtils;
+
+public class ControladorCargaCDRs {
+	private IRegistroCDR registroCDR;
+<span class="fc" id="L26">	public ControladorCargaCDRs(IRegistroCDR registroCDR) {</span>
+<span class="fc" id="L27">		this.registroCDR = registroCDR;</span>
+<span class="fc" id="L28">		get(&quot;/registrosCargados&quot;, (request, response) -&gt;</span>
+        {
+<span class="fc" id="L30">        	Map&lt;String, Object&gt; modelo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L31">        	modelo.put(&quot;registrosCargados&quot;, devolverRegistrosCargados(this.registroCDR));</span>
+<span class="fc" id="L32">        	return new VelocityTemplateEngine().render(new ModelAndView(modelo, &quot;velocity/registros/vistaPreviaDeCDRSCargados.vm&quot;));</span>
+        });
+        
+<span class="fc" id="L35">        post(&quot;/api/submit&quot;, (request, response) -&gt; </span>
+        {
+<span class="fc" id="L37">        	request.attribute(&quot;org.eclipse.jetty.multipartConfig&quot;, new MultipartConfigElement(&quot;/tmp&quot;));</span>
+<span class="fc" id="L38">        	Part archivoCargado = null;	      	</span>
+        	try
+        	{
+<span class="fc" id="L41">        		guardarCDRsCargados(registroCDR, request);	</span>
+        	}
+<span class="fc" id="L43">        	catch(IOException | ServletException e)</span>
+        	{
+<span class="fc" id="L45">        		e.printStackTrace();</span>
+<span class="fc" id="L46">        	}</span>
+<span class="fc" id="L47">        	Map&lt;String, Object&gt; modelo = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L48">        	modelo.put(&quot;registrosCargados&quot;, devolverRegistrosCargados(this.registroCDR));</span>
+<span class="fc" id="L49">        	modelo.put(&quot;Title&quot;,&quot;CDRs Cargados&quot;);</span>
+<span class="fc" id="L50">            return new VelocityTemplateEngine().render(new ModelAndView(modelo, &quot;velocity/registros/vistaPreviaDeCDRSCargados.vm&quot;));</span>
+
+        });
+<span class="fc" id="L53">	}</span>
+
+
+
+	private void guardarCDRsCargados(IRegistroCDR registroCDR, Request request) throws IOException, ServletException {
+		Part archivoCargado;
+<span class="fc" id="L59">		archivoCargado = request.raw().getPart(&quot;myFile&quot;);</span>
+<span class="fc" id="L60">		InputStream flujoDeEntrada = archivoCargado.getInputStream();</span>
+<span class="fc" id="L61">		StringWriter escritor = new StringWriter();</span>
+<span class="fc" id="L62">		IOUtils.copy(flujoDeEntrada, escritor);</span>
+<span class="fc" id="L63">		String cadenaCDRsCargados = escritor.toString();</span>
+<span class="fc" id="L64">		registroCDR.guardarTemporalmenteCDRs(cadenaCDRsCargados);</span>
+<span class="fc" id="L65">	}</span>
+	
+
+
+	private static ArrayList&lt;CDR&gt; devolverRegistrosCargados(IRegistroCDR registroCDR) {
+<span class="fc" id="L70">    	return registroCDR.obtenerRegistrosNoTarificados();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="119" failures="0" name="TestSuite" time="7.998" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="11.0.8+10-LTS"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.8\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="D:\II-2020\GESTION DE CALIDAD DE SISTEMAS (CANEDO ARZE CARLOS OSWALDO)\Practica 3\2\facturadorCalidad"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="BO"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="D:\II-2020\GESTION DE CALIDAD DE SISTEMAS (CANEDO ARZE CARLOS OSWALDO)\Practica 3\2\facturadorCalidad"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="11.0.8+10-LTS"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\Fidel\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="classworlds.conf" value="C:\Users\Fidel\eclipse-workspace3\.metadata\.plugins\org.eclipse.m2e.launching\launches\m2conf8742553438113306086.tmp"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-11.0.8\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Python39\Scripts\;C:\Python39\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Python38\Scripts\;C:\Python38\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\Users\Fidel\AppData\Local\Microsoft\WindowsApps;C:\Users\Fidel\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Fidel\AppData\Local\GitHubDesktop\bin;C:\Users\Fidel\AppData\Roaming\npm;C:\Users\Fidel\.dotnet\tools;."/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="55.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="user.home" value="C:\Users\Fidel"/>
+    <property name="user.timezone" value="America/La_Paz"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="user.name" value="Fidel"/>
+    <property name="java.class.path" value="C:\Users\Fidel\Desktop\eclipse\plugins\org.eclipse.m2e.maven.runtime_1.16.0.20200610-1735\jars\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B test"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-11.0.8"/>
+    <property name="user.language" value="es"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="11.0.8"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="D:\II-2020\GESTION DE CALIDAD DE SISTEMAS (CANEDO ARZE CARLOS OSWALDO)\Practica 3\2\facturadorCalidad\EMBEDDED"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2020-07-14"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.vendor.version" value="18.9"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="casosDeUsoTest.CalculadorCostoLlamadaTest" name="asignarCostoYConseguirCostoDeLlamadaCasoCalculosimpleTest" time="0.027"/>
+  <testcase classname="casosDeUsoTest.CalculadorCostoLlamadaTest" name="asignarCostoYConseguirCostoDeLlamadaCasoDefaultTest" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="noEstaEnHorarioReducido" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="noEstaEnHorarioSuperReducido" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaPlanNoRegistrado" time="0.001"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaPostpago" time="0.001"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaPrepagoNormal" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaPrepagoReducida" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaPrepagoSuperReducida" time="0"/>
+  <testcase classname="casosDeUsoTest.ObtenerMontoTarifaTest" name="obtenerMontoTarifaWow" time="0"/>
+  <testcase classname="casosDeUsoTest.PersistenciaFiltrosTest" name="coincidenEnMesTest" time="0"/>
+  <testcase classname="casosDeUsoTest.PersistenciaFiltrosTest" name="esNumeroInvalidoDeMesTest" time="0.001"/>
+  <testcase classname="casosDeUsoTest.PersistenciaFiltrosTest" name="filtrarRegistrosPorMesTest" time="0"/>
+  <testcase classname="casosDeUsoTest.PersistenciaFiltrosTest" name="obtenerMesLiteralTest" time="0"/>
+  <testcase classname="casosDeUsoTest.PersistenciaFiltrosTest" name="sumarTotalDelMesTest" time="0"/>
+  <testcase classname="casosDeUsoTest.PersistenciaSerializacionTest" name="deserializar" time="0.084"/>
+  <testcase classname="casosDeUsoTest.PersistenciaTest" name="obtenerFacturaConClienteNoRegistrado" time="0.01"/>
+  <testcase classname="casosDeUsoTest.PersistenciaTest" name="obtenerFacturaDelMesParaClienteTest" time="0.017"/>
+  <testcase classname="casosDeUsoTest.PersistenciaVistasTest" name="mostrarPersistenciaAmigosEnBD" time="0.009"/>
+  <testcase classname="casosDeUsoTest.PersistenciaVistasTest" name="mostrarPersistenciaCDREnBD" time="0.01"/>
+  <testcase classname="casosDeUsoTest.PersistenciaVistasTest" name="mostrarPersistenciaCDRFiltroMes" time="0.023"/>
+  <testcase classname="casosDeUsoTest.PersistenciaVistasTest" name="mostrarPersistenciaClienteEnBD" time="0.01"/>
+  <testcase classname="casosDeUsoTest.RegistroCDRTest" name="guardarTemporalmenteCDRs" time="0.001"/>
+  <testcase classname="casosDeUsoTest.RegistroClientesTest" name="guardarClientesCargados" time="0.105"/>
+  <testcase classname="casosDeUsoTest.RegistroClientesTest" name="guardarTemporalmenteCDRs" time="0.188"/>
+  <testcase classname="casosDeUsoTest.RegistroClientesTest" name="llenarListaClientes" time="0.135"/>
+  <testcase classname="casosDeUsoTest.RegistroClientesTest" name="llenarListaClientesPlanWow" time="0.316"/>
+  <testcase classname="casosDeUsoTest.RegistroClientesTest" name="noCoincidenEnNumeroTelefonico" time="0.21"/>
+  <testcase classname="casosDeUsoTest.TarificacionTest" name="CDRNoTarificadoTest" time="0.001"/>
+  <testcase classname="casosDeUsoTest.TarificacionTest" name="CDRTarificadoTest" time="0"/>
+  <testcase classname="casosDeUsoTest.TarificacionTest" name="tarificarRegistroTest" time="0"/>
+  <testcase classname="casosDeUsoTest.TarificacionTest" name="tarificarRegistrosTest" time="0"/>
+  <testcase classname="controladoresTest.ControladorCargaCDRsTest" name="getRegistrosCargados" time="0.884"/>
+  <testcase classname="controladoresTest.ControladorCargaCDRsTest" name="postApiSubmit" time="0.531"/>
+  <testcase classname="controladoresTest.ControladorCargaCDRsTest" name="postApiSubmitSinArchivo" time="0.031"/>
+  <testcase classname="controladoresTest.ControladorCDRBDTest" name="cdrGuardadoBDTest" time="0.009"/>
+  <testcase classname="controladoresTest.ControladorCDRBDTest" name="filtroPorFechaTest" time="0.011"/>
+  <testcase classname="controladoresTest.ControladorCDRSerializacionTest" name="cdrGuardadoBDTest" time="0.009"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="cambiarModoDeConfiguracionArchivo" time="0.025"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="cambiarModoDeConfiguracionDB" time="0.038"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="configuracion" time="0.018"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="devolverRegistrosNoTarificadosTest" time="0"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="devolverRegistrosTarificadosTest" time="0.002"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="getCDR" time="0.029"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="getCDRRecuperados" time="0.033"/>
+  <testcase classname="controladoresTest.ControladorCDRTest" name="guardar" time="0.023"/>
+  <testcase classname="controladoresTest.ControladorClientesTest" name="getClientes" time="0.028"/>
+  <testcase classname="controladoresTest.ControladorClientesTest" name="recuperarClientesAmigosTest" time="0.002"/>
+  <testcase classname="controladoresTest.ControladorClientesTest" name="recuperarClientesTest" time="0.002"/>
+  <testcase classname="controladoresTest.ControladorFacturacionTest" name="devolverFacturaDeUnMes" time="0.008"/>
+  <testcase classname="controladoresTest.ControladorFacturacionTest" name="getFactura" time="0.021"/>
+  <testcase classname="controladoresTest.ControladorPrincipalTarificadorTest" name="revisarDeBDClientesExistentes" time="0.001"/>
+  <testcase classname="controladoresTest.ControladorPrincipalTarificadorTest" name="revisarDeBDClientesExistentesDespueDeGuardarUno" time="0.408"/>
+  <testcase classname="controladoresTest.ControladorRegistroClientesTest" name="getRegistrosCargados" time="0.02"/>
+  <testcase classname="controladoresTest.ControladorRegistroClientesTest" name="postApiSubmit" time="0.53"/>
+  <testcase classname="controladoresTest.ControladorRegistroClientesTest" name="postApiSubmitSinArchivo" time="0.025"/>
+  <testcase classname="entidadesTest.CDRTest" name="asignarCostoYConseguirCostoDeLlamadaTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="calcularElCostoDeLlamadaTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conseguirDuracionDeLlamadaTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conseguirFechaDeLlamadaTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conseguirHoraDeLlamadaTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conseguirNumeroDeTelefonoDeDestinoTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conseguirNumeroDeTelefonoDeOrigenTest" time="0"/>
+  <testcase classname="entidadesTest.CDRTest" name="conversiónDeTiempoDeLlamadaADecimalTest" time="0"/>
+  <testcase classname="entidadesTest.ClienteTest" name="asignarNumeroTelefonicoYConseguirNumeroTelefonicoTest" time="0"/>
+  <testcase classname="entidadesTest.ClienteTest" name="asignarPlanYConseguirPlanTest" time="0"/>
+  <testcase classname="entidadesTest.ClienteTest" name="asignarTipoDePlanYConseguirTipoDePlanTest" time="0"/>
+  <testcase classname="entidadesTest.ClienteTest" name="conseguirCiTest" time="0"/>
+  <testcase classname="entidadesTest.ClienteTest" name="conseguirNombreTest" time="0"/>
+  <testcase classname="entidadesTest.PlanPostpagoTest" name="calcularCostoDeUnaLlamada" time="0.002"/>
+  <testcase classname="entidadesTest.PlanPostpagoTest" name="obtenerTipoDeTarifa" time="0"/>
+  <testcase classname="entidadesTest.PlanPrepagoTest" name="calcularCostoDeUnaLlamada" time="0"/>
+  <testcase classname="entidadesTest.PlanPrepagoTest" name="obtenerTipoDeTarifa" time="0"/>
+  <testcase classname="entidadesTest.PlanWowTest" name="calculatePriceCallBelongsToFriends" time="0"/>
+  <testcase classname="entidadesTest.PlanWowTest" name="calculatePriceExternalNumber" time="0"/>
+  <testcase classname="entidadesTest.UserTest" name="userNameTest" time="0"/>
+  <testcase classname="entidadesTest.UserTest" name="userPasswordTest" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerCostoDeLlamada" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerDuracionLlamada" time="0.001"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerFecha" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerFechaTarificacion" time="0.001"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerHora" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerHoraTarificacion" time="0.001"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerId" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerNumeroTelefonoDestino" time="0"/>
+  <testcase classname="modelosTest.CDRModeloTest" name="obtenerNumeroTelefonoOrigen" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirCiTest" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirFechaDeRegistroTest" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirNombreTest" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirNumeroTelefonicoTest" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirNumerosDeAmigosTest" time="0"/>
+  <testcase classname="modelosTest.ClienteModeloTest" name="conseguirTipoDePlanTest" time="0"/>
+  <testcase classname="modelosTest.FacturaModeloTest" name="mesTest" time="0.001"/>
+  <testcase classname="modelosTest.FacturaModeloTest" name="montoMesTest" time="0"/>
+  <testcase classname="modelosTest.FacturaModeloTest" name="numeroTelefonicoTest" time="0"/>
+  <testcase classname="repositoriosTest.ConnectionBDTest" name="getUserAndPassException" time="0"/>
+  <testcase classname="repositoriosTest.FactoriaPlanTest" name="getPlanNull" time="0"/>
+  <testcase classname="repositoriosTest.FactoriaPlanTest" name="getPlanNull2" time="0"/>
+  <testcase classname="repositoriosTest.FactoriaPlanTest" name="getPlanPostpago" time="0.001"/>
+  <testcase classname="repositoriosTest.FactoriaPlanTest" name="getPlanPrepago" time="0"/>
+  <testcase classname="repositoriosTest.FactoriaPlanTest" name="getPlanWOW" time="0.001"/>
+  <testcase classname="repositoriosTest.PersistenciaArchivosTest" name="deserializarTodosLosArchivosTest" time="3.013"/>
+  <testcase classname="repositoriosTest.PersistenciaArchivosTest" name="serializarTest" time="0.003"/>
+  <testcase classname="repositoriosTest.PersistenciaBDCDRTest" name="borrarDatos" time="0.118"/>
+  <testcase classname="repositoriosTest.PersistenciaBDCDRTest" name="crearTabla" time="0.012"/>
+  <testcase classname="repositoriosTest.PersistenciaBDCDRTest" name="mostrarTabla" time="0.002"/>
+  <testcase classname="repositoriosTest.PersistenciaBDCDRTest" name="poblarTabla" time="0.117"/>
+  <testcase classname="repositoriosTest.PersistenciaBDClientesTest" name="crearTablaClientesYNumerosAmigos" time="0.01"/>
+  <testcase classname="repositoriosTest.PersistenciaBDClientesTest" name="mostrarTablaDeClientes" time="0.118"/>
+  <testcase classname="repositoriosTest.PersistenciaBDClientesTest" name="mostrarTablaDeNumerosAmigos" time="0.107"/>
+  <testcase classname="repositoriosTest.PersistenciaBDClientesTest" name="poblarTablaDeClientes" time="0.119"/>
+  <testcase classname="repositoriosTest.PersistenciaBDClientesTest" name="poblarTablaDeNumerosDeAmigos" time="0.144"/>
+  <testcase classname="repositoriosTest.RepositorioCDRTest" name="registrarCDRyObtnerLosRegistrosNoTarificadosTest" time="0"/>
+  <testcase classname="repositoriosTest.RepositorioCDRTest" name="registrarCDRyVaciarLosRegistrosTest" time="0.001"/>
+  <testcase classname="repositoriosTest.RepositorioClientesTest" name="buscarClienteTest" time="0.001"/>
+  <testcase classname="repositoriosTest.RepositorioClientesTest" name="registrarClienteAmigosEnDBTest" time="0.284"/>
+  <testcase classname="repositoriosTest.RepositorioClientesTest" name="registrarClienteNormalEnDBTest" time="0.104"/>
+  <testcase classname="repositoriosTest.RepositorioClientesTest" name="registrarNuevoClientePlanNormalTest" time="0"/>
+  <testcase classname="repositoriosTest.RepositorioClientesTest" name="registrarNuevoClientePlanNumerosAmigos" time="0"/>
+</testsuite>

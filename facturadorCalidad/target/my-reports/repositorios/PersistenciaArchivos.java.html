@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PersistenciaArchivos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">repositorios</a> &gt; <span class="el_source">PersistenciaArchivos.java</span></div><h1>PersistenciaArchivos.java</h1><pre class="source lang-java linenums">package repositorios;
+
+import java.io.*;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.javatuples.Pair;
+
+import casosDeUso.IPersistenciaArchivos;
+import entidades.CDR;
+import io.vavr.Tuple2;
+import java.util.logging.Logger;
+
+<span class="fc" id="L19">public class PersistenciaArchivos implements IPersistenciaArchivos {</span>
+	private static final String EXCEPTION_CAUGHT = &quot;Exception caught&quot;;
+<span class="fc" id="L21">	private static String rutaCarpeta = Paths.get(&quot;.&quot;).toAbsolutePath().normalize().toString()+&quot;\\Serializaciones\\&quot;;</span>
+<span class="fc" id="L22">	private final static Logger LOGGER = Logger.getLogger(PersistenciaArchivos.class.getName());</span>
+	@Override
+	public String serializar(ArrayList&lt;CDR&gt; registrosTelefonicos) {
+		try {
+<span class="fc" id="L26">			String fechaDocumento = obtenerFechaNombreDocumento();</span>
+<span class="fc" id="L27">            File documento = new File(fechaDocumento + &quot;.txt&quot;); </span>
+<span class="fc" id="L28">            String rutaActual = rutaCarpeta + documento.toString();</span>
+         
+            try(
+<span class="fc" id="L31">        		FileOutputStream archivoDeSalida = new FileOutputStream((rutaActual));</span>
+<span class="fc" id="L32">				ObjectOutputStream objetoDeSalida = new ObjectOutputStream(archivoDeSalida);){</span>
+<span class="fc" id="L33">				objetoDeSalida.writeObject(registrosTelefonicos);</span>
+<span class="fc" id="L34">				objetoDeSalida.close();</span>
+<span class="fc" id="L35">				archivoDeSalida.close();</span>
+<span class="fc" id="L36">				return fechaDocumento;</span>
+			}
+<span class="nc" id="L38">		} catch (IOException ex) {</span>
+<span class="nc" id="L39">			LOGGER.severe(EXCEPTION_CAUGHT);</span>
+<span class="nc" id="L40">			return &quot;&quot;;</span>
+		}	
+	}
+	private String obtenerFechaNombreDocumento() {
+<span class="fc" id="L44">		Date fecha = new Date();</span>
+<span class="fc" id="L45">		DateFormat formatoFechaHora = new SimpleDateFormat(&quot;HH-mm-ss dd-MM-yyyy&quot;);</span>
+<span class="fc" id="L46">		String fechaDocumento = formatoFechaHora.format(fecha).toString();</span>
+<span class="fc" id="L47">		fechaDocumento = fechaDocumento.replace(&quot; &quot;, &quot;-&quot;);</span>
+<span class="fc" id="L48">		return fechaDocumento;</span>
+	}
+	@Override
+	public ArrayList&lt;CDR&gt; deserializar(String nombreArchivo) {
+		try {
+<span class="fc" id="L53">			File documento = new File(nombreArchivo); </span>
+<span class="fc" id="L54">			String rutaActual = rutaCarpeta + documento.toString();</span>
+<span class="fc" id="L55">			ArrayList&lt;CDR&gt; lecturaRegistros = new ArrayList&lt;CDR&gt;();</span>
+			try(
+<span class="fc" id="L57">				FileInputStream archivoEntrada = new FileInputStream(rutaActual);</span>
+<span class="fc" id="L58">				ObjectInputStream objetoEntrada = new ObjectInputStream(archivoEntrada);){</span>
+<span class="fc" id="L59">				lecturaRegistros = (ArrayList&lt;CDR&gt;)objetoEntrada.readObject();</span>
+<span class="fc" id="L60">				objetoEntrada.close();</span>
+<span class="fc" id="L61">				return lecturaRegistros;</span>
+			}
+<span class="nc" id="L63">		} catch (IOException ex) {</span>
+<span class="nc" id="L64">			LOGGER.severe(EXCEPTION_CAUGHT);</span>
+		}
+<span class="nc" id="L66">        catch(ClassNotFoundException ex) {</span>
+<span class="nc" id="L67">        	LOGGER.severe(EXCEPTION_CAUGHT);</span>
+<span class="nc" id="L68">        }</span>
+<span class="nc" id="L69">		ArrayList&lt;CDR&gt; lecturaRegistros = null;</span>
+<span class="nc" id="L70">		return lecturaRegistros;</span>
+	}
+	
+	private ArrayList&lt;String&gt; listarDirectorio() {
+<span class="fc" id="L74">		File directorio = new File(rutaCarpeta);</span>
+<span class="fc" id="L75">		String[] ficheros = directorio.list();</span>
+<span class="fc" id="L76">		ArrayList&lt;String&gt; listaFicheros = new ArrayList&lt;String&gt;();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (ficheros != null) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">		  for (int x=0;x&lt;ficheros.length;x++) {</span>
+<span class="fc" id="L79">			  LOGGER.info(ficheros[x]);</span>
+<span class="fc" id="L80">			  listaFicheros.add(ficheros[x]);</span>
+		  }
+		}
+<span class="fc" id="L83">		return listaFicheros;</span>
+	}
+	@Override
+	public ArrayList&lt;Pair&lt;String,ArrayList&lt;CDR&gt;&gt;&gt; deserializarTodosLosArchivos() {
+<span class="fc" id="L87">		ArrayList&lt;Pair&lt;String,ArrayList&lt;CDR&gt;&gt;&gt; archivosDeserializados = new ArrayList&lt;Pair&lt;String,ArrayList&lt;CDR&gt;&gt;&gt;();</span>
+		ArrayList&lt;String&gt;archivos;
+<span class="fc" id="L89">		archivos = listarDirectorio();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">		for(String nombre : archivos) {</span>
+<span class="fc" id="L91">			Pair&lt;String, ArrayList&lt;CDR&gt;&gt; par = new Pair&lt;String, ArrayList&lt;CDR&gt;&gt;(nombre, deserializar(nombre));</span>
+<span class="fc" id="L92">			archivosDeserializados.add(par);</span>
+<span class="fc" id="L93">		}</span>
+<span class="fc" id="L94">		return archivosDeserializados;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

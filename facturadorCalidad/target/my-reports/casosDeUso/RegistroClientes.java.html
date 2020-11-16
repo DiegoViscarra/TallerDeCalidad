@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RegistroClientes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">facturadorLlamadas</a> &gt; <a href="index.source.html" class="el_package">casosDeUso</a> &gt; <span class="el_source">RegistroClientes.java</span></div><h1>RegistroClientes.java</h1><pre class="source lang-java linenums">package casosDeUso;
+
+import java.util.ArrayList;
+
+import entidades.Cliente;
+import modelos.ClienteModelo;
+
+public class RegistroClientes implements IRegistroClientes {
+
+	private IRepositorioCliente repositorioCliente;
+	private IPersistenciaBDClientes persistenciaBDClientes;
+<span class="fc" id="L12">	public RegistroClientes(IRepositorioCliente repositorioCliente, IPersistenciaBDClientes persistenciaBDClientes) {</span>
+<span class="fc" id="L13">		this.repositorioCliente = repositorioCliente;</span>
+<span class="fc" id="L14">		this.persistenciaBDClientes = persistenciaBDClientes;</span>
+<span class="fc" id="L15">	}</span>
+	
+
+	@Override
+	public Cliente buscarCliente(int numeroTelefonico) {
+<span class="fc" id="L20">		return repositorioCliente.buscarCliente(numeroTelefonico);</span>
+	}
+
+	@Override
+	public ArrayList&lt;Cliente&gt; devolverClientes() {
+<span class="fc" id="L25">		return repositorioCliente.devolverClientes();</span>
+	}
+
+	@Override
+	public void guardarClientesCargados(String RegistroClientes) {
+<span class="fc" id="L30">		repositorioCliente.registrarClientes(RegistroClientes);</span>
+<span class="fc" id="L31">	}</span>
+	
+	@Override
+	public void llenarListaClientes() {
+<span class="fc" id="L35">		ArrayList&lt;ClienteModelo&gt; clientes = persistenciaBDClientes.mostrarTablaClientes();</span>
+<span class="fc" id="L36">		ArrayList&lt;ClienteModelo&gt; clientesAmigos = persistenciaBDClientes.mostrarTablaClientesConNumerosAmigos();</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		for(ClienteModelo cliente : clientes) {</span>
+<span class="fc" id="L38">			Cliente clienteEntidad = convertirACliente(cliente);</span>
+<span class="fc" id="L39">			recuperarClienteEnSistema(clientesAmigos, cliente, clienteEntidad);</span>
+<span class="fc" id="L40">		}</span>
+		
+<span class="fc" id="L42">	}</span>
+
+	private void recuperarClienteEnSistema(ArrayList&lt;ClienteModelo&gt; clientesAmigos, ClienteModelo cliente,
+			Cliente clienteEntidad) {
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if(tienePlanWow(cliente)) {</span>
+<span class="fc" id="L47">			ArrayList&lt;Integer&gt; numerosAmigosDelCliente = buscarRegistroAmigos(cliente.getNumeroTelefonico(), clientesAmigos);</span>
+<span class="fc" id="L48">			repositorioCliente.registrarNuevoClientePlanNumerosAmigos(clienteEntidad, cliente.getTipoPlan(), numerosAmigosDelCliente);</span>
+<span class="fc" id="L49">		}</span>
+		else {
+<span class="fc" id="L51">			repositorioCliente.registrarNuevoClientePlanNormal(clienteEntidad, cliente.getTipoPlan());</span>
+		}
+<span class="fc" id="L53">	}</span>
+
+	private boolean tienePlanWow(ClienteModelo cliente) {
+<span class="fc" id="L56">		return cliente.getTipoPlan().equalsIgnoreCase(&quot;WOW&quot;);</span>
+	}
+	
+	ArrayList&lt;Integer&gt; buscarRegistroAmigos(Integer numeroCliente, ArrayList&lt;ClienteModelo&gt; clientesAmigos){
+<span class="fc" id="L60">		ArrayList&lt;Integer&gt; numerosAmigos = null;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for(ClienteModelo cliente:clientesAmigos) {</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">			if(coincidenEnNumeroTelefonico(numeroCliente, cliente))</span>
+<span class="fc" id="L63">				numerosAmigos = cliente.getNumerosAmigos();</span>
+<span class="fc" id="L64">		}</span>
+<span class="fc" id="L65">		return numerosAmigos;</span>
+	}
+
+	private boolean coincidenEnNumeroTelefonico(Integer numeroCliente, ClienteModelo cliente) {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		return cliente.getNumeroTelefonico() == numeroCliente;</span>
+	}
+	
+	Cliente convertirACliente(ClienteModelo cliente) {
+<span class="fc" id="L73">		Cliente clienteEntidad = new Cliente(cliente.getNombre(), cliente.getCi(), cliente.getNumeroTelefonico());</span>
+<span class="fc" id="L74">		return clienteEntidad;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
