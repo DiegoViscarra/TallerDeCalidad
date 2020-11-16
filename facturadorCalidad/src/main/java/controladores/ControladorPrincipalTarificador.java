@@ -31,7 +31,7 @@ import spark.utils.IOUtils;
 public class ControladorPrincipalTarificador {
 	
 	private static IRepositorioCDR repositorioCDR = new RepositorioCDR();
-	private static IPersistenciaBDClientes persistenciaClientes = new PersistenciaBDClientes();
+	public static IPersistenciaBDClientes persistenciaClientes = new PersistenciaBDClientes();
 	public static IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes, new PersistenciaArchivos(), repositorioCDR);
 	private static IRepositorioCliente repositorioCliente = new RepositorioCliente(persistencia);
 	public static ITarificacion tarificacion = new Tarificacion(repositorioCliente);
