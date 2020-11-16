@@ -106,7 +106,7 @@ public class ControladorCDRs {
     	return persistencia.deserializarArchivos();
     }
 	
-	private static ArrayList<CDRModelo> devolverDeBDCDRModelo(IPersistencia persistencia) {
+	public static ArrayList<CDRModelo> devolverDeBDCDRModelo(IPersistencia persistencia) {
     	return persistencia.mostrarDeBDCDRs();
     }
 	
@@ -118,15 +118,15 @@ public class ControladorCDRs {
     	persistencia.persistirEnArchivo(devolverRegistrosTarificados(tarificacion, registroCDR));
     }
     
-    private static ArrayList<CDR> devolverRegistrosTarificados(ITarificacion tarificacion, IRegistroCDR registroCDR) {
+    public static ArrayList<CDR> devolverRegistrosTarificados(ITarificacion tarificacion, IRegistroCDR registroCDR) {
     	return tarificacion.tarificarRegistros(devolverRegistrosNoTarificados(registroCDR));
     }
     
-    private static ArrayList<CDR> devolverRegistrosNoTarificados(IRegistroCDR registroCDR) {
+    public static ArrayList<CDR> devolverRegistrosNoTarificados(IRegistroCDR registroCDR) {
     	return registroCDR.obtenerRegistrosNoTarificados();
     }
     
-    private static ArrayList<CDRModelo> devolverCDRModeloFiltrado(String fecha, IPersistencia persistencia) {
+    public static ArrayList<CDRModelo> devolverCDRModeloFiltrado(String fecha, IPersistencia persistencia) {
     	return persistencia.mostrarDeBDCDRsFiltradosPor(fecha);
     }
     

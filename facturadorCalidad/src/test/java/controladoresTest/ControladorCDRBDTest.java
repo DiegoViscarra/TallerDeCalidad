@@ -1,12 +1,9 @@
 package controladoresTest;
 
-import java.io.IOException; 
-import java.util.ArrayList; 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -31,13 +28,14 @@ import entidades.CDR;
 import entidades.Cliente;
 import entidades.PlanPostpago;
 import entidades.PlanPrepago;
+import modelos.CDRModelo;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
 import repositorios.PersistenciaBDClientes;
 import repositorios.RepositorioCDR;
 import repositorios.RepositorioCliente;
 
-public class ControladorCDRTest {
+public class ControladorCDRBDTest {
 	public ITarificacion tarificacion = null;
 	public IPersistencia persistencia = null;
 	public IRegistroCDR registroCDR = null;
@@ -70,7 +68,7 @@ public class ControladorCDRTest {
 		
 		Cliente cliente2 = new Cliente("Ana", "9", 789);
 		IPlan plan2 = new PlanPostpago();
-		cliente2.setPlan(plan2); 
+		cliente2.setPlan(plan2);
 		cliente2.setTipoPlan("POSTPAGO");
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
 		persistenciaBDClientes.poblarTablaClientes(cliente2);
@@ -79,75 +77,28 @@ public class ControladorCDRTest {
 	}
 	
 	@BeforeMethod
-	public void initRegistrosNoTarificados() {
-
+	public void initGuardarRegistrosEnBD() {
+		persistenciaBDCDR.borrarTodosLosDatosDeCDR();
 		repositorioCDR.registrarCDRs("123;456;2:45;3/1/2020;11:00\\r\\n\"");
 		repositorioCDR.registrarCDRs("789;456;1:45;3/1/2020;11:00\\r\\n\"");
+		ControladorCDRs.guardarEnBD(persistencia, tarificacion, registroCDR);
 	}
 	
 	@Test
-	public void devolverRegistrosNoTarificadosTest() {
-		ArrayList<CDR> registros = ControladorCDRs.devolverRegistrosNoTarificados(registroCDR);
-		for(CDR cdr: registros) {
-			Assert.assertEquals(-1.0, cdr.getCostoDeLlamada());
-		}
-	}
-	
-	
-	@Test
-	public void devolverRegistrosTarificadosTest() {
-		ArrayList<CDR> registros = ControladorCDRs.devolverRegistrosTarificados(tarificacion, registroCDR);
-		for(CDR cdr: registros) {
-			Assert.assertNotEquals(-1.0, cdr.getCostoDeLlamada());
+	public void cdrGuardadoBDTest() {
+		ArrayList<CDRModelo> registros = ControladorCDRs.devolverDeBDCDRModelo(persistencia);
+		Assert.assertEquals(registros.size(), 2);
+		for(CDRModelo cdr : registros) {
+			Assert.assertNotEquals(cdr.getCostoDeLlamada(), -1.0);
 		}
 	}
 	
 	@Test
-	public void getCDR() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/registrosTarificados");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	}
-	
-	@Test 
-	public void getCDRRecuperados() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/registrosRecuperados");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	}
-	
-	@Test
-	public void cambiarModoDeConfiguracionDB() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/configuracion/baseDeDatos");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	}
-	
-	@Test
-	public void cambiarModoDeConfiguracionArchivo() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/configuracion/archivo");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	}
-	
-	@Test
-	public void guardar() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/guardar");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-	}
-	
-	@Test
-	public void configuracion() throws IOException, InterruptedException {
-		HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://localhost:8080/configuracion");
-        HttpResponse response = client.execute(request);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	public void filtroPorFechaTest() {
+		Date myDate = new Date();
+		String fecha= new SimpleDateFormat("yyyy-MM-dd").format(myDate);
+		ArrayList<CDRModelo> registros = ControladorCDRs.devolverCDRModeloFiltrado(fecha, persistencia);
+		Assert.assertEquals(registros.size(), 2);
 	}
 	
 	@AfterMethod
@@ -163,5 +114,3 @@ public class ControladorCDRTest {
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 	}
 }
-
-

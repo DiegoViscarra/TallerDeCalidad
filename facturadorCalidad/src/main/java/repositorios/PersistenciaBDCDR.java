@@ -91,7 +91,7 @@ public class PersistenciaBDCDR implements IPersistenciaBDCDR {
 			conexionBD = DriverManager.getConnection(connectionDB.getConnection("Users.txt"));
 			conexionBD.setAutoCommit(false);
 			LOGGER.info("Opened CDR successfully");
-			
+			 
 			enunciadoSQL = conexionBD.createStatement();
 			try(ResultSet resultadoConsulta = enunciadoSQL.executeQuery(sentenciaSQL)){
 				while ( resultadoConsulta.next() ) {

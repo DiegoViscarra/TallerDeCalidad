@@ -64,6 +64,7 @@ public class ControladorRegistroClientesTest {
 
 	@Test
 	public void postApiSubmit() throws Exception, InterruptedException {
+		persistenciaClientes.borrarTodosLosDatosDeClientes();
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost("http://localhost:8080/api/submitCliente");
 		File uploadFile = new File("FilesTest/Clientes.csv");
@@ -73,7 +74,7 @@ public class ControladorRegistroClientesTest {
 		httpPost.setEntity(reqEntity);
 		HttpResponse response = httpclient.execute(httpPost);
 		Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-		Assert.assertEquals(3, registroClientes.devolverClientes().size());
+		Assert.assertEquals(3, persistenciaClientes.mostrarTablaClientes().size());
 	}
 
 	@BeforeClass
@@ -89,11 +90,12 @@ public class ControladorRegistroClientesTest {
 
 	@BeforeMethod
 	public void beforeMethod() {
-		persistenciaClientes.borrarTodosLosDatosDeClientes();
+		
 	}
 
 	@AfterClass
 	public void afterClass() {
+		persistenciaClientes.borrarTodosLosDatosDeClientes();
 		
 	}
 	@AfterSuite

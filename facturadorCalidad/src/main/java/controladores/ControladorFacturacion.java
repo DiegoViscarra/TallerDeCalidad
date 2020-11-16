@@ -13,7 +13,7 @@ import modelos.FacturaModelo;
 public class ControladorFacturacion {
 	private IPersistencia persistencia;
 	public static Gson gson = new Gson();
-	ControladorFacturacion(IPersistencia persistencia){
+	public ControladorFacturacion(IPersistencia persistencia){
 		this.persistencia = persistencia;
 		get("/costoLlamadaCliente/:numeroTelefonico/mes/:mes", (request, response) ->
         {
