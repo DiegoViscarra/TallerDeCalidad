@@ -37,7 +37,7 @@ public class RegistroClientes implements IRegistroClientes {
 <span class="fc bfc" id="L37" title="All 2 branches covered.">		for(ClienteModelo cliente : clientes) {</span>
 <span class="fc" id="L38">			Cliente clienteEntidad = convertirACliente(cliente);</span>
 <span class="fc" id="L39">			recuperarClienteEnSistema(clientesAmigos, cliente, clienteEntidad);</span>
-<span class="fc" id="L40">		}</span>
+		}
 		
 <span class="fc" id="L42">	}</span>
 
@@ -61,7 +61,7 @@ public class RegistroClientes implements IRegistroClientes {
 <span class="fc bfc" id="L61" title="All 2 branches covered.">		for(ClienteModelo cliente:clientesAmigos) {</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">			if(coincidenEnNumeroTelefonico(numeroCliente, cliente))</span>
 <span class="fc" id="L63">				numerosAmigos = cliente.getNumerosAmigos();</span>
-<span class="fc" id="L64">		}</span>
+		}
 <span class="fc" id="L65">		return numerosAmigos;</span>
 	}
 

@@ -34,7 +34,7 @@ import spark.utils.IOUtils;
 <span class="fc" id="L34">	private static IRepositorioCDR repositorioCDR = new RepositorioCDR();</span>
 <span class="fc" id="L35">	public static IPersistenciaBDClientes persistenciaClientes = new PersistenciaBDClientes();</span>
 <span class="fc" id="L36">	public static IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes,</span>
-			new PersistenciaArchivos(), repositorioCDR);
+<span class="fc" id="L37">			new PersistenciaArchivos(), repositorioCDR);</span>
 <span class="fc" id="L38">	private static IRepositorioCliente repositorioCliente = new RepositorioCliente(persistencia);</span>
 <span class="fc" id="L39">	public static ITarificacion tarificacion = new Tarificacion(repositorioCliente);</span>
 <span class="fc" id="L40">	public static IRegistroClientes registroClientes = new RegistroClientes(repositorioCliente, persistenciaClientes);</span>

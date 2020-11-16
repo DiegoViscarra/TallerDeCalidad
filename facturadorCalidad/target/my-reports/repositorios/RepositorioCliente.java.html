@@ -44,7 +44,7 @@ public class RepositorioCliente implements IRepositorioCliente{
 		{
 <span class="fc bfc" id="L45" title="All 2 branches covered.">			if(cliente.getNumeroTelefonico() == numeroTelefonico)</span>
 <span class="fc" id="L46">				return cliente;</span>
-<span class="fc" id="L47">		}</span>
+		}
 <span class="fc" id="L48">		return null;</span>
 	}
 
@@ -71,13 +71,13 @@ public class RepositorioCliente implements IRepositorioCliente{
 <span class="fc" id="L71">			Cliente cliente = registrarClienteEnBD(ci, nombre, plan, numeroTelefonico);</span>
 <span class="fc" id="L72">			registrarClienteEnRepositorio(plan, numeroTelefonico, numerosAmigos, clientesDivididos, i, cliente);</span>
 <span class="fc" id="L73">			i++;</span>
-<span class="fc" id="L74">		}</span>
+		}
 <span class="fc" id="L75">	}</span>
 	private void registrarClienteEnRepositorio(String plan, int numeroTelefonico, ArrayList&lt;Integer&gt; numerosAmigos,
 			String[] clientesDivididos, int posicion, Cliente cliente) {
 <span class="fc bfc" id="L78" title="All 2 branches covered.">		if(plan.equalsIgnoreCase(&quot;WOW&quot;)) {</span>
 <span class="fc" id="L79">			registrarClientePlanAmigos(plan, numeroTelefonico, numerosAmigos, clientesDivididos, posicion, cliente);</span>
-		}
+<span class="fc" id="L80">		}</span>
 		else {
 <span class="fc" id="L82">			registrarNuevoClientePlanNormal(cliente,plan);</span>
 		}
