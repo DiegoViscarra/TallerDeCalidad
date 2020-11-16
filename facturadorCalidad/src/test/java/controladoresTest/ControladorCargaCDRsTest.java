@@ -16,10 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import org.testng.annotations.BeforeMethod;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class ControladorCargaCDRsTest {
@@ -67,13 +64,5 @@ public class ControladorCargaCDRsTest {
 				new ControladorCargaCDRs(registroCDR);
 	}
 
-	@BeforeMethod
-	public void beforeMethod() {
 
-	}
-
-	@AfterClass
-	public void afterClass() {
-
-	}
 }

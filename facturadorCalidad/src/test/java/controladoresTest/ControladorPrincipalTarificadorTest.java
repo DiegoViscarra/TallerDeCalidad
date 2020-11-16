@@ -4,15 +4,27 @@ import org.testng.annotations.Test;
 import controladores.ControladorPrincipalTarificador;
 import entidades.Cliente;
 import entidades.PlanPrepago;
+
+import static spark.Spark.port;
 import static spark.Spark.stop;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 
 public class ControladorPrincipalTarificadorTest {
 	ControladorPrincipalTarificador controladorPrincipalTarificador;
-
+	
+	@AfterSuite
+	public void afterSuite() {
+		stop();
+	}
+	
+	@BeforeSuite
+	public void beforeSuite() throws InterruptedException {
+		port(8080);
+	}
+	
 	@Test
 	public void revisarDeBDClientesExistentesDespueDeGuardarUno() {
 		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
@@ -21,7 +33,7 @@ public class ControladorPrincipalTarificadorTest {
 		cliente.setPlan(planPrepago);
 		cliente.setTipoPlan("PREPAGO");
 		ControladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
-		ControladorPrincipalTarificador.main(null);
+		ControladorPrincipalTarificador.inicializar();
 		int result = ControladorPrincipalTarificador.devolverClientesDeBD().size();
 		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 		Assert.assertEquals(1, result);
@@ -29,23 +41,12 @@ public class ControladorPrincipalTarificadorTest {
 
 	@Test
 	public void revisarDeBDClientesExistentes() {
-		controladorPrincipalTarificador.revisarDeBDClientesExistentes();
-
-		// controladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
-	}
+		ControladorPrincipalTarificador.revisarDeBDClientesExistentes();
+}
 
 	@BeforeClass
 	public void beforeClass() {
 		controladorPrincipalTarificador = new ControladorPrincipalTarificador();
 	}
-
-	@BeforeMethod
-	public void beforeMethod() {
-
-	}
-
-	@AfterClass
-	public void afterClass() {
-		stop();
-	}
+	
 }
