@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -148,6 +149,14 @@ public class ControladorCDRTest {
         HttpGet request = new HttpGet("http://localhost:8080/configuracion");
         HttpResponse response = client.execute(request);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void postFiltrar() throws IOException, InterruptedException {
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost("http://localhost:8080/filtrar?fecha=10102020");
+		HttpResponse response = httpclient.execute(httpPost);
+		Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
 	
 	@AfterMethod

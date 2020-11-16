@@ -44,7 +44,6 @@ public class ControladorRegistroClientesTest {
 	
 	@Test
 	public void postApiSubmitSinArchivo() throws Exception, InterruptedException {
-		
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost("http://localhost:8080/api/submitCliente");
 		HttpResponse response = httpclient.execute(httpPost);

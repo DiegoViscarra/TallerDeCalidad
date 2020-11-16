@@ -4,8 +4,8 @@ import org.testng.annotations.Test;
 
 import entidades.CDR;
 import entidades.PlanPostpago;
-import junit.framework.Assert;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 
 public class PlanPostpagoTest {

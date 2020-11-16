@@ -91,4 +91,14 @@ public class PersistenciaArchivosTest {
 		
 		
 	}
+	
+	@Test
+	public void deserializarExepcionTest() {
+		String nombreArchivo = persistencia.serializar(listaRegistros);
+		nombreArchivo = "";
+		ArrayList<CDR> deserializado = persistencia.deserializar(nombreArchivo);
+		
+		Assert.assertEquals(deserializado, null);
+		
+	}
 }
