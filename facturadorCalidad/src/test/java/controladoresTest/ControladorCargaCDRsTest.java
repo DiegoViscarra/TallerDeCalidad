@@ -6,18 +6,9 @@ import casosDeUso.IRegistroCDR;
 import casosDeUso.IRepositorioCDR;
 import casosDeUso.RegistroCDR;
 import controladores.ControladorCargaCDRs;
-import jdk.jfr.ContentType;
 import repositorios.RepositorioCDR;
 
-import static spark.Spark.port;
-import static spark.Spark.stop;
-
 import java.io.File;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse.BodyHandlers;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
