@@ -18,7 +18,7 @@ public class PersistenciaBDClientes implements IPersistenciaBDClientes {
 	private static final ConnectionDB connectionDB= new ConnectionDB();
 	private static final String ORG_SQLITE_JDBC = "org.sqlite.JDBC";
 	private final static Logger LOGGER = Logger.getLogger(PersistenciaBDClientes.class.getName());
-	Connection conexionBD = null;
+	public Connection conexionBD = null;
 	Statement enunciadoSQL = null;
 	
 	@Override
