@@ -1,7 +1,12 @@
 package controladoresTest;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -95,6 +100,54 @@ public class ControladorCDRTest {
 		for(CDR cdr: registros) {
 			Assert.assertNotEquals(-1.0, cdr.getCostoDeLlamada());
 		}
+	}
+	
+	@Test
+	public void getCDR() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/registrosTarificados");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void getCDRRecuperados() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/registrosRecuperados");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void cambiarModoDeConfiguracionDB() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/configuracion/baseDeDatos");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void cambiarModoDeConfiguracionArchivo() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/configuracion/archivo");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void guardar() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/guardar");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+	}
+	
+	@Test
+	public void configuracion() throws IOException, InterruptedException {
+		HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://localhost:8080/configuracion");
+        HttpResponse response = client.execute(request);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
 	
 	@AfterMethod
