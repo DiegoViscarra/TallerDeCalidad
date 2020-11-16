@@ -4,19 +4,28 @@ import org.testng.annotations.Test;
 import controladores.ControladorPrincipalTarificador;
 import entidades.Cliente;
 import entidades.PlanPrepago;
+
+import static spark.Spark.port;
 import static spark.Spark.stop;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+
 import org.testng.annotations.BeforeClass;
 
 public class ControladorPrincipalTarificadorTest {
 	ControladorPrincipalTarificador controladorPrincipalTarificador;
-	@BeforeClass
-	public void init() throws InterruptedException {
+	
+	@AfterSuite
+	public void afterSuite() {
 		stop();
-		Thread.sleep(2000);
 	}
+	
+	@BeforeSuite
+	public void beforeSuite() throws InterruptedException {
+		port(8080);
+	}
+	
 
 	@Test
 	public void revisarDeBDClientesExistentesDespueDeGuardarUno() {
@@ -26,31 +35,20 @@ public class ControladorPrincipalTarificadorTest {
 		cliente.setPlan(planPrepago);
 		cliente.setTipoPlan("PREPAGO");
 		ControladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
-		ControladorPrincipalTarificador.main(null);
+		ControladorPrincipalTarificador.inicializar();
 		int result = ControladorPrincipalTarificador.devolverClientesDeBD().size();
+		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 		Assert.assertEquals(1, result);
 	}
-	
+
 	@Test
 	public void revisarDeBDClientesExistentes() {
 		ControladorPrincipalTarificador.revisarDeBDClientesExistentes();
-		// controladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
-	}
-
+}
 
 	@BeforeClass
 	public void beforeClass() {
-		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 		controladorPrincipalTarificador = new ControladorPrincipalTarificador();
 	}
-
-	@BeforeMethod
-	public void beforeMethod() {
-
-	}
-
-	@AfterClass
-	public void afterClass() {
-		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
-	}
+	
 }

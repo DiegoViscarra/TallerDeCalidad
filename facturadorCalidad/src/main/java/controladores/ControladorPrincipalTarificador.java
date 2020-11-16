@@ -1,4 +1,5 @@
 package controladores;
+
 import static spark.Spark.*;
 
 import java.io.IOException;
@@ -29,32 +30,38 @@ import spark.template.velocity.VelocityTemplateEngine;
 import spark.utils.IOUtils;
 
 public class ControladorPrincipalTarificador {
-	
+
 	private static IRepositorioCDR repositorioCDR = new RepositorioCDR();
 	public static IPersistenciaBDClientes persistenciaClientes = new PersistenciaBDClientes();
-	public static IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes, new PersistenciaArchivos(), repositorioCDR);
+	public static IPersistencia persistencia = new Persistencia(new PersistenciaBDCDR(), persistenciaClientes,
+			new PersistenciaArchivos(), repositorioCDR);
 	private static IRepositorioCliente repositorioCliente = new RepositorioCliente(persistencia);
 	public static ITarificacion tarificacion = new Tarificacion(repositorioCliente);
-	public static IRegistroClientes registroClientes = new RegistroClientes(repositorioCliente,persistenciaClientes);
+	public static IRegistroClientes registroClientes = new RegistroClientes(repositorioCliente, persistenciaClientes);
 	public static IRegistroCDR registroCDR = new RegistroCDR(repositorioCDR);
-	
+
 	public static void main(String[] args) {
 		port(8080);
-        revisarDeBDClientesExistentes();
-        new ControladorFacturacion(persistencia);
-        new ControladorRegistroClientes(registroClientes);
-        new ControladorClientes(persistencia);
-        new ControladorCDRs(tarificacion, persistencia, registroCDR);
-        new ControladorCargaCDRs(registroCDR);
-    }
-        
-    public static ArrayList<ClienteModelo> devolverClientesDeBD(){
-    	return persistencia.mostrarDeBDClientes();
-    }
-    
-    public static void revisarDeBDClientesExistentes() {
-    	if(devolverClientesDeBD().size()!=0)
-    		registroClientes.llenarListaClientes();
-    }
+		inicializar();
+	}
+
+	public static void inicializar() {
+		revisarDeBDClientesExistentes();
+		new ControladorFacturacion(persistencia);
+		new ControladorRegistroClientes(registroClientes);
+		new ControladorClientes(persistencia);
+		new ControladorCDRs(tarificacion, persistencia, registroCDR);
+		new ControladorCargaCDRs(registroCDR);
+	}
+
+	public static ArrayList<ClienteModelo> devolverClientesDeBD() {
+		return persistencia.mostrarDeBDClientes();
+	}
+
+	public static void revisarDeBDClientesExistentes() {
+		if (devolverClientesDeBD().size() != 0)
+			registroClientes.llenarListaClientes();
+	}
+
 
 }
