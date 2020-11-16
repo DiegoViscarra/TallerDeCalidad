@@ -60,10 +60,6 @@ public class ControladorClientesTest {
 	@BeforeClass
 	public void initControlador() {
 		
-<<<<<<< HEAD
-=======
-		port(8080);
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 		persistenciaBDCDR = new PersistenciaBDCDR();
 		persistenciaBDClientes = new PersistenciaBDClientes();
 		persistenciaArchivos = new PersistenciaArchivos();
@@ -133,10 +129,6 @@ public class ControladorClientesTest {
 		
 	@AfterClass
 	public void endTest() {
-<<<<<<< HEAD
-=======
-		stop();
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 		persistenciaBDCDR.borrarTodosLosDatosDeCDR();

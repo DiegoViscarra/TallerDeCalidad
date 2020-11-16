@@ -4,20 +4,14 @@ import static spark.Spark.port;
 
 import java.io.IOException;
 import java.net.URI;
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-=======
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
 
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -38,11 +32,7 @@ import controladores.ControladorFacturacion;
 import entidades.CDR;
 import entidades.Cliente;
 import entidades.PlanPostpago;
-<<<<<<< HEAD
-=======
-import entidades.PlanPrepago;
-import entidades.PlanWow;
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
+
 import modelos.FacturaModelo;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
@@ -51,23 +41,14 @@ import repositorios.RepositorioCDR;
 import repositorios.RepositorioCliente;
 
 public class ControladorFacturacionTest {
-<<<<<<< HEAD
-=======
-	
-	HttpClient client;
-	HttpRequest request;
-	HttpResponse<?> response;
-	
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
+
 	public ITarificacion tarificacion = null;
 	public IPersistencia persistencia = null;
 	public IRegistroCDR registroCDR = null;
 	public IRepositorioCliente repositorio = null;
-<<<<<<< HEAD
+
 	public ControladorFacturacion controlador = null;
-=======
-	public ControladorClientes controlador = null;
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
+
 	public IPersistenciaBDCDR persistenciaBDCDR;
 	public IPersistenciaBDClientes persistenciaBDClientes;
 	public IPersistenciaArchivos persistenciaArchivos;
@@ -75,13 +56,7 @@ public class ControladorFacturacionTest {
 	
 	@BeforeClass
 	public void initControlador() {
-<<<<<<< HEAD
-=======
-		//port(8080);
-		//client = HttpClient.newBuilder().build();
-		//response = null;
-		
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
+
 		persistenciaBDCDR = new PersistenciaBDCDR();
 		persistenciaBDClientes = new PersistenciaBDClientes();
 		persistenciaArchivos = new PersistenciaArchivos();
@@ -89,11 +64,7 @@ public class ControladorFacturacionTest {
 		
 		persistencia = new Persistencia(persistenciaBDCDR, persistenciaBDClientes, persistenciaArchivos, repositorioCDR);
 		repositorio = new  RepositorioCliente(persistencia);
-<<<<<<< HEAD
 		controlador = new ControladorFacturacion(persistencia);
-=======
-		controlador = new ControladorClientes(persistencia);
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 		
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
@@ -113,7 +84,6 @@ public class ControladorFacturacionTest {
 	}
 	
 	@Test
-<<<<<<< HEAD
 	public void getFactura() throws IOException, InterruptedException {
 		HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet("http://localhost:8080/costoLlamadaCliente/123/mes/1");
@@ -127,25 +97,7 @@ public class ControladorFacturacionTest {
 		Assert.assertEquals(factura.getNumeroTelefonico(), (Integer)123);
 		Assert.assertEquals(factura.montoMes(), 2.75); 
 	}
-	
-	
-=======
-	public void devolverFacturaDeUnMes() {
-		FacturaModelo factura = ControladorFacturacion.devolverFacturaDeUnMesDeUnCliente(123, "1", persistencia);
-		Assert.assertEquals(factura.montoMes(), 2.75);
-		Assert.assertEquals(factura.getNumeroTelefonico(), (Integer)123);
-	}
-	
-	/*
-	@Test
-	public void getClientes() throws IOException, InterruptedException {
-		client = HttpClient.newHttpClient();
-		request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/costoLlamadaCliente/123/mes/1")).build();
-		response = client.send(request, HttpResponse.BodyHandlers.ofString());
-		Assert.assertEquals(response.statusCode(), 200);
-	}
-	*/
->>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
+
 
 	@AfterClass
 	public void endTest() {
