@@ -13,7 +13,7 @@ import spark.template.velocity.VelocityTemplateEngine;
 
 public class ControladorClientes {
 	private IPersistencia persistencia;
-	ControladorClientes(IPersistencia persistencia) {
+	public ControladorClientes(IPersistencia persistencia) {
 		this.persistencia = persistencia;
 		get("/clientes", (request, response) -> 
         {

@@ -1,12 +1,17 @@
 package controladoresTest;
 
+import static spark.Spark.port;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import casosDeUso.IPersistencia;
@@ -19,25 +24,31 @@ import casosDeUso.IRepositorioCDR;
 import casosDeUso.IRepositorioCliente;
 import casosDeUso.ITarificacion;
 import casosDeUso.Persistencia;
-import casosDeUso.RegistroCDR;
-import casosDeUso.Tarificacion;
-import controladores.ControladorCDRs;
+import controladores.ControladorClientes;
+import controladores.ControladorFacturacion;
 import entidades.CDR;
 import entidades.Cliente;
 import entidades.PlanPostpago;
 import entidades.PlanPrepago;
+import entidades.PlanWow;
+import modelos.FacturaModelo;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
 import repositorios.PersistenciaBDClientes;
 import repositorios.RepositorioCDR;
 import repositorios.RepositorioCliente;
 
-public class ControladorCDRTest {
+public class ControladorFacturacionTest {
+	
+	HttpClient client;
+	HttpRequest request;
+	HttpResponse<?> response;
+	
 	public ITarificacion tarificacion = null;
 	public IPersistencia persistencia = null;
 	public IRegistroCDR registroCDR = null;
 	public IRepositorioCliente repositorio = null;
-	public ControladorCDRs controlador = null;
+	public ControladorClientes controlador = null;
 	public IPersistenciaBDCDR persistenciaBDCDR;
 	public IPersistenciaBDClientes persistenciaBDClientes;
 	public IPersistenciaArchivos persistenciaArchivos;
@@ -45,6 +56,10 @@ public class ControladorCDRTest {
 	
 	@BeforeClass
 	public void initControlador() {
+		//port(8080);
+		//client = HttpClient.newBuilder().build();
+		//response = null;
+		
 		persistenciaBDCDR = new PersistenciaBDCDR();
 		persistenciaBDClientes = new PersistenciaBDClientes();
 		persistenciaArchivos = new PersistenciaArchivos();
@@ -52,57 +67,42 @@ public class ControladorCDRTest {
 		
 		persistencia = new Persistencia(persistenciaBDCDR, persistenciaBDClientes, persistenciaArchivos, repositorioCDR);
 		repositorio = new  RepositorioCliente(persistencia);
-		tarificacion = new Tarificacion(repositorio);
-		registroCDR = new RegistroCDR(repositorioCDR);
+		controlador = new ControladorClientes(persistencia);
 		
-		controlador = new ControladorCDRs(tarificacion, persistencia, registroCDR);
+		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
+		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
+
 		
 		//CrearClientes
 		Cliente cliente1 = new Cliente("Sergio", "5", 123);
-		IPlan plan1 = new PlanPrepago();
+		IPlan plan1 = new PlanPostpago();
 		cliente1.setPlan(plan1);
-		cliente1.setTipoPlan("PREPAGO");
+		cliente1.setTipoPlan("POSTPAGO");	
 		
-		Cliente cliente2 = new Cliente("Ana", "9", 789);
-		IPlan plan2 = new PlanPostpago();
-		cliente2.setPlan(plan2);
-		cliente2.setTipoPlan("POSTPAGO");
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
-		persistenciaBDClientes.poblarTablaClientes(cliente2);
-		repositorio.registrarNuevoClientePlanNormal(cliente1, "PREPAGO");
-		repositorio.registrarNuevoClientePlanNormal(cliente2, "POSTPAGO");
+		repositorio.registrarNuevoClientePlanNormal(cliente1, "POSTPAGO");
+		CDR registro = new CDR(123, 456, "2:45","11/1/2020" , "12:00");
+		registro.setCosto(2.75);
+		persistenciaBDCDR.poblarTabla(registro);
 	}
 	
-	@BeforeMethod
-	public void initRegistrosNoTarificados() {
+	@Test
+	public void devolverFacturaDeUnMes() {
+		FacturaModelo factura = ControladorFacturacion.devolverFacturaDeUnMesDeUnCliente(123, "1", persistencia);
+		Assert.assertEquals(factura.montoMes(), 2.75);
+		Assert.assertEquals(factura.getNumeroTelefonico(), (Integer)123);
+	}
+	
+	/*
+	@Test
+	public void getClientes() throws IOException, InterruptedException {
+		client = HttpClient.newHttpClient();
+		request = HttpRequest.newBuilder().uri(URI.create("http://localhost:8080/costoLlamadaCliente/123/mes/1")).build();
+		response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		Assert.assertEquals(response.statusCode(), 200);
+	}
+	*/
 
-		repositorioCDR.registrarCDRs("123;456;2:45;3/1/2020;11:00\\r\\n\"");
-		repositorioCDR.registrarCDRs("789;456;1:45;3/1/2020;11:00\\r\\n\"");
-	}
-	
-	@Test
-	public void devolverRegistrosNoTarificadosTest() {
-		ArrayList<CDR> registros = ControladorCDRs.devolverRegistrosNoTarificados(registroCDR);
-		for(CDR cdr: registros) {
-			Assert.assertEquals(-1.0, cdr.getCostoDeLlamada());
-		}
-	}
-	
-	
-	@Test
-	public void devolverRegistrosTarificadosTest() {
-		ArrayList<CDR> registros = ControladorCDRs.devolverRegistrosTarificados(tarificacion, registroCDR);
-		for(CDR cdr: registros) {
-			Assert.assertNotEquals(-1.0, cdr.getCostoDeLlamada());
-		}
-	}
-	
-	@AfterMethod
-	public void emptyRepositorio() {
-		repositorioCDR.vaciarRegistros();
-	}
-	
-	
 	@AfterClass
 	public void endTest() {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
@@ -110,5 +110,3 @@ public class ControladorCDRTest {
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 	}
 }
-
-
