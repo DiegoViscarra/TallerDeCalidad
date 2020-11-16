@@ -1,5 +1,6 @@
 package controladoresTest;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,6 +8,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+=======
+import java.util.ArrayList;
+
+>>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -102,6 +107,7 @@ public class ControladorCDRTest {
 		}
 	}
 	
+<<<<<<< HEAD
 	@Test
 	public void getCDR() throws IOException, InterruptedException {
 		HttpClient client = new DefaultHttpClient();
@@ -150,6 +156,8 @@ public class ControladorCDRTest {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
 	
+=======
+>>>>>>> c0e1545286515c829d1a31fdc97693d1e9abe5fd
 	@AfterMethod
 	public void emptyRepositorio() {
 		repositorioCDR.vaciarRegistros();
