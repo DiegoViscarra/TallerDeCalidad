@@ -51,6 +51,7 @@ public class ControladorRegistroClientesTest {
 
 	@Test
 	public void postApiSubmit() throws Exception, InterruptedException {
+		persistenciaClientes.borrarTodosLosDatosDeClientes();
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost("http://localhost:8080/api/submitCliente");
 		File uploadFile = new File("FilesTest/Clientes.csv");
@@ -72,6 +73,26 @@ public class ControladorRegistroClientesTest {
 		registroClientes = new RegistroClientes(repositorioCliente,persistenciaClientes);
 		
 		new ControladorRegistroClientes(registroClientes);
+	}
+
+
+	@BeforeMethod
+	public void beforeMethod() {
+		
+	}
+
+	@AfterClass
+	public void afterClass() {
+		persistenciaClientes.borrarTodosLosDatosDeClientes();
+		
+	}
+	@AfterSuite
+	public void afterSuite() {
+		stop();
+	}
+	@BeforeSuite
+	public void beforeSuite() throws InterruptedException {
+		port(8080);
 	}
 
 }

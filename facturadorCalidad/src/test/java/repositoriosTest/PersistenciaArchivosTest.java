@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import org.javatuples.Pair;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import entidades.CDR;
-import junit.framework.Assert;
+
 import repositorios.PersistenciaArchivos;
 
 public class PersistenciaArchivosTest {

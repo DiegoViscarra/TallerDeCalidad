@@ -2,16 +2,14 @@ package controladoresTest;
 
 import static spark.Spark.port;
 
-import java.io.IOException;
+import java.io.IOException;  
 import java.net.URI;
-
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +22,7 @@ import casosDeUso.IPersistenciaBDClientes;
 import casosDeUso.IPlan;
 import casosDeUso.IRegistroCDR;
 import casosDeUso.IRepositorioCDR;
-import casosDeUso.IRepositorioCliente;
+import casosDeUso.IRepositorioCliente; 
 import casosDeUso.ITarificacion;
 import casosDeUso.Persistencia;
 import controladores.ControladorClientes;
@@ -32,7 +30,6 @@ import controladores.ControladorFacturacion;
 import entidades.CDR;
 import entidades.Cliente;
 import entidades.PlanPostpago;
-
 import modelos.FacturaModelo;
 import repositorios.PersistenciaArchivos;
 import repositorios.PersistenciaBDCDR;
@@ -41,14 +38,11 @@ import repositorios.RepositorioCDR;
 import repositorios.RepositorioCliente;
 
 public class ControladorFacturacionTest {
-
 	public ITarificacion tarificacion = null;
 	public IPersistencia persistencia = null;
 	public IRegistroCDR registroCDR = null;
 	public IRepositorioCliente repositorio = null;
-
 	public ControladorFacturacion controlador = null;
-
 	public IPersistenciaBDCDR persistenciaBDCDR;
 	public IPersistenciaBDClientes persistenciaBDClientes;
 	public IPersistenciaArchivos persistenciaArchivos;
@@ -56,7 +50,6 @@ public class ControladorFacturacionTest {
 	
 	@BeforeClass
 	public void initControlador() {
-
 		persistenciaBDCDR = new PersistenciaBDCDR();
 		persistenciaBDClientes = new PersistenciaBDClientes();
 		persistenciaArchivos = new PersistenciaArchivos();
@@ -97,8 +90,9 @@ public class ControladorFacturacionTest {
 		Assert.assertEquals(factura.getNumeroTelefonico(), (Integer)123);
 		Assert.assertEquals(factura.montoMes(), 2.75); 
 	}
-
-
+	
+	
+ 
 	@AfterClass
 	public void endTest() {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();

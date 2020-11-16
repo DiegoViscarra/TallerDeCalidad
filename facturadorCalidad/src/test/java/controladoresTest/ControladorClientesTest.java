@@ -72,7 +72,7 @@ public class ControladorClientesTest {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 
-		
+		 
 		//CrearClientes
 		Cliente cliente1 = new Cliente("Sergio", "5", 123);
 		IPlan plan1 = new PlanPrepago();
@@ -89,8 +89,8 @@ public class ControladorClientesTest {
 		amigos.add(123); amigos.add(234); amigos.add(345); amigos.add(456);
 		IPlan plan3 = new PlanWow(amigos);
 		cliente3.setPlan(plan3);
-		cliente3.setTipoPlan("WOW");
-		
+		cliente3.setTipoPlan("WOW"); 
+		 
 		
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
 		persistenciaBDClientes.poblarTablaClientes(cliente2);

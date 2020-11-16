@@ -1,16 +1,12 @@
 package controladoresTest;
 
-
-import java.io.IOException;
-import java.util.ArrayList;
+import java.io.IOException; 
+import java.util.ArrayList; 
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.util.ArrayList;
-
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -74,7 +70,7 @@ public class ControladorCDRTest {
 		
 		Cliente cliente2 = new Cliente("Ana", "9", 789);
 		IPlan plan2 = new PlanPostpago();
-		cliente2.setPlan(plan2);
+		cliente2.setPlan(plan2); 
 		cliente2.setTipoPlan("POSTPAGO");
 		persistenciaBDClientes.poblarTablaClientes(cliente1);
 		persistenciaBDClientes.poblarTablaClientes(cliente2);
@@ -106,7 +102,6 @@ public class ControladorCDRTest {
 		}
 	}
 	
-
 	@Test
 	public void getCDR() throws IOException, InterruptedException {
 		HttpClient client = new DefaultHttpClient();
@@ -115,7 +110,7 @@ public class ControladorCDRTest {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
 	
-	@Test
+	@Test 
 	public void getCDRRecuperados() throws IOException, InterruptedException {
 		HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet("http://localhost:8080/registrosRecuperados");
