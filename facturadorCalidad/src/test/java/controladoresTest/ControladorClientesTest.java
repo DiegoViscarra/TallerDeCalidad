@@ -72,7 +72,7 @@ public class ControladorClientesTest {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
 		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
 
-		
+		 
 		//CrearClientes
 		Cliente cliente1 = new Cliente("Sergio", "5", 123);
 		IPlan plan1 = new PlanPrepago();

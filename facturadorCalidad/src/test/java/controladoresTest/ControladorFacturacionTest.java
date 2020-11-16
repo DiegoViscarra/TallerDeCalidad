@@ -22,7 +22,7 @@ import casosDeUso.IPersistenciaBDClientes;
 import casosDeUso.IPlan;
 import casosDeUso.IRegistroCDR;
 import casosDeUso.IRepositorioCDR;
-import casosDeUso.IRepositorioCliente;
+import casosDeUso.IRepositorioCliente; 
 import casosDeUso.ITarificacion;
 import casosDeUso.Persistencia;
 import controladores.ControladorClientes;
@@ -92,7 +92,7 @@ public class ControladorFacturacionTest {
 	}
 	
 	
-
+ 
 	@AfterClass
 	public void endTest() {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();

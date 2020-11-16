@@ -43,7 +43,7 @@ public class PersistenciaSerializacionTest {
 		CDR registro = new CDR(323, 345, "02:45", "11/11/2020", "23:00");
 		registro.setCosto(2.75);
 		registros.add(registro);
-		persistencia.persistirEnArchivo(registros); 
+		persistencia.persistirEnArchivo(registros);  
 	} 
 	
 	@Test

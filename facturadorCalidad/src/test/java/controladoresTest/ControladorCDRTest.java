@@ -110,7 +110,7 @@ public class ControladorCDRTest {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 	}
 	
-	@Test
+	@Test 
 	public void getCDRRecuperados() throws IOException, InterruptedException {
 		HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet("http://localhost:8080/registrosRecuperados");
