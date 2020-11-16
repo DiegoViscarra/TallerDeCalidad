@@ -2,9 +2,9 @@ package modelosTest;
 
 import org.testng.annotations.Test;
 
-import junit.framework.Assert;
 import modelos.CDRModelo;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 
 public class CDRModeloTest {

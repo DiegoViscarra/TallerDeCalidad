@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 <span class="fc" id="L27">            File documento = new File(fechaDocumento + &quot;.txt&quot;); </span>
 <span class="fc" id="L28">            String rutaActual = rutaCarpeta + documento.toString();</span>
          
-            try(
+<span class="fc" id="L30">            try(</span>
 <span class="fc" id="L31">        		FileOutputStream archivoDeSalida = new FileOutputStream((rutaActual));</span>
 <span class="fc" id="L32">				ObjectOutputStream objetoDeSalida = new ObjectOutputStream(archivoDeSalida);){</span>
 <span class="fc" id="L33">				objetoDeSalida.writeObject(registrosTelefonicos);</span>
@@ -53,21 +53,21 @@ import java.util.logging.Logger;
 <span class="fc" id="L53">			File documento = new File(nombreArchivo); </span>
 <span class="fc" id="L54">			String rutaActual = rutaCarpeta + documento.toString();</span>
 <span class="fc" id="L55">			ArrayList&lt;CDR&gt; lecturaRegistros = new ArrayList&lt;CDR&gt;();</span>
-			try(
+<span class="fc" id="L56">			try(</span>
 <span class="fc" id="L57">				FileInputStream archivoEntrada = new FileInputStream(rutaActual);</span>
 <span class="fc" id="L58">				ObjectInputStream objetoEntrada = new ObjectInputStream(archivoEntrada);){</span>
 <span class="fc" id="L59">				lecturaRegistros = (ArrayList&lt;CDR&gt;)objetoEntrada.readObject();</span>
 <span class="fc" id="L60">				objetoEntrada.close();</span>
 <span class="fc" id="L61">				return lecturaRegistros;</span>
 			}
-<span class="nc" id="L63">		} catch (IOException ex) {</span>
-<span class="nc" id="L64">			LOGGER.severe(EXCEPTION_CAUGHT);</span>
+<span class="fc" id="L63">		} catch (IOException ex) {</span>
+<span class="fc" id="L64">			LOGGER.severe(EXCEPTION_CAUGHT);</span>
 		}
 <span class="nc" id="L66">        catch(ClassNotFoundException ex) {</span>
 <span class="nc" id="L67">        	LOGGER.severe(EXCEPTION_CAUGHT);</span>
-<span class="nc" id="L68">        }</span>
-<span class="nc" id="L69">		ArrayList&lt;CDR&gt; lecturaRegistros = null;</span>
-<span class="nc" id="L70">		return lecturaRegistros;</span>
+        }
+<span class="fc" id="L69">		ArrayList&lt;CDR&gt; lecturaRegistros = null;</span>
+<span class="fc" id="L70">		return lecturaRegistros;</span>
 	}
 	
 	private ArrayList&lt;String&gt; listarDirectorio() {
@@ -90,7 +90,7 @@ import java.util.logging.Logger;
 <span class="fc bfc" id="L90" title="All 2 branches covered.">		for(String nombre : archivos) {</span>
 <span class="fc" id="L91">			Pair&lt;String, ArrayList&lt;CDR&gt;&gt; par = new Pair&lt;String, ArrayList&lt;CDR&gt;&gt;(nombre, deserializar(nombre));</span>
 <span class="fc" id="L92">			archivosDeserializados.add(par);</span>
-<span class="fc" id="L93">		}</span>
+		}
 <span class="fc" id="L94">		return archivosDeserializados;</span>
 	}
 }

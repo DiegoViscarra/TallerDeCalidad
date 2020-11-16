@@ -85,9 +85,9 @@ public class ControladorCDRs {
         });
         
 <span class="fc" id="L87">        post(&quot;/filtrar&quot;, (request, response) -&gt; {</span>
-<span class="nc" id="L88">        	Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();</span>
-<span class="nc" id="L89">        	model.put(&quot;registrosRecuperados&quot;, devolverCDRModeloFiltrado(request.queryParams(&quot;fecha&quot;).toString(), persistencia));</span>
-<span class="nc" id="L90">        	return new VelocityTemplateEngine().render(new ModelAndView(model, &quot;velocity/registros/registrosDeCDRSRecuperados.vm&quot;));</span>
+<span class="fc" id="L88">        	Map&lt;String, Object&gt; model = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L89">        	model.put(&quot;registrosRecuperados&quot;, devolverCDRModeloFiltrado(request.queryParams(&quot;fecha&quot;).toString(), persistencia));</span>
+<span class="fc" id="L90">        	return new VelocityTemplateEngine().render(new ModelAndView(model, &quot;velocity/registros/registrosDeCDRSRecuperados.vm&quot;));</span>
         });
 <span class="fc" id="L92">	}</span>
 

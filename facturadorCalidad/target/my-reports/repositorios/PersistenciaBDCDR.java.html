@@ -40,10 +40,10 @@ import modelos.CDRModelo;
 <span class="fc" id="L40">			enunciadoSQL.executeUpdate(sentenciaSQL);</span>
 <span class="fc" id="L41">			enunciadoSQL.close();</span>
 <span class="fc" id="L42">			conexionBD.close();</span>
-<span class="nc" id="L43">		} catch ( Exception e ) {</span>
+<span class="pc" id="L43">		} catch ( Exception e ) {</span>
 <span class="nc" id="L44">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
 <span class="nc" id="L45">			System.exit(0);</span>
-<span class="fc" id="L46">		}</span>
+		}
 <span class="fc" id="L47">	}</span>
 
 	@Override
@@ -78,7 +78,7 @@ import modelos.CDRModelo;
 <span class="nc" id="L78">			LOGGER.info(&quot;entra al errror&quot;);</span>
 <span class="nc" id="L79">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
 <span class="nc" id="L80">			System.exit(0);</span>
-<span class="fc" id="L81">		}</span>
+		}
 		
 <span class="fc" id="L83">		LOGGER.info(&quot;CDR created successfully&quot;);</span>
 <span class="fc" id="L84">	}</span>
@@ -110,7 +110,7 @@ import modelos.CDRModelo;
 <span class="fc" id="L110">				    modelo.setDatosAvanzadosCDR(duracionLlamada, fecha, hora, fechaTarificacion, costo, horaTarificacion);</span>
 					
 <span class="fc" id="L112">					registrosRecuperados.add(modelo);</span>
-<span class="fc" id="L113">				}</span>
+				}
 <span class="fc" id="L114">				resultadoConsulta.close();</span>
 <span class="fc" id="L115">				enunciadoSQL.close();</span>
 <span class="fc" id="L116">				conexionBD.close();</span>
@@ -145,7 +145,7 @@ import modelos.CDRModelo;
 <span class="nc" id="L145">			LOGGER.info(&quot;entra al error&quot;);</span>
 <span class="nc" id="L146">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
 <span class="nc" id="L147">			System.exit(0);</span>
-<span class="fc" id="L148">		}</span>
+		}
 <span class="fc" id="L149">		LOGGER.info(&quot;CDR deleted successfully&quot;);</span>
 <span class="fc" id="L150">	}</span>
 	
@@ -169,7 +169,7 @@ import modelos.CDRModelo;
 <span class="nc" id="L169">			LOGGER.info(&quot;entra al error&quot;);</span>
 <span class="nc" id="L170">			LOGGER.severe(e.getClass().getName() + &quot;: &quot; + e.getMessage());</span>
 <span class="nc" id="L171">			System.exit(0);</span>
-<span class="fc" id="L172">		}</span>
+		}
 <span class="fc" id="L173">		LOGGER.info(&quot;CDR deleted successfully&quot;);</span>
 <span class="fc" id="L174">	}</span>
 	
