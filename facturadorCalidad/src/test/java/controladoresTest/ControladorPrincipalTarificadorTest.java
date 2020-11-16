@@ -12,6 +12,11 @@ import org.testng.annotations.BeforeClass;
 
 public class ControladorPrincipalTarificadorTest {
 	ControladorPrincipalTarificador controladorPrincipalTarificador;
+	@BeforeClass
+	public void init() throws InterruptedException {
+		stop();
+		Thread.sleep(2000);
+	}
 
 	@Test
 	public void revisarDeBDClientesExistentesDespueDeGuardarUno() {
@@ -23,19 +28,19 @@ public class ControladorPrincipalTarificadorTest {
 		ControladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
 		ControladorPrincipalTarificador.main(null);
 		int result = ControladorPrincipalTarificador.devolverClientesDeBD().size();
-		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 		Assert.assertEquals(1, result);
 	}
-
+	
 	@Test
 	public void revisarDeBDClientesExistentes() {
-		controladorPrincipalTarificador.revisarDeBDClientesExistentes();
-
+		ControladorPrincipalTarificador.revisarDeBDClientesExistentes();
 		// controladorPrincipalTarificador.persistencia.persistirEnBDClientes(cliente);
 	}
 
+
 	@BeforeClass
 	public void beforeClass() {
+		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 		controladorPrincipalTarificador = new ControladorPrincipalTarificador();
 	}
 
@@ -46,6 +51,6 @@ public class ControladorPrincipalTarificadorTest {
 
 	@AfterClass
 	public void afterClass() {
-		stop();
+		ControladorPrincipalTarificador.persistenciaClientes.borrarTodosLosDatosDeClientes();
 	}
 }
