@@ -91,14 +91,6 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(resultado);
 	}
 	
-	/*Prueba los métodos borrarTodosLosDatosDeClientes y borrarTodosLosDatosDeNumerosAmigos*/
-	/*
-	@Test
-	void borrarDatosDeLaBaseDeDatosDeClientes()  {
-		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
-		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
-		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
-	}*/
 	@AfterMethod
 	public void afterMethod() {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
