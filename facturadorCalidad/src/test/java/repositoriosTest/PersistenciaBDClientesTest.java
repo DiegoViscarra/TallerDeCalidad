@@ -26,7 +26,7 @@ public class PersistenciaBDClientesTest {
 	public void beforeMethod() {
 		persistenciaBDClientes = new PersistenciaBDClientes();
 	}
-	/*Prueba método crearTabla*/
+
 	@Test 
 	void crearTablaClientesYNumerosAmigos() throws SQLException {
 		persistenciaBDClientes.crearTabla();
@@ -41,7 +41,6 @@ public class PersistenciaBDClientesTest {
 		persistenciaBDClientes.conexionBD.close();
 	}
 	
-	/*Prueba método poblarTablaClientes*/
 	@Test
 	void poblarTablaDeClientes() {
 		persistenciaBDClientes.crearTabla();
@@ -51,7 +50,6 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
 	}
 	
-	/*Prueba método poblarTablaClientesConNumerosAmigos*/
 	@Test
 	void poblarTablaDeNumerosDeAmigos() {
 		persistenciaBDClientes.crearTabla();
@@ -62,7 +60,6 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
 	}
 	
-	/*Prueba método mostrarTablaClientes*/
 	@Test
 	void mostrarTablaDeClientes() throws SQLException {
 		persistenciaBDClientes.crearTabla();
@@ -76,7 +73,6 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(resultado);
 	}
 	
-	/*Prueba método mostrarTablaClientesConNumerosAmigos*/
 	@Test
 	void mostrarTablaDeNumerosAmigos() throws SQLException {
 		persistenciaBDClientes.crearTabla();
@@ -91,14 +87,6 @@ public class PersistenciaBDClientesTest {
 		Assert.assertNotNull(resultado);
 	}
 	
-	/*Prueba los métodos borrarTodosLosDatosDeClientes y borrarTodosLosDatosDeNumerosAmigos*/
-	/*
-	@Test
-	void borrarDatosDeLaBaseDeDatosDeClientes()  {
-		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
-		persistenciaBDClientes.borrarTodosLosDatosDeNumerosAmigos();
-		Assert.assertNotNull(persistenciaBDClientes.conexionBD);
-	}*/
 	@AfterMethod
 	public void afterMethod() {
 		persistenciaBDClientes.borrarTodosLosDatosDeClientes();
